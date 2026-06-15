@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompteador · Armá tu prompt paso a paso</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f4f0;
+      --surface: #ffffff;
+      --primary: #2d2d2d;
+      --accent: #4361ee;
+      --accent-light: #eef0fd;
+      --muted: #777;
+      --border: #e2e2e2;
+      --radius: 12px;
+      --success: #2d6a4f;
+      --success-light: #d8f3dc;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 16px 80px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      max-width: 600px;
+    }
+
+    header .badge {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+
+    header h1 {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .progress-bar-wrap {
+      width: 100%;
+      max-width: 620px;
+      margin-bottom: 28px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: var(--border);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 99px;
+      transition: width 0.4s ease;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 32px;
+      width: 100%;
+      max-width: 620px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+
+    .step { display: none; }
+    .step.active { display: block; }
+
+    .step-number {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .step h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .step .hint {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-bottom: 22px;
+      line-height: 1.5;
+    }
+
+    /* Tool cards */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .tool-card {
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: left;
+      background: var(--surface);
+    }
+
+    .tool-card:hover { border-color: var(--accent); background: var(--accent-light); }
+    .tool-card.selected { border-color: var(--accent); background: var(--accent-light); }
+
+    .tool-card .tool-icon { font-size: 1.8rem; margin-bottom: 8px; }
+    .tool-card .tool-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
+    .tool-card .tool-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.4; }
+
+    /* Options */
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .option-btn {
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      cursor: pointer;
+      text-align: left;
+      background: var(--surface);
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .option-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+    .option-btn.selected { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+    .option-btn .opt-icon { font-size: 1.2rem; }
+
+    /* Inputs */
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--primary);
+    }
+
+    .field textarea,
+    .field input[type="text"],
+    .field select {
+      width: 100%;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 0.92rem;
+      font-family: inherit;
+      color: var(--primary);
+      transition: border-color 0.15s;
+      resize: vertical;
+      background: var(--surface);
+    }
+
+    .field textarea:focus,
+    .field input[type="text"]:focus,
+    .field select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .field textarea { min-height: 80px; }
+
+    /* Checkbox tags */
+    .tag-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .tag-btn {
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--surface);
+      transition: all 0.15s;
+    }
+
+    .tag-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+    .tag-btn.selected { border-color: var(--accent); background: var(--accent); color: #fff; }
+
+    /* Navigation */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 11px 24px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #3451d1; }
+    .btn-primary:disabled { background: #b0b8f5; cursor: not-allowed; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 2px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: #aaa; color: var(--primary); }
+
+    /* Result */
+    .result-box {
+      background: #1e1e2e;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .result-box pre {
+      color: #cdd6f4;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.6;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255,255,255,0.1);
+      color: #cdd6f4;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.15s;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.2); }
+    .copy-btn.copied { background: var(--success); color: #fff; }
+
+    .tips-box {
+      background: var(--success-light);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+    .tips-box h4 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--success);
+      margin-bottom: 8px;
+    }
+    .tips-box ul {
+      list-style: none;
+      padding: 0;
+    }
+    .tips-box ul li {
+      font-size: 0.83rem;
+      color: #1b4332;
+      padding: 3px 0;
+      padding-left: 16px;
+      position: relative;
+    }
+    .tips-box ul li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .restart-btn {
+      width: 100%;
+      text-align: center;
+      padding: 12px;
+      background: transparent;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .restart-btn:hover { border-color: #aaa; color: var(--primary); }
+
+    .tool-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    footer {
+      margin-top: 48px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: #aaa;
+    }
+
+    @media (max-width: 480px) {
+      .tool-grid { grid-template-columns: 1fr; }
+      .card { padding: 22px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Herramienta gratuita · 100% local</div>
+  <h1>Armá tu prompt paso a paso</h1>
+  <p>Respondé algunas preguntas y generamos un prompt claro y efectivo, optimizado para la herramienta de IA que uses.</p>
+</header>
+
+<div class="progress-bar-wrap">
+  <div class="progress-label">
+    <span id="progress-text">Paso 1 de 7</span>
+    <span id="progress-pct">0%</span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+  </div>
+</div>
+
+<div class="card">
+
+  <!-- STEP 1: Selección de herramienta -->
+  <div class="step active" id="step-1">
+    <div class="step-number">Paso 1 de 7</div>
+    <h2>¿Con qué herramienta de IA vas a usar este prompt?</h2>
+    <p class="hint">Cada herramienta tiene su propia lógica. El prompt se va a adaptar a la que elijas.</p>
+    <div class="tool-grid">
+      <div class="tool-card" onclick="selectTool(this, 'chatgpt')">
+        <div class="tool-icon">💬</div>
+        <div class="tool-name">ChatGPT</div>
+        <div class="tool-desc">OpenAI. Versátil para casi cualquier tarea.</div>
+      </div>
+      <div class="tool-card" onclick="selectTool(this, 'gemini')">
+        <div class="tool-icon">✨</div>
+        <div class="tool-name">Gemini</div>
+        <div class="tool-desc">Google. Muy bueno con documentos y búsqueda.</div>
+      </div>
+      <div class="tool-card" onclick="selectTool(this, 'claude')">
+        <div class="tool-icon">🤖</div>
+        <div class="tool-name">Claude</div>
+        <div class="tool-desc">Anthropic. Excelente para análisis y redacción larga.</div>
+      </div>
+      <div class="tool-card" onclick="selectTool(this, 'notebooklm')">
+        <div class="tool-icon">📓</div>
+        <div class="tool-name">NotebookLM</div>
+        <div class="tool-desc">Google. Especializado en analizar tus propios documentos.</div>
+      </div>
+    </div>
+    <div class="nav">
+      <div></div>
+      <button class="btn btn-primary" id="btn-1" onclick="goTo(2)" disabled>Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Propósito -->
+  <div class="step" id="step-2">
+    <div class="step-number">Paso 2 de 7</div>
+    <h2>¿Cuál es el objetivo del prompt?</h2>
+    <p class="hint">¿Qué querés que la IA haga por vos?</p>
+    <div class="options-list" id="purpose-options">
+      <div class="option-btn" onclick="selectOption(this, 'purpose')">
+        <span class="opt-icon">✍️</span> Redactar o escribir algo
+      </div>
+      <div class="option-btn" onclick="selectOption(this, 'purpose')">
+        <span class="opt-icon">📋</span> Resumir o sintetizar información
+      </div>
+      <div class="option-btn" onclick="selectOption(this, 'purpose')">
+        <span class="opt-icon">🔍</span> Analizar o evaluar un contenido
+      </div>
+      <div class="option-btn" onclick="selectOption(this, 'purpose')">
+        <span class="opt-icon">💡</span> Generar ideas o hacer lluvia de ideas
+      </div>
+      <div class="option-btn" onclick="selectOption(this, 'purpose')">
+        <span class="opt-icon">🔄</span> Transformar o convertir un texto
+      </div>
+      <div class="option-btn" onclick="selectOption(this, 'purpose')">
+        <span class="opt-icon">❓</span> Responder preguntas o investigar
+      </div>
+    </div>
+
+    <div style="margin-top: 18px; border-top: 1px solid var(--border); padding-top: 18px;">
+      <label style="display:block; font-size:0.88rem; font-weight:600; margin-bottom:6px; color: var(--primary);">
+        ¿Tu objetivo no está en la lista? Describilo vos mismo:
+      </label>
+      <textarea
+        id="custom-purpose-input"
+        placeholder="Ej: Quiero que me ayude a preparar preguntas para una entrevista de trabajo en el sector tecnológico..."
+        style="width:100%; border:2px solid var(--border); border-radius:8px; padding:12px 14px; font-size:0.92rem; font-family:inherit; color:var(--primary); resize:vertical; min-height:70px; background:var(--surface); transition: border-color 0.15s;"
+        oninput="onCustomPurposeInput(this)"
+        onfocus="this.style.borderColor='var(--accent)'"
+        onblur="this.style.borderColor='var(--border)'"
+      ></textarea>
+      <small style="display:block; margin-top:5px; font-size:0.78rem; color:var(--muted);">Podés combinar una opción de arriba con este campo para ser más preciso.</small>
+    </div>
+
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goTo(1)">← Atrás</button>
+      <button class="btn btn-primary" id="btn-2" onclick="goTo(3)" disabled>Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Rol / Persona -->
+  <div class="step" id="step-3">
+    <div class="step-number">Paso 3 de 7</div>
+    <h2>¿Qué rol querés que adopte la IA?</h2>
+    <p class="hint">Asignarle un rol mejora mucho la calidad de las respuestas.</p>
+    <div class="options-list" id="role-options">
+      <div class="option-btn" onclick="selectOption(this, 'role')">
+        <span class="opt-icon">🧑‍💼</span> Experto en el tema
+      </div>
+      <div class="option-btn" onclick="selectOption(this, 'role')">
+        <span class="opt-icon">📝</span> Redactor profesional
+      </div>
+      <div class="option-btn" onclick="selectOption(this, 'role')">
+        <span class="opt-icon">🎓</span> Docente o explicador
+      </div>
+      <div class="option-btn" onclick="selectOption(this, 'role')">
+        <span class="opt-icon">🔎</span> Analista crítico
+      </div>
+      <div class="option-btn" onclick="selectOption(this, 'role')">
+        <span class="opt-icon">🤝</span> Asistente genérico
+      </div>
+    </div>
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goTo(2)">← Atrás</button>
+      <button class="btn btn-primary" id="btn-3" onclick="goTo(4)" disabled>Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: Tarea principal -->
+  <div class="step" id="step-4">
+    <div class="step-number">Paso 4 de 7</div>
+    <h2>Describí la tarea principal</h2>
+    <p class="hint">Explicá con tus palabras qué querés que haga. Mientras más específico, mejor el resultado.</p>
+    <div class="field">
+      <label>¿Qué tiene que hacer exactamente? *</label>
+      <textarea id="task-input" placeholder="Ej: Quiero que me escriba un email formal explicando un retraso en la entrega de un proyecto..." oninput="checkField('task-input', 'btn-4')"></textarea>
+    </div>
+    <div class="field">
+      <label>Contexto o información de fondo (opcional)</label>
+      <textarea id="context-input" placeholder="Ej: El proyecto era de desarrollo de software, el cliente es una empresa mediana, el retraso fue por problemas técnicos..."></textarea>
+    </div>
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goTo(3)">← Atrás</button>
+      <button class="btn btn-primary" id="btn-4" onclick="goTo(5)" disabled>Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: Formato de salida -->
+  <div class="step" id="step-5">
+    <div class="step-number">Paso 5 de 7</div>
+    <h2>¿Cómo querés que te responda?</h2>
+    <p class="hint">El formato del output importa tanto como la instrucción.</p>
+    <div class="options-list" id="format-options">
+      <div class="option-btn" onclick="selectOption(this, 'format')">
+        <span class="opt-icon">📄</span> Texto corrido / párrafos
+      </div>
+      <div class="option-btn" onclick="selectOption(this, 'format')">
+        <span class="opt-icon">📌</span> Lista de puntos
+      </div>
+      <div class="option-btn" onclick="selectOption(this, 'format')">
+        <span class="opt-icon">📊</span> Tabla
+      </div>
+      <div class="option-btn" onclick="selectOption(this, 'format')">
+        <span class="opt-icon">📝</span> Esquema o estructura
+      </div>
+      <div class="option-btn" onclick="selectOption(this, 'format')">
+        <span class="opt-icon">⚡</span> Respuesta corta y directa
+      </div>
+    </div>
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goTo(4)">← Atrás</button>
+      <button class="btn btn-primary" id="btn-5" onclick="goTo(6)" disabled>Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- STEP 6: Tono + restricciones -->
+  <div class="step" id="step-6">
+    <div class="step-number">Paso 6 de 7</div>
+    <h2>Últimos ajustes</h2>
+    <p class="hint">Estos detalles marcan la diferencia entre un resultado genérico y uno que te sirve.</p>
+
+    <div class="field">
+      <label>Tono del texto</label>
+      <select id="tone-select">
+        <option value="">— No especificar —</option>
+        <option value="formal">Formal y profesional</option>
+        <option value="neutro">Neutro y objetivo</option>
+        <option value="simple">Simple y claro (para cualquier público)</option>
+        <option value="tecnico">Técnico (para especialistas)</option>
+        <option value="amigable">Amigable y cercano</option>
+      </select>
+    </div>
+
+    <p style="font-size:0.88rem; font-weight:600; margin-bottom:10px;">¿Qué NO debe hacer la IA? (opcional, seleccioná los que aplican)</p>
+    <div class="tag-group" id="restrict-tags">
+      <div class="tag-btn" onclick="toggleTag(this)">No inventar datos</div>
+      <div class="tag-btn" onclick="toggleTag(this)">No usar tecnicismos</div>
+      <div class="tag-btn" onclick="toggleTag(this)">No repetir ideas</div>
+      <div class="tag-btn" onclick="toggleTag(this)">No dar opiniones personales</div>
+      <div class="tag-btn" onclick="toggleTag(this)">No extenderse demasiado</div>
+      <div class="tag-btn" onclick="toggleTag(this)">No usar lenguaje informal</div>
+    </div>
+
+    <div class="field">
+      <label>¿Alguna otra restricción o aclaración?</label>
+      <textarea id="extra-input" placeholder="Ej: No quiero que incluya saludos al final, quiero que el texto sea de no más de 200 palabras..." style="min-height:60px;"></textarea>
+    </div>
+
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goTo(5)">← Atrás</button>
+      <button class="btn btn-primary" onclick="goTo(7)">Generar prompt →</button>
+    </div>
+  </div>
+
+  <!-- STEP 7: Resultado -->
+  <div class="step" id="step-7">
+    <div class="step-number">Paso 7 de 7</div>
+    <h2>Tu prompt está listo</h2>
+    <p class="hint" style="margin-bottom:20px;">Copialo y pegalo directamente en <span id="tool-name-result" style="font-weight:700;"></span>.</p>
+
+    <div id="tool-badge-result" class="tool-badge"></div>
+
+    <div class="result-box">
+      <pre id="prompt-result"></pre>
+      <button class="copy-btn" id="copy-btn" onclick="copyPrompt()">Copiar</button>
+    </div>
+
+    <button id="copy-btn-large" onclick="copyPrompt()" style="
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 16px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.15s;
+    " onmouseover="this.style.background='#3451d1'" onmouseout="if(!this.classList.contains('copied')) this.style.background='var(--accent)'">
+      📋 Copiar prompt
+    </button>
+
+    <div class="tips-box" id="tips-box"></div>
+
+    <button class="restart-btn" onclick="restart()">↺ Armar otro prompt</button>
+  </div>
+
+</div>
+
+<footer>
+  Procesamiento 100% local · Ningún dato sale de tu navegador
+</footer>
+
+<script>
+  // ─── State ───────────────────────────────────────────────────────────────────
+  const state = {
+    tool: null,
+    purpose: null,
+    customPurpose: '',
+    role: null,
+    task: '',
+    context: '',
+    format: null,
+    tone: '',
+    restrictions: [],
+    extra: ''
+  };
+
+  const TOTAL_STEPS = 7;
+
+  // ─── Tool selection ──────────────────────────────────────────────────────────
+  function selectTool(el, tool) {
+    document.querySelectorAll('.tool-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    state.tool = tool;
+    document.getElementById('btn-1').disabled = false;
+  }
+
+  // ─── Option selection ─────────────────────────────────────────────────────────
+  function selectOption(el, key) {
+    const parent = el.parentElement;
+    parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    state[key] = el.textContent.trim().replace(/^.\s+/, '');
+    const stepNum = el.closest('.step').id.replace('step-', '');
+    const btn = document.getElementById('btn-' + stepNum);
+    if (btn) btn.disabled = false;
+  }
+
+  // ─── Custom purpose input (paso 2) ───────────────────────────────────────────
+  function onCustomPurposeInput(el) {
+    state.customPurpose = el.value.trim();
+    const hasOption = !!state.purpose;
+    const hasCustom = state.customPurpose.length >= 5;
+    document.getElementById('btn-2').disabled = !(hasOption || hasCustom);
+  }
+
+  // ─── Text field check ────────────────────────────────────────────────────────
+  function checkField(inputId, btnId) {
+    const val = document.getElementById(inputId).value.trim();
+    document.getElementById(btnId).disabled = val.length < 5;
+  }
+
+  // ─── Tag toggle ───────────────────────────────────────────────────────────────
+  function toggleTag(el) {
+    el.classList.toggle('selected');
+    const label = el.textContent.trim();
+    if (el.classList.contains('selected')) {
+      state.restrictions.push(label);
+    } else {
+      state.restrictions = state.restrictions.filter(r => r !== label);
+    }
+  }
+
+  // ─── Navigation ───────────────────────────────────────────────────────────────
+  function goTo(step) {
+    if (step === 7) {
+      state.task = document.getElementById('task-input').value.trim();
+      state.context = document.getElementById('context-input').value.trim();
+      state.tone = document.getElementById('tone-select').value;
+      state.extra = document.getElementById('extra-input').value.trim();
+      buildPrompt();
+    }
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step-' + step).classList.add('active');
+    updateProgress(step);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateProgress(step) {
+    const pct = Math.round(((step - 1) / (TOTAL_STEPS - 1)) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = `Paso ${step} de ${TOTAL_STEPS}`;
+    document.getElementById('progress-pct').textContent = pct + '%';
+  }
+
+  // ─── Prompt builder ───────────────────────────────────────────────────────────
+  const TOOL_META = {
+    chatgpt: {
+      name: 'ChatGPT',
+      icon: '💬',
+      tip: 'En ChatGPT podés pegar este prompt directamente en el chat. Si usás la versión Plus, también podés usarlo como instrucción del sistema en un GPT personalizado.',
+      tips: [
+        'Podés pedir variantes: "Generá 3 versiones de esto"',
+        'Si el resultado no te convence, pedí: "Hacelo más formal" o "Resumilo"',
+        'Usá el botón de regenerar para obtener alternativas'
+      ]
+    },
+    gemini: {
+      name: 'Gemini',
+      icon: '✨',
+      tip: 'Gemini funciona muy bien cuando adjuntás archivos junto con el prompt. Si tenés un documento de referencia, subilo al mismo tiempo.',
+      tips: [
+        'Gemini puede procesar PDFs: adjuntá el archivo con el prompt',
+        'Usá Gemini Advanced para tareas complejas de análisis',
+        'Podés pedir: "Buscá en Google sobre esto y luego..." para combinar búsqueda web con generación'
+      ]
+    },
+    claude: {
+      name: 'Claude',
+      icon: '🤖',
+      tip: 'Claude responde muy bien a instrucciones largas y detalladas. No tengas miedo de ser específico.',
+      tips: [
+        'Claude maneja bien textos largos: podés pegar documentos completos',
+        'Pedile que "piense paso a paso" para tareas complejas',
+        'Si querés más profundidad: "Desarrollá más el punto X"'
+      ]
+    },
+    notebooklm: {
+      name: 'NotebookLM',
+      icon: '📓',
+      tip: 'NotebookLM trabaja sobre documentos que vos subís. Primero cargá tus fuentes (PDFs, docs) y luego usá este prompt en el chat.',
+      tips: [
+        'Primero subí tus documentos como "fuentes" al notebook',
+        'NotebookLM solo responde sobre lo que hay en tus documentos, no inventa',
+        'Podés pedirle que genere un "audio overview" para escuchar un resumen'
+      ]
+    }
+  };
+
+  function buildPrompt() {
+    const meta = TOOL_META[state.tool];
+    const lines = [];
+
+    // ── Roles ricos y específicos ──────────────────────────────────────────────
+    const roleMap = {
+      'Experto en el tema': `Sos un experto con profundo conocimiento teórico y experiencia práctica en el área relevante a esta tarea. Tu forma de pensar es sistemática: identificás primero los aspectos clave, luego los desarrollás con rigor y cerrás con conclusiones bien fundamentadas. En tu comunicación sos preciso, evitás la ambigüedad y respaldás cada afirmación con argumentos o evidencia.`,
+      'Redactor profesional': `Sos un redactor profesional con amplia experiencia en comunicación escrita para distintos públicos y registros. Tu forma de pensar parte de la claridad del mensaje: antes de escribir, definís el objetivo del texto, el lector al que va dirigido y el efecto que debe producir. Escribís con estructura clara, frases directas y vocabulario preciso; evitás el relleno y cuidás el ritmo de cada párrafo.`,
+      'Docente o explicador': `Sos un docente experimentado con habilidad para hacer accesible lo complejo. Tu enfoque pedagógico parte de lo que el lector ya sabe para construir sobre esa base, usando analogías, ejemplos concretos y preguntas guía cuando es necesario. Explicás un concepto a la vez, verificás la comprensión antes de avanzar y usás un lenguaje claro, sin sacrificar la profundidad cuando el tema lo requiere.`,
+      'Analista crítico': `Sos un analista crítico con entrenamiento en pensamiento lógico, detección de sesgos y evaluación de evidencia. Tu forma de pensar es escéptica y rigurosa: no aceptás afirmaciones sin fundamento, explorás distintas perspectivas antes de concluir y señalás tanto los puntos fuertes como las debilidades de cualquier argumento o contenido. Te comunicás con objetividad, sin subjetivismos, y distinguís claramente los hechos de las interpretaciones.`,
+      'Asistente genérico': `Sos un asistente inteligente, metódico y orientado a resultados. Leés con atención cada instrucción, priorizás la utilidad práctica de tus respuestas y adaptás tu nivel de detalle a lo que la tarea requiere. Sos directo, organizado y confiable.`
+    };
+
+    const roleText = roleMap[state.role] || 'Sos un asistente inteligente, metódico y orientado a resultados. Leés con atención cada instrucción, priorizás la utilidad práctica de tus respuestas y adaptás tu nivel de detalle a lo que la tarea requiere.';
+
+    // ── Tono integrado al rol ──────────────────────────────────────────────────
+    const toneMap = {
+      formal:    'Tu registro es formal y profesional: usás vocabulario cuidado, evitás coloquialismos y mantenés distancia institucional sin perder claridad.',
+      neutro:    'Tu registro es neutro y objetivo: presentás la información sin juicios de valor, en tercera persona cuando corresponde, con un estilo equilibrado.',
+      simple:    'Tu registro es simple y accesible: priorizás frases cortas, palabras de uso común y explicaciones que cualquier persona pueda entender sin conocimientos previos.',
+      tecnico:   'Tu registro es técnico y especializado: usás la terminología propia del campo, asumís que el lector tiene formación en el área y no simplificás conceptos que no lo requieren.',
+      amigable:  'Tu registro es amigable y cercano: usás segunda persona, un tono cálido y natural, como si le explicaras algo a alguien de confianza.'
+    };
+
+    // ── Metodología por propósito ──────────────────────────────────────────────
+    const purposeKeyMap = {
+      'Redactar o escribir algo':            'redactar',
+      'Resumir o sintetizar información':    'resumir',
+      'Analizar o evaluar un contenido':     'analizar',
+      'Generar ideas o hacer lluvia de ideas': 'ideas',
+      'Transformar o convertir un texto':    'transformar',
+      'Responder preguntas o investigar':    'investigar'
+    };
+
+    const methodologyMap = {
+      redactar: `METODOLOGÍA:
+Seguí estos pasos en orden:
+1. Identificá el objetivo comunicacional del texto y el perfil del lector.
+2. Definí la estructura antes de escribir: introducción, desarrollo, cierre.
+3. Escribí el texto respetando esa estructura y el tono indicado.
+4. Revisá que cada párrafo aporte algo distinto y que el texto fluya con coherencia.`,
+
+      resumir: `METODOLOGÍA:
+Seguí estos pasos en orden:
+1. Leé o analizá el contenido completo antes de comenzar.
+2. Identificá las ideas principales y descartá los detalles secundarios.
+3. Reorganizá esas ideas en un orden lógico que facilite la comprensión.
+4. Redactá el resumen en el formato y extensión indicados, sin agregar información que no esté en el original.`,
+
+      analizar: `METODOLOGÍA:
+Seguí estos pasos en orden:
+1. Describí brevemente el objeto de análisis y su contexto.
+2. Identificá los elementos más relevantes para evaluar (criterios, dimensiones, variables).
+3. Analizá cada elemento con objetividad, señalando fortalezas y debilidades.
+4. Elaborá una conclusión que integre los hallazgos y responda a la pregunta central.`,
+
+      ideas: `METODOLOGÍA:
+Seguí estos pasos en orden:
+1. Delimitá el problema o desafío que se quiere abordar.
+2. Generá un conjunto amplio de ideas sin filtrar ni juzgar en esta etapa.
+3. Agrupá las ideas por categorías o ejes temáticos.
+4. Destacá las 3 a 5 más prometedoras con una breve justificación de cada una.`,
+
+      transformar: `METODOLOGÍA:
+Seguí estos pasos en orden:
+1. Analizá el texto original para entender su contenido, intención y registro actual.
+2. Identificá qué debe cambiar (formato, tono, extensión, estructura, estilo) y qué debe mantenerse.
+3. Realizá la transformación preservando la fidelidad al contenido original.
+4. Verificá que el resultado cumple con el formato y tono solicitados.`,
+
+      investigar: `METODOLOGÍA:
+Seguí estos pasos en orden:
+1. Reformulá la pregunta o tema para asegurarte de entender qué se quiere saber exactamente.
+2. Organizá la respuesta de lo general a lo específico.
+3. Fundamentá cada afirmación con argumentos sólidos o datos concretos.
+4. Si hay perspectivas distintas sobre el tema, presentalas de forma equilibrada antes de concluir.`
+    };
+
+    // ── Formato enriquecido ────────────────────────────────────────────────────
+    const formatMap = {
+      'Texto corrido / párrafos': 'Presentá tu respuesta en párrafos bien construidos, con ideas completas en cada uno. No uses listas ni viñetas. El texto debe fluir de forma coherente de principio a fin.',
+      'Lista de puntos': 'Organizá tu respuesta en una lista de puntos numerados o con viñetas. Cada punto debe expresar una idea completa y diferente. Evitá repetir conceptos entre puntos.',
+      'Tabla': 'Presentá la información en una tabla clara, con encabezados descriptivos en cada columna. Cada fila debe corresponder a un elemento distinto. Si el contenido no puede organizarse en tabla, justificá brevemente por qué y usá el formato más apropiado.',
+      'Esquema o estructura': 'Organizá la respuesta con títulos principales (##) y subtítulos (###) cuando corresponda. Cada sección debe tener contenido sustancial, no solo un encabezado. El esquema debe reflejar una jerarquía lógica del tema.',
+      'Respuesta corta y directa': 'Respondé de forma concisa: máximo 3 a 5 oraciones o puntos. Priorizá la información más importante. No justifiques ni desarrolles más de lo necesario.'
+    };
+
+    // ── Construir prompt ───────────────────────────────────────────────────────
+    const purposeNote = state.customPurpose ? state.customPurpose : null;
+    const toneNote = state.tone && toneMap[state.tone] ? toneMap[state.tone] : null;
+
+    // Determinar clave de metodología
+    const purposeKey = purposeKeyMap[state.purpose] || null;
+    const methodology = purposeKey ? methodologyMap[purposeKey] : null;
+
+    if (state.tool === 'notebooklm') {
+      lines.push(`[INSTRUCCIÓN PARA NOTEBOOKLM]`);
+      lines.push(``);
+      lines.push(`Basándote exclusivamente en los documentos que tengo cargados como fuentes, sin agregar información externa ni suposiciones propias:`);
+      lines.push(``);
+      if (purposeNote) {
+        lines.push(`OBJETIVO:`);
+        lines.push(purposeNote);
+        lines.push(``);
+      }
+      lines.push(`TAREA:`);
+      lines.push(state.task);
+      if (state.context) {
+        lines.push(``);
+        lines.push(`CONTEXTO ADICIONAL:`);
+        lines.push(state.context);
+      }
+    } else {
+      // Rol + tono integrados en el mismo bloque de identidad
+      let identity = roleText;
+      if (toneNote) identity += ` ${toneNote}`;
+      lines.push(identity);
+      lines.push(``);
+
+      if (purposeNote) {
+        lines.push(`OBJETIVO:`);
+        lines.push(purposeNote);
+        lines.push(``);
+      }
+
+      lines.push(`TAREA:`);
+      lines.push(state.task);
+
+      if (state.context) {
+        lines.push(``);
+        lines.push(`CONTEXTO:`);
+        lines.push(state.context);
+      }
+
+      if (methodology) {
+        lines.push(``);
+        lines.push(methodology);
+      }
+    }
+
+    // Formato de salida
+    if (state.format) {
+      lines.push(``);
+      lines.push(`FORMATO DE SALIDA:`);
+      lines.push(formatMap[state.format] || state.format);
+    }
+
+    // Restricciones
+    const allRestrictions = [...state.restrictions];
+    if (state.extra) allRestrictions.push(state.extra);
+
+    if (allRestrictions.length > 0) {
+      lines.push(``);
+      lines.push(`RESTRICCIONES:`);
+      allRestrictions.forEach(r => lines.push(`- ${r}`));
+    }
+
+    // Verificación final
+    lines.push(``);
+    lines.push(`VERIFICACIÓN FINAL:`);
+    lines.push(`Antes de responder, confirmá que: (1) la respuesta cumple con el objetivo planteado en la tarea, (2) el formato de salida es exactamente el que se solicitó, (3) no hay contradicciones internas ni afirmaciones sin sustento.`);
+
+    const promptText = lines.join('\n');
+    document.getElementById('prompt-result').textContent = promptText;
+
+    // Tool badge & name
+    document.getElementById('tool-name-result').textContent = meta.name;
+    document.getElementById('tool-badge-result').innerHTML = `${meta.icon} Optimizado para ${meta.name}`;
+
+    // Tips
+    const tipsHtml = `
+      <h4>💡 Cómo usarlo mejor en ${meta.name}</h4>
+      <ul>
+        <li>${meta.tip}</li>
+        ${meta.tips.map(t => `<li>${t}</li>`).join('')}
+      </ul>
+    `;
+    document.getElementById('tips-box').innerHTML = tipsHtml;
+  }
+
+  // ─── Copy ─────────────────────────────────────────────────────────────────────
+  function copyPrompt() {
+    const text = document.getElementById('prompt-result').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btnSmall = document.getElementById('copy-btn');
+      btnSmall.textContent = '✓ Copiado';
+      btnSmall.classList.add('copied');
+
+      const btnLarge = document.getElementById('copy-btn-large');
+      btnLarge.innerHTML = '✓ ¡Copiado! Ya podés pegarlo en la herramienta de IA';
+      btnLarge.style.background = '#2d6a4f';
+      btnLarge.classList.add('copied');
+
+      setTimeout(() => {
+        btnSmall.textContent = 'Copiar';
+        btnSmall.classList.remove('copied');
+        btnLarge.innerHTML = '📋 Copiar prompt';
+        btnLarge.style.background = 'var(--accent)';
+        btnLarge.classList.remove('copied');
+      }, 2500);
+    });
+  }
+
+  // ─── Restart ──────────────────────────────────────────────────────────────────
+  function restart() {
+    state.tool = null; state.purpose = null; state.customPurpose = ''; state.role = null;
+    state.task = ''; state.context = ''; state.format = null;
+    state.tone = ''; state.restrictions = []; state.extra = '';
+
+    const customPurposeField = document.getElementById('custom-purpose-input');
+    if (customPurposeField) customPurposeField.value = '';
+
+    document.querySelectorAll('.tool-card').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+    document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('selected'));
+    document.getElementById('task-input').value = '';
+    document.getElementById('context-input').value = '';
+    document.getElementById('tone-select').value = '';
+    document.getElementById('extra-input').value = '';
+    document.getElementById('btn-1').disabled = true;
+    document.getElementById('btn-2').disabled = true;
+    document.getElementById('btn-3').disabled = true;
+    document.getElementById('btn-4').disabled = true;
+    document.getElementById('btn-5').disabled = true;
+
+    goTo(1);
+  }
+</script>
+</body>
+</html>

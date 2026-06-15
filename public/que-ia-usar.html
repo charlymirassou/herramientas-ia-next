@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¿Qué IA usar? · Carlos Mirassou Canseco</title>
+  <meta name="description" content="Respondé 5 preguntas simples y descubrí qué herramienta de IA es la mejor para lo que querés hacer." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f4f6f9;
+      --surface: #fff;
+      --primary: #1a1f36;
+      --accent: #1a3a5c;
+      --accent-mid: #2563a8;
+      --accent-light: #eaf0f8;
+      --muted: #6b7280;
+      --border: #e2e8f0;
+      --radius: 12px;
+      --chatgpt: #10a37f; --chatgpt-light: #d1fae5;
+      --gemini: #4285f4;  --gemini-light: #dbeafe;
+      --claude: #d97706;  --claude-light: #fef3c7;
+      --notebook: #7c3aed; --notebook-light: #ede9fe;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg); color: var(--primary);
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; padding: 40px 16px 80px;
+    }
+
+    header { text-align: center; max-width: 620px; margin-bottom: 36px; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .82rem; font-weight: 600; color: var(--muted);
+      text-decoration: none; margin-bottom: 20px; transition: color .15s;
+    }
+    .back-link:hover { color: var(--accent-mid); }
+
+    .header-badge {
+      display: inline-block; background: var(--accent-light); color: var(--accent-mid);
+      font-size: 11px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; padding: 4px 14px; border-radius: 20px; margin-bottom: 14px;
+    }
+
+    header h1 { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800; color: var(--accent); line-height: 1.2; margin-bottom: 10px; }
+    header p  { color: var(--muted); font-size: .97rem; line-height: 1.6; }
+
+    /* Progress */
+    .progress-wrap { width: 100%; max-width: 640px; margin-bottom: 24px; }
+    .progress-info { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    .progress-bar  { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-mid), var(--accent)); border-radius: 99px; transition: width .4s ease; }
+
+    /* Card */
+    .card { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); padding: 36px; width: 100%; max-width: 640px; box-shadow: 0 2px 16px rgba(0,0,0,.06); }
+
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* Step header */
+    .step-label { font-size: 11px; font-weight: 700; color: var(--accent-mid); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px; }
+    .step-question { font-size: 1.12rem; font-weight: 800; color: var(--accent); line-height: 1.35; margin-bottom: 6px; }
+    .step-sub { font-size: .87rem; color: var(--muted); margin-bottom: 22px; line-height: 1.5; }
+
+    /* Task grid */
+    .task-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 28px; }
+    .task-card {
+      border: 2px solid var(--border); border-radius: 10px; padding: 15px 13px;
+      cursor: pointer; transition: all .15s; text-align: left; background: var(--surface);
+    }
+    .task-card:hover  { border-color: var(--accent-mid); background: var(--accent-light); }
+    .task-card.selected { border-color: var(--accent-mid); background: var(--accent-light); }
+    .task-card .tc-icon  { font-size: 1.5rem; margin-bottom: 7px; display: block; }
+    .task-card .tc-title { font-size: .88rem; font-weight: 700; color: var(--accent); display: block; margin-bottom: 3px; }
+    .task-card .tc-desc  { font-size: .76rem; color: var(--muted); line-height: 1.4; }
+
+    /* Options list */
+    .opt-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .opt-btn {
+      border: 2px solid var(--border); border-radius: 10px; padding: 14px 18px;
+      cursor: pointer; font-size: .9rem; font-weight: 500; transition: all .15s;
+      display: flex; align-items: flex-start; gap: 12px; background: var(--surface); text-align: left;
+    }
+    .opt-btn:hover   { border-color: var(--accent-mid); background: var(--accent-light); }
+    .opt-btn.selected { border-color: var(--accent-mid); background: var(--accent-light); color: var(--accent); }
+    .opt-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+    .opt-body {}
+    .opt-title { font-weight: 700; display: block; margin-bottom: 2px; }
+    .opt-desc  { font-size: .78rem; color: var(--muted); line-height: 1.4; }
+    .opt-btn.selected .opt-desc { color: var(--accent-mid); }
+
+    /* Nav */
+    .nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .btn { padding: 12px 26px; border-radius: 8px; font-size: .92rem; font-weight: 700; cursor: pointer; border: none; transition: all .15s; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-mid); }
+    .btn-primary:disabled { background: #94a3b8; cursor: not-allowed; }
+    .btn-ghost { background: transparent; color: var(--muted); border: 2px solid var(--border); }
+    .btn-ghost:hover { border-color: #94a3b8; color: var(--primary); }
+
+    /* Intro */
+    .intro-center { text-align: center; }
+    .intro-icon { font-size: 3rem; margin-bottom: 16px; }
+    .steps-preview { display: flex; gap: 8px; flex-wrap: wrap; margin: 20px 0 28px; justify-content: center; }
+    .steps-pill { background: var(--accent-light); color: var(--accent-mid); font-size: .79rem; font-weight: 600; padding: 5px 13px; border-radius: 20px; }
+
+    /* ── RESULTADO ──────────────────────── */
+    .result-header { text-align: center; padding-bottom: 28px; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
+    .tool-badge { display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; padding: 5px 18px; border-radius: 20px; margin-bottom: 14px; }
+    .tool-logo { font-size: 4rem; margin-bottom: 10px; }
+    .tool-name { font-size: 1.7rem; font-weight: 800; margin-bottom: 8px; }
+    .tool-tagline { font-size: .95rem; color: var(--muted); line-height: 1.6; max-width: 440px; margin: 0 auto; }
+
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+    .info-card { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 15px; }
+    .info-card .ic-icon  { font-size: 1.2rem; margin-bottom: 6px; }
+    .info-card .ic-label { font-size: .72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 4px; }
+    .info-card .ic-val   { font-size: .86rem; font-weight: 600; color: var(--primary); line-height: 1.4; }
+
+    .tip-box { background: var(--accent-light); border: 1px solid #c7d9f0; border-radius: 10px; padding: 18px; margin-bottom: 24px; }
+    .tip-box .tip-label { font-size: .73rem; font-weight: 800; color: var(--accent-mid); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; }
+    .tip-box p { font-size: .87rem; color: var(--accent); line-height: 1.6; }
+
+    .alt-section { margin-bottom: 8px; }
+    .alt-section h3 { font-size: .83rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 12px; }
+    .alt-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    .alt-card { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; text-align: center; font-size: .76rem; }
+    .alt-card .alt-icon { font-size: 1.3rem; margin-bottom: 4px; }
+    .alt-card .alt-name { font-weight: 700; color: var(--primary); margin-bottom: 3px; }
+    .alt-card .alt-why  { color: var(--muted); line-height: 1.4; }
+
+    /* Share */
+    .share-box { background: linear-gradient(135deg,#0f2744,#1a3a5c); border-radius: var(--radius); padding: 24px; text-align: center; margin-top: 24px; }
+    .share-box h3 { color: #fff; font-size: .97rem; font-weight: 700; margin-bottom: 6px; }
+    .share-box p  { color: #94a3b8; font-size: .83rem; margin-bottom: 16px; }
+    .share-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .share-btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 8px; font-size: .87rem; font-weight: 700; cursor: pointer; border: none; text-decoration: none; transition: all .15s; }
+    .share-wa   { background: #25d366; color: #fff; }
+    .share-wa:hover { background: #1da851; }
+    .share-copy { background: rgba(255,255,255,.1); color: #fff; border: 1px solid rgba(255,255,255,.2); }
+    .share-copy:hover { background: rgba(255,255,255,.18); }
+    .share-copy.copied { background: #166534; }
+
+    .restart-btn { width: 100%; margin-top: 14px; padding: 11px; background: transparent; border: 2px solid var(--border); border-radius: 8px; font-size: .9rem; font-weight: 600; color: var(--muted); cursor: pointer; transition: all .15s; }
+    .restart-btn:hover { border-color: #94a3b8; color: var(--primary); }
+
+    footer { margin-top: 44px; text-align: center; font-size: .77rem; color: #aaa; }
+    footer a { color: #aaa; }
+
+    @media (max-width: 520px) {
+      .card { padding: 24px 18px; }
+      .task-grid { grid-template-columns: 1fr; }
+      .alt-grid  { grid-template-columns: 1fr; }
+      .info-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="back-link">← Volver al inicio</a>
+  <div class="header-badge">5 preguntas · menos de 2 minutos</div>
+  <h1>¿Qué herramienta de IA uso para esto?</h1>
+  <p>ChatGPT, Gemini, Claude, NotebookLM… Cada una tiene sus puntos fuertes. Respondé estas preguntas y te decimos cuál se adapta mejor a vos.</p>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-info">
+    <span id="prog-text">Inicio</span>
+    <span id="prog-pct"></span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="prog-fill" style="width:0%"></div>
+  </div>
+</div>
+
+<div class="card">
+
+  <!-- INTRO -->
+  <div class="screen active" id="screen-intro">
+    <div class="intro-center">
+      <div class="intro-icon">🤔</div>
+      <h2 style="font-size:1.2rem;font-weight:800;color:var(--accent);margin-bottom:8px;">Elegí la IA correcta para cada tarea</h2>
+      <p style="color:var(--muted);font-size:.93rem;line-height:1.6;margin-bottom:16px;">No existe "la mejor IA". Cada herramienta brilla en situaciones distintas. Cinco preguntas son suficientes para orientarte.</p>
+      <div class="steps-preview">
+        <span class="steps-pill">¿Qué querés hacer?</span>
+        <span class="steps-pill">¿Cuánto texto manejás?</span>
+        <span class="steps-pill">¿Es confidencial?</span>
+        <span class="steps-pill">¿Usás Google?</span>
+        <span class="steps-pill">¿Gratis o de pago?</span>
+      </div>
+    </div>
+    <div class="nav" style="justify-content:center;">
+      <button class="btn btn-primary" onclick="goStep(1)" style="padding:13px 40px;font-size:1rem;">Empezar →</button>
+    </div>
+  </div>
+
+  <!-- PREGUNTA 1: tarea -->
+  <div class="screen" id="screen-1">
+    <div class="step-label">Pregunta 1 de 5</div>
+    <div class="step-question">¿Qué querés hacer con la IA?</div>
+    <div class="step-sub">Elegí la opción que más se acerque a tu tarea. Si hay varias, elegí la principal.</div>
+    <div class="task-grid" id="task-grid"></div>
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goStep(0)">← Atrás</button>
+      <button class="btn btn-primary" id="btn-n1" onclick="goStep(2)" disabled>Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- PREGUNTA 2: longitud -->
+  <div class="screen" id="screen-2">
+    <div class="step-label">Pregunta 2 de 5</div>
+    <div class="step-question">¿Qué tan largo es el texto o contenido con el que vas a trabajar?</div>
+    <div class="step-sub">Pensá en lo que vas a cargarle a la IA: documentos, artículos, expedientes, transcripciones, etc.</div>
+    <div class="opt-list" id="len-list"></div>
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goStep(1)">← Atrás</button>
+      <button class="btn btn-primary" id="btn-n2" onclick="goStep(3)" disabled>Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- PREGUNTA 3: confidencial -->
+  <div class="screen" id="screen-3">
+    <div class="step-label">Pregunta 3 de 5</div>
+    <div class="step-question">¿La información que vas a usar es confidencial o sensible?</div>
+    <div class="step-sub">Datos personales, documentos internos, expedientes, información de clientes o pacientes, secreto profesional.</div>
+    <div class="opt-list" id="conf-list"></div>
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goStep(2)">← Atrás</button>
+      <button class="btn btn-primary" id="btn-n3" onclick="goStep(4)" disabled>Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- PREGUNTA 4: ecosistema Google -->
+  <div class="screen" id="screen-4">
+    <div class="step-label">Pregunta 4 de 5</div>
+    <div class="step-question">¿Usás herramientas de Google en tu trabajo diario?</div>
+    <div class="step-sub">Gmail, Google Drive, Google Docs, Google Calendar, Google Meet u otras apps de Google Workspace.</div>
+    <div class="opt-list" id="google-list"></div>
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goStep(3)">← Atrás</button>
+      <button class="btn btn-primary" id="btn-n4" onclick="goStep(5)" disabled>Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- PREGUNTA 5: presupuesto -->
+  <div class="screen" id="screen-5">
+    <div class="step-label">Pregunta 5 de 5</div>
+    <div class="step-question">¿Cuál es tu disposición a pagar por una herramienta de IA?</div>
+    <div class="step-sub">Todas tienen versión gratuita, pero las versiones pagas tienen mejor capacidad y menos limitaciones.</div>
+    <div class="opt-list" id="price-list"></div>
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goStep(4)">← Atrás</button>
+      <button class="btn btn-primary" id="btn-n5" onclick="calcResult()" disabled>Ver mi recomendación →</button>
+    </div>
+  </div>
+
+  <!-- RESULTADO -->
+  <div class="screen" id="screen-result">
+    <div class="result-header">
+      <div class="tool-badge" id="r-badge"></div>
+      <div class="tool-logo" id="r-logo"></div>
+      <div class="tool-name" id="r-name"></div>
+      <div class="tool-tagline" id="r-tagline"></div>
+    </div>
+    <div class="info-grid" id="r-info"></div>
+    <div class="tip-box">
+      <div class="tip-label">💡 Cómo empezar</div>
+      <p id="r-tip"></p>
+    </div>
+    <div class="alt-section">
+      <h3>También podés considerar</h3>
+      <div class="alt-grid" id="r-alts"></div>
+    </div>
+    <div class="share-box">
+      <h3>¿Le sirve a alguien que conocés?</h3>
+      <p>Esta guía es gratuita y funciona desde cualquier dispositivo.</p>
+      <div class="share-buttons">
+        <a id="share-wa-btn" href="#" target="_blank" class="share-btn share-wa">💬 Compartir por WhatsApp</a>
+        <button class="share-btn share-copy" id="share-copy-btn" onclick="copyLink()">🔗 Copiar link</button>
+      </div>
+    </div>
+    <button class="restart-btn" onclick="restart()">↺ Volver a empezar</button>
+  </div>
+
+</div>
+
+<footer>Por <a href="index.html">Carlos Mirassou Canseco</a> · Derecho & IA</footer>
+
+<script>
+// ─── Datos ────────────────────────────────────────────────────────────────────
+
+const TASKS = [
+  { id:'write',    icon:'✍️', title:'Redactar o escribir',           desc:'Emails, informes, borradores, textos de todo tipo',       s:{chatgpt:3,gemini:2,claude:4,notebook:0} },
+  { id:'analyze',  icon:'🔍', title:'Analizar documentos propios',    desc:'Revisar, interpretar o extraer info de mis archivos',      s:{chatgpt:1,gemini:1,claude:3,notebook:5} },
+  { id:'research', icon:'🌐', title:'Investigar o buscar información',desc:'Explorar un tema, encontrar fuentes, aprender algo nuevo', s:{chatgpt:3,gemini:4,claude:2,notebook:0} },
+  { id:'ideas',    icon:'💡', title:'Generar ideas',                  desc:'Brainstorming, creatividad, explorar posibilidades',       s:{chatgpt:3,gemini:3,claude:3,notebook:0} },
+  { id:'code',     icon:'💻', title:'Escribir o revisar código',      desc:'Programar, depurar, entender scripts o fórmulas',         s:{chatgpt:4,gemini:2,claude:4,notebook:0} },
+  { id:'image',    icon:'🖼️', title:'Analizar o describir imágenes', desc:'Extraer texto, interpretar fotos, leer gráficos',          s:{chatgpt:5,gemini:4,claude:2,notebook:0} },
+];
+
+const LEN_OPTS = [
+  { id:'short',  icon:'📝', title:'Corto (menos de 1 página)',   desc:'Preguntas, párrafos sueltos, mensajes o textos breves',              s:{chatgpt:2,gemini:2,claude:1,notebook:0} },
+  { id:'medium', icon:'📄', title:'Medio (1 a 10 páginas)',      desc:'Artículos, informes, documentos habituales de trabajo',              s:{chatgpt:2,gemini:2,claude:3,notebook:2} },
+  { id:'long',   icon:'📚', title:'Largo (más de 10 páginas)',   desc:'Expedientes, libros, contratos extensos, normativa completa',        s:{chatgpt:1,gemini:1,claude:4,notebook:4} },
+];
+
+const CONF_OPTS = [
+  { id:'yes_high', icon:'🔒', title:'Sí, muy sensible',         desc:'No puedo arriesgar que salga de mis dispositivos: datos personales, secreto profesional, información reservada', s:{chatgpt:-3,gemini:-3,claude:-1,notebook:5} },
+  { id:'yes_low',  icon:'⚠️', title:'Algo sensible, pero no crítico', desc:'Prefiero cuidarla, pero no es un requisito estricto',          s:{chatgpt:0, gemini:0, claude:1, notebook:3} },
+  { id:'no',       icon:'🌐', title:'No, no hay problema',       desc:'Es información pública o de uso general, sin restricciones',         s:{chatgpt:2,gemini:2,claude:2,notebook:0} },
+];
+
+const GOOGLE_OPTS = [
+  { id:'yes',     icon:'✅', title:'Sí, uso Google a diario',    desc:'Gmail, Drive, Docs, Meet u otras apps de Google Workspace son mi entorno habitual', s:{chatgpt:0,gemini:4,claude:0,notebook:2} },
+  { id:'a_bit',   icon:'🔄', title:'Algo, pero no soy fanático', desc:'Las uso cuando no queda otra, pero no son mi herramienta principal',                s:{chatgpt:1,gemini:2,claude:1,notebook:1} },
+  { id:'no',      icon:'❌', title:'No, apenas uso Google',      desc:'Prefiero otras plataformas o trabajo en un entorno diferente',                       s:{chatgpt:2,gemini:0,claude:2,notebook:1} },
+];
+
+const PRICE_OPTS = [
+  { id:'free',    icon:'🆓', title:'Solo versión gratuita',      desc:'No quiero pagar por ahora, me conformo con lo que ofrecen gratis',  s:{chatgpt:1,gemini:2,claude:1,notebook:3} },
+  { id:'maybe',   icon:'🤔', title:'Pago si vale la pena',       desc:'Estoy abierto si la diferencia es notoria',                         s:{chatgpt:2,gemini:2,claude:2,notebook:2} },
+  { id:'pay',     icon:'💳', title:'Sí, dispuesto a pagar',      desc:'Quiero la mejor experiencia posible',                               s:{chatgpt:3,gemini:2,claude:4,notebook:2} },
+];
+
+// ─── Herramientas ─────────────────────────────────────────────────────────────
+const TOOLS = {
+  chatgpt: {
+    name:'ChatGPT', logo:'🟢', color:'#10a37f', light:'#d1fae5',
+    tagline:'La más popular y versátil del mercado. Excelente para redactar, generar ideas, escribir código y, con la función de búsqueda activada, también para investigar temas actuales.',
+    info:[
+      {icon:'🔑',label:'Acceso',         val:'Gratis (GPT-4o mini) o USD 20/mes (GPT-4o completo)'},
+      {icon:'🌐',label:'Busca en internet',val:'Sí, con la función Search activada'},
+      {icon:'📎',label:'Maneja archivos', val:'Sí, en versión gratuita y de pago'},
+      {icon:'🏆',label:'Mejor para',      val:'Redacción, código, ideas y búsquedas actualizadas'},
+    ],
+    tip:'Entrá a chat.openai.com y creá una cuenta gratuita. Antes de escribir, activá la función "Search" si necesitás información reciente. Sé específico en tus instrucciones: cuanto más contexto le des, mejor responde.',
+    alts:['claude','gemini','notebook'],
+  },
+  gemini: {
+    name:'Gemini', logo:'🔵', color:'#4285f4', light:'#dbeafe',
+    tagline:'La IA de Google. Se integra directamente con Gmail, Drive y Docs. Siempre conectada a internet, sin costo adicional. La opción más natural si ya vivís en el ecosistema Google.',
+    info:[
+      {icon:'🔑',label:'Acceso',           val:'Gratis con cuenta de Google, o USD 19.99/mes (Advanced)'},
+      {icon:'🌐',label:'Busca en internet', val:'Sí, siempre y por defecto'},
+      {icon:'📎',label:'Maneja archivos',   val:'Sí, incluido en versión gratuita'},
+      {icon:'🏆',label:'Mejor para',        val:'Integración con Google, imágenes y búsqueda actualizada'},
+    ],
+    tip:'Entrá a gemini.google.com con tu cuenta de Gmail. No necesitás registrarte en ningún lado nuevo. Podés pedirle que revise un email tuyo, que busque información reciente o que te ayude a redactar en Google Docs directamente.',
+    alts:['chatgpt','claude','notebook'],
+  },
+  claude: {
+    name:'Claude', logo:'🟠', color:'#d97706', light:'#fef3c7',
+    tagline:'La IA de Anthropic. Destaca en análisis profundo, redacción cuidadosa y manejo de textos muy largos. Responde con más matices y coherencia en tareas complejas.',
+    info:[
+      {icon:'🔑',label:'Acceso',           val:'Gratis (Claude Haiku) o USD 20/mes (Claude Sonnet)'},
+      {icon:'🌐',label:'Busca en internet', val:'Sí, con función de búsqueda web'},
+      {icon:'📎',label:'Maneja archivos',   val:'Sí, documentos largos en versión gratuita y de pago'},
+      {icon:'🏆',label:'Mejor para',        val:'Redacción compleja, análisis y textos muy extensos'},
+    ],
+    tip:'Entrá a claude.ai y creá una cuenta. Podés pegarle directamente un documento largo o subir un archivo. Si la tarea es compleja, describile el contexto completo antes de pedir la tarea: funciona mejor con más información.',
+    alts:['chatgpt','gemini','notebook'],
+  },
+  notebook: {
+    name:'NotebookLM', logo:'🟣', color:'#7c3aed', light:'#ede9fe',
+    tagline:'La herramienta de Google para trabajar sobre tus propios documentos. No inventa ni busca en internet: responde exclusivamente con lo que vos le cargás. Ideal cuando la privacidad importa.',
+    info:[
+      {icon:'🔑',label:'Acceso',            val:'Completamente gratuito con cuenta de Google'},
+      {icon:'🌐',label:'Busca en internet',  val:'No. Solo trabaja sobre tus documentos'},
+      {icon:'📎',label:'Maneja archivos',    val:'Sí — es su función principal: PDFs, Docs, YouTube, sitios web'},
+      {icon:'🏆',label:'Mejor para',         val:'Analizar documentos propios con privacidad y sin alucinaciones'},
+    ],
+    tip:'Entrá a notebooklm.google.com con tu cuenta de Google. Creá un "notebook", subí tus documentos (PDFs, Word, links) y empezá a hacerle preguntas. La IA solo responde con lo que está en esos archivos — sin inventar.',
+    alts:['claude','chatgpt','gemini'],
+  },
+};
+
+const ALT_LOGOS  = {chatgpt:'🟢',gemini:'🔵',claude:'🟠',notebook:'🟣'};
+const ALT_WHY    = {chatgpt:'Versátil y popular',gemini:'Integrado a Google',claude:'Mejor en textos largos',notebook:'Analiza tus documentos'};
+
+// ─── Estado ───────────────────────────────────────────────────────────────────
+let sel = { task:null, len:null, conf:null, google:null, price:null };
+
+// ─── Init lists ───────────────────────────────────────────────────────────────
+function buildTaskGrid() {
+  const g = document.getElementById('task-grid');
+  TASKS.forEach(t => {
+    const b = document.createElement('button');
+    b.className = 'task-card';
+    b.innerHTML = `<span class="tc-icon">${t.icon}</span><span class="tc-title">${t.title}</span><span class="tc-desc">${t.desc}</span>`;
+    b.onclick = () => {
+      sel.task = t.id;
+      document.querySelectorAll('.task-card').forEach(x => x.classList.remove('selected'));
+      b.classList.add('selected');
+      document.getElementById('btn-n1').disabled = false;
+    };
+    g.appendChild(b);
+  });
+}
+
+function buildOptList(containerId, opts, selKey, btnId, nextStep) {
+  const c = document.getElementById(containerId);
+  opts.forEach(o => {
+    const b = document.createElement('button');
+    b.className = 'opt-btn';
+    b.innerHTML = `<span class="opt-icon">${o.icon}</span><span class="opt-body"><span class="opt-title">${o.title}</span><span class="opt-desc">${o.desc}</span></span>`;
+    b.onclick = () => {
+      sel[selKey] = o.id;
+      c.querySelectorAll('.opt-btn').forEach(x => x.classList.remove('selected'));
+      b.classList.add('selected');
+      document.getElementById(btnId).disabled = false;
+    };
+    c.appendChild(b);
+  });
+}
+
+buildTaskGrid();
+buildOptList('len-list',    LEN_OPTS,    'len',    'btn-n2', 3);
+buildOptList('conf-list',   CONF_OPTS,   'conf',   'btn-n3', 4);
+buildOptList('google-list', GOOGLE_OPTS, 'google', 'btn-n4', 5);
+buildOptList('price-list',  PRICE_OPTS,  'price',  'btn-n5', 'result');
+
+// ─── Navegación ───────────────────────────────────────────────────────────────
+const SCREENS = ['screen-intro','screen-1','screen-2','screen-3','screen-4','screen-5'];
+const PCTS    = [0, 20, 40, 60, 80, 100];
+const LABELS  = ['Inicio','Pregunta 1 de 5','Pregunta 2 de 5','Pregunta 3 de 5','Pregunta 4 de 5','Pregunta 5 de 5'];
+
+function goStep(step) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(SCREENS[step]).classList.add('active');
+  document.getElementById('prog-fill').style.width = PCTS[step] + '%';
+  document.getElementById('prog-text').textContent = LABELS[step];
+  document.getElementById('prog-pct').textContent  = step > 0 ? PCTS[step] + '%' : '';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ─── Calcular resultado ───────────────────────────────────────────────────────
+function calcResult() {
+  const task   = TASKS.find(t => t.id === sel.task);
+  const lenO   = LEN_OPTS.find(o => o.id === sel.len);
+  const confO  = CONF_OPTS.find(o => o.id === sel.conf);
+  const googO  = GOOGLE_OPTS.find(o => o.id === sel.google);
+  const priceO = PRICE_OPTS.find(o => o.id === sel.price);
+
+  const scores = {chatgpt:0, gemini:0, claude:0, notebook:0};
+  [task.s, lenO.s, confO.s, googO.s, priceO.s].forEach(sc => {
+    Object.keys(sc).forEach(k => scores[k] += sc[k]);
+  });
+
+  // Piso en 0
+  Object.keys(scores).forEach(k => { if (scores[k] < 0) scores[k] = 0; });
+
+  const winner = Object.entries(scores).sort((a,b) => b[1]-a[1])[0][0];
+  showResult(winner, task.title);
+}
+
+// ─── Mostrar resultado ────────────────────────────────────────────────────────
+function showResult(toolId, taskTitle) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-result').classList.add('active');
+  document.getElementById('prog-fill').style.width = '100%';
+  document.getElementById('prog-text').textContent = '¡Resultado listo!';
+  document.getElementById('prog-pct').textContent  = '';
+
+  const tool = TOOLS[toolId];
+
+  const badge = document.getElementById('r-badge');
+  badge.textContent = 'Herramienta recomendada';
+  badge.style.background = tool.light;
+  badge.style.color = tool.color;
+
+  document.getElementById('r-logo').textContent  = tool.logo;
+  document.getElementById('r-name').textContent  = tool.name;
+  document.getElementById('r-name').style.color  = tool.color;
+  document.getElementById('r-tagline').textContent = tool.tagline;
+
+  document.getElementById('r-info').innerHTML = tool.info.map(i =>
+    `<div class="info-card"><div class="ic-icon">${i.icon}</div><div class="ic-label">${i.label}</div><div class="ic-val">${i.val}</div></div>`
+  ).join('');
+
+  document.getElementById('r-tip').textContent = tool.tip;
+
+  document.getElementById('r-alts').innerHTML = tool.alts.map(id =>
+    `<div class="alt-card"><div class="alt-icon">${ALT_LOGOS[id]}</div><div class="alt-name">${TOOLS[id].name}</div><div class="alt-why">${ALT_WHY[id]}</div></div>`
+  ).join('');
+
+  const msg = encodeURIComponent(`Usé el selector de herramientas de IA de Carlos Mirassou Canseco y me recomendó ${tool.name} para "${taskTitle}". ¿Probaste esta guía? → https://charlymirassou.github.io/herramientas-ia/que-ia-usar.html`);
+  document.getElementById('share-wa-btn').href = `https://wa.me/?text=${msg}`;
+
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ─── Compartir / Reiniciar ────────────────────────────────────────────────────
+function copyLink() {
+  navigator.clipboard.writeText('https://charlymirassou.github.io/herramientas-ia/que-ia-usar.html').then(() => {
+    const btn = document.getElementById('share-copy-btn');
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '🔗 Copiar link'; btn.classList.remove('copied'); }, 2500);
+  });
+}
+
+function restart() {
+  sel = {task:null,len:null,conf:null,google:null,price:null};
+  document.querySelectorAll('.task-card, .opt-btn').forEach(b => b.classList.remove('selected'));
+  ['btn-n1','btn-n2','btn-n3','btn-n4','btn-n5'].forEach(id => document.getElementById(id).disabled = true);
+  goStep(0);
+}
+</script>
+</body>
+</html>

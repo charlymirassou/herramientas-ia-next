@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verificador de Textos IA Â· Carlos Mirassou Canseco</title>
+  <meta name="description" content="PegÃ¡ un texto generado por IA y descubrÃ­ exactamente quÃ© tenÃ©s que verificar antes de presentarlo." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f4f6f9;
+      --surface: #fff;
+      --primary: #1a1f36;
+      --accent: #1a3a5c;
+      --accent-mid: #2563a8;
+      --accent-light: #eaf0f8;
+      --muted: #6b7280;
+      --border: #e2e8f0;
+      --radius: 12px;
+      --warn: #d97706;
+      --warn-light: #fef3c7;
+      --danger: #dc2626;
+      --danger-light: #fee2e2;
+      --success: #166534;
+      --success-light: #dcfce7;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg); color: var(--primary);
+      min-height: 100vh; display: flex;
+      flex-direction: column; align-items: center;
+      padding: 40px 16px 80px;
+    }
+
+    header { text-align: center; max-width: 660px; margin-bottom: 36px; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .82rem; font-weight: 600; color: var(--muted);
+      text-decoration: none; margin-bottom: 20px; transition: color .15s;
+    }
+    .back-link:hover { color: var(--accent-mid); }
+
+    .header-badge {
+      display: inline-block; background: var(--warn-light); color: var(--warn);
+      font-size: 11px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; padding: 4px 14px; border-radius: 20px; margin-bottom: 14px;
+      border: 1px solid #f6c560;
+    }
+
+    header h1 { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800; color: var(--accent); line-height: 1.2; margin-bottom: 10px; }
+    header p  { color: var(--muted); font-size: .95rem; line-height: 1.6; }
+
+    /* Progress */
+    .progress-wrap { width: 100%; max-width: 700px; margin-bottom: 24px; }
+    .progress-info  { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    .progress-bar   { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+    .progress-fill  { height: 100%; background: linear-gradient(90deg,var(--warn),#f59e0b); border-radius: 99px; transition: width .4s ease; }
+
+    /* Card */
+    .card { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); padding: 36px; width: 100%; max-width: 700px; box-shadow: 0 2px 16px rgba(0,0,0,.06); }
+
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* Step header */
+    .step-label    { font-size: 11px; font-weight: 700; color: var(--warn); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px; }
+    .step-question { font-size: 1.1rem; font-weight: 800; color: var(--accent); line-height: 1.35; margin-bottom: 6px; }
+    .step-sub      { font-size: .87rem; color: var(--muted); margin-bottom: 22px; line-height: 1.5; }
+
+    /* Doc type chips */
+    .doc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 28px; }
+    .doc-chip {
+      border: 2px solid var(--border); border-radius: 10px; padding: 14px 12px;
+      cursor: pointer; text-align: center; transition: all .15s; background: var(--surface);
+    }
+    .doc-chip:hover    { border-color: var(--warn); background: var(--warn-light); }
+    .doc-chip.selected { border-color: var(--warn); background: var(--warn-light); }
+    .doc-chip .dc-icon  { font-size: 1.6rem; margin-bottom: 6px; display: block; }
+    .doc-chip .dc-title { font-size: .82rem; font-weight: 700; color: var(--accent); }
+
+    /* Textarea */
+    textarea {
+      width: 100%; min-height: 200px; padding: 14px 16px;
+      border: 2px solid var(--border); border-radius: 10px;
+      font-family: inherit; font-size: .9rem; color: var(--primary);
+      resize: vertical; transition: border-color .15s;
+      margin-bottom: 8px;
+    }
+    textarea:focus { outline: none; border-color: var(--accent-mid); }
+    .char-count { font-size: .75rem; color: var(--muted); text-align: right; margin-bottom: 20px; }
+
+    /* API config */
+    .provider-row { display: flex; gap: 10px; margin-bottom: 20px; }
+    .provider-btn {
+      flex: 1; padding: 14px; border: 2px solid var(--border); border-radius: 10px;
+      cursor: pointer; font-size: .88rem; font-weight: 700; text-align: center;
+      transition: all .15s; background: var(--surface);
+    }
+    .provider-btn:hover    { border-color: var(--accent-mid); background: var(--accent-light); }
+    .provider-btn.selected { border-color: var(--accent-mid); background: var(--accent-light); color: var(--accent); }
+    .provider-btn .pb-logo { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+
+    .api-key-wrap { position: relative; margin-bottom: 12px; }
+    .api-key-wrap input {
+      width: 100%; padding: 12px 48px 12px 16px;
+      border: 2px solid var(--border); border-radius: 10px;
+      font-family: monospace; font-size: .85rem; color: var(--primary);
+      transition: border-color .15s;
+    }
+    .api-key-wrap input:focus { outline: none; border-color: var(--accent-mid); }
+    .toggle-vis {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; font-size: 1rem; color: var(--muted);
+    }
+    .key-note { font-size: .75rem; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
+    .key-note a { color: var(--accent-mid); }
+
+    /* GuÃ­a API */
+    .guide-toggle {
+      display: flex; align-items: center; gap: 8px; cursor: pointer;
+      font-size: .85rem; font-weight: 700; color: var(--accent-mid);
+      background: var(--accent-light); border: 1px solid #c7d9f0;
+      padding: 10px 16px; border-radius: 8px; margin-bottom: 16px;
+      border: none; width: 100%; text-align: left; transition: background .15s;
+    }
+    .guide-toggle:hover { background: #d4e4f5; }
+
+    .guide-box {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px; margin-bottom: 20px;
+      display: none;
+    }
+    .guide-box.open { display: block; }
+
+    .guide-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+    .guide-tab {
+      padding: 7px 16px; border-radius: 8px; font-size: .82rem; font-weight: 700;
+      cursor: pointer; border: 2px solid var(--border); background: var(--surface);
+      color: var(--muted); transition: all .15s;
+    }
+    .guide-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    .guide-content { display: none; }
+    .guide-content.active { display: block; }
+
+    .guide-step {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+    }
+    .guide-step:last-child { border-bottom: none; }
+    .gs-num {
+      width: 26px; height: 26px; flex-shrink: 0;
+      background: var(--accent); color: #fff;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: .75rem; font-weight: 800;
+    }
+    .gs-text { font-size: .84rem; color: var(--primary); line-height: 1.5; }
+    .gs-text a { color: var(--accent-mid); font-weight: 600; }
+    .gs-text strong { color: var(--accent); }
+
+    /* Nav */
+    .nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 8px; }
+    .btn { padding: 12px 26px; border-radius: 8px; font-size: .92rem; font-weight: 700; cursor: pointer; border: none; transition: all .15s; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-mid); }
+    .btn-primary:disabled { background: #94a3b8; cursor: not-allowed; }
+    .btn-analyze { background: var(--warn); color: #fff; font-size: 1rem; padding: 14px 32px; }
+    .btn-analyze:hover { background: #b45309; }
+    .btn-analyze:disabled { background: #94a3b8; cursor: not-allowed; }
+    .btn-ghost { background: transparent; color: var(--muted); border: 2px solid var(--border); }
+    .btn-ghost:hover { border-color: #94a3b8; color: var(--primary); }
+
+    /* Loading */
+    .loading-box { text-align: center; padding: 32px 0; }
+    .spinner {
+      width: 44px; height: 44px; border: 4px solid var(--border);
+      border-top-color: var(--warn); border-radius: 50%;
+      animation: spin .8s linear infinite; margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-box p { color: var(--muted); font-size: .9rem; }
+
+    /* Error */
+    .error-box {
+      background: var(--danger-light); border: 1px solid #fca5a5;
+      border-radius: 10px; padding: 16px; margin-bottom: 20px;
+      font-size: .87rem; color: var(--danger); display: none;
+    }
+    .error-box.visible { display: block; }
+
+    /* ââ RESULTADOS ââââââââââââââââââââââââââââââââââââ */
+    .result-summary {
+      background: linear-gradient(135deg, #0f2744, #1a3a5c);
+      border-radius: 10px; padding: 24px; margin-bottom: 28px; color: #fff;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .rs-icon { font-size: 2.5rem; flex-shrink: 0; }
+    .rs-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 4px; }
+    .rs-sub   { font-size: .85rem; color: #94a3b8; line-height: 1.5; }
+
+    .risk-section { margin-bottom: 24px; }
+    .risk-section h3 {
+      font-size: .82rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .risk-item {
+      border-radius: 10px; padding: 14px 16px; margin-bottom: 10px;
+      border-left: 4px solid;
+    }
+    .risk-item.alto   { background: var(--danger-light);  border-color: var(--danger);  }
+    .risk-item.medio  { background: var(--warn-light);    border-color: var(--warn);    }
+    .risk-item.bajo   { background: var(--success-light); border-color: #16a34a;        }
+
+    .risk-item .ri-label {
+      font-size: .7rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .08em; margin-bottom: 4px;
+    }
+    .risk-item.alto  .ri-label { color: var(--danger); }
+    .risk-item.medio .ri-label { color: var(--warn); }
+    .risk-item.bajo  .ri-label { color: var(--success); }
+
+    .risk-item .ri-text { font-size: .88rem; color: var(--primary); line-height: 1.5; margin-bottom: 6px; }
+    .risk-item .ri-how  { font-size: .8rem; color: var(--muted); line-height: 1.4; font-style: italic; }
+
+    .raw-result {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px; font-size: .87rem;
+      color: var(--primary); line-height: 1.7; white-space: pre-wrap;
+    }
+
+    .result-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+    .btn-copy-result {
+      padding: 11px 22px; border-radius: 8px; font-size: .88rem; font-weight: 700;
+      cursor: pointer; border: 2px solid var(--border);
+      background: var(--surface); color: var(--primary); transition: all .15s;
+    }
+    .btn-copy-result:hover { border-color: #94a3b8; }
+    .btn-copy-result.copied { background: var(--success-light); border-color: #16a34a; color: var(--success); }
+
+    .restart-btn {
+      width: 100%; margin-top: 14px; padding: 11px;
+      background: transparent; border: 2px solid var(--border);
+      border-radius: 8px; font-size: .9rem; font-weight: 600;
+      color: var(--muted); cursor: pointer; transition: all .15s;
+    }
+    .restart-btn:hover { border-color: #94a3b8; color: var(--primary); }
+
+    footer { margin-top: 44px; text-align: center; font-size: .77rem; color: #aaa; }
+    footer a { color: #aaa; }
+
+    @media (max-width: 540px) {
+      .card { padding: 24px 16px; }
+      .doc-grid { grid-template-columns: repeat(2, 1fr); }
+      .provider-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="back-link">â Volver al inicio</a>
+  <div class="header-badge">â¡ Requiere API key Â· Uso Avanzado</div>
+  <h1>Â¿QuÃ© verificar antes de presentar?</h1>
+  <p>PegÃ¡ el texto que generÃ³ la IA y el sistema analiza exactamente quÃ© puntos tenÃ©s que revisar antes de usarlo: citas, normativa, datos, nombres y afirmaciones riesgosas.</p>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-info">
+    <span id="prog-text">Inicio</span>
+    <span id="prog-pct"></span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="prog-fill" style="width:0%"></div>
+  </div>
+</div>
+
+<div class="card">
+
+  <!-- INTRO -->
+  <div class="screen active" id="screen-intro">
+    <div style="text-align:center; margin-bottom:28px;">
+      <div style="font-size:3rem; margin-bottom:14px;">ð</div>
+      <h2 style="font-size:1.2rem;font-weight:800;color:var(--accent);margin-bottom:8px;">RevisiÃ³n inteligente de textos generados por IA</h2>
+      <p style="color:var(--muted);font-size:.92rem;line-height:1.6;max-width:460px;margin:0 auto;">La IA puede equivocarse con fechas, inventar jurisprudencia o citar normativa que no existe. Esta herramienta analiza el texto y te dice exactamente quÃ© verificar.</p>
+    </div>
+    <div style="background:var(--warn-light);border:1px solid #f6c560;border-radius:10px;padding:16px;margin-bottom:28px;">
+      <div style="font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--warn);margin-bottom:8px;">Â¿CÃ³mo funciona?</div>
+      <div style="font-size:.86rem;color:var(--primary);line-height:1.6;">
+        UsÃ¡s tu propia API key de OpenAI o Anthropic (Claude). El texto se envÃ­a directamente desde tu navegador a la IA elegida, que lo analiza y devuelve un informe de riesgos. <strong>NingÃºn dato pasa por servidores de terceros.</strong>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;">
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <span style="font-size:1.2rem;">ð</span>
+        <div style="font-size:.86rem;color:var(--primary);line-height:1.5;"><strong>Paso 1:</strong> ElegÃ­s el tipo de documento y pegÃ¡s el texto generado por la IA.</div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <span style="font-size:1.2rem;">ð</span>
+        <div style="font-size:.86rem;color:var(--primary);line-height:1.5;"><strong>Paso 2:</strong> IngresÃ¡s tu API key. Si no tenÃ©s una, la herramienta te explica cÃ³mo obtenerla.</div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <span style="font-size:1.2rem;">â ï¸</span>
+        <div style="font-size:.86rem;color:var(--primary);line-height:1.5;"><strong>Paso 3:</strong> ObtenÃ©s un informe con los puntos de riesgo ordenados por prioridad.</div>
+      </div>
+    </div>
+    <div style="text-align:center;">
+      <button class="btn btn-analyze" onclick="goStep(1)">Empezar â</button>
+    </div>
+  </div>
+
+  <!-- PASO 1: tipo de doc + texto -->
+  <div class="screen" id="screen-1">
+    <div class="step-label">Paso 1 de 2</div>
+    <div class="step-question">Â¿QuÃ© tipo de documento es?</div>
+    <div class="step-sub">ElegÃ­ la categorÃ­a mÃ¡s cercana. Ayuda a enfocar el anÃ¡lisis.</div>
+
+    <div class="doc-grid">
+      <button class="doc-chip" onclick="selDoc(this,'sentencia')">
+        <span class="dc-icon">âï¸</span><span class="dc-title">Sentencia / ResoluciÃ³n</span>
+      </button>
+      <button class="doc-chip" onclick="selDoc(this,'escrito')">
+        <span class="dc-icon">ð</span><span class="dc-title">Escrito / Demanda</span>
+      </button>
+      <button class="doc-chip" onclick="selDoc(this,'informe')">
+        <span class="dc-icon">ð</span><span class="dc-title">Informe / Dictamen</span>
+      </button>
+      <button class="doc-chip" onclick="selDoc(this,'contrato')">
+        <span class="dc-icon">ð</span><span class="dc-title">Contrato / Acuerdo</span>
+      </button>
+      <button class="doc-chip" onclick="selDoc(this,'nota')">
+        <span class="dc-icon">âï¸</span><span class="dc-title">Nota / ComunicaciÃ³n</span>
+      </button>
+      <button class="doc-chip" onclick="selDoc(this,'general')">
+        <span class="dc-icon">ð</span><span class="dc-title">Otro documento</span>
+      </button>
+    </div>
+
+    <div class="step-question" style="margin-top:4px;">PegÃ¡ el texto generado por la IA</div>
+    <div class="step-sub">Puede ser parcial o completo. MÃ­nimo recomendado: 100 palabras.</div>
+
+    <textarea id="doc-text" placeholder="PegÃ¡ aquÃ­ el texto que generÃ³ la IA y que querÃ©s revisar antes de usar..." oninput="updateChar()"></textarea>
+    <div class="char-count" id="char-count">0 caracteres</div>
+
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goStep(0)">â AtrÃ¡s</button>
+      <button class="btn btn-primary" id="btn-n1" onclick="goStep(2)" disabled>Siguiente â</button>
+    </div>
+  </div>
+
+  <!-- PASO 2: API key -->
+  <div class="screen" id="screen-2">
+    <div class="step-label">Paso 2 de 2</div>
+    <div class="step-question">ConfigurÃ¡ tu API key</div>
+    <div class="step-sub">ElegÃ­ el proveedor y pegÃ¡ tu clave. No se guarda en ningÃºn servidor â solo se usa en esta sesiÃ³n.</div>
+
+    <div class="provider-row">
+      <button class="provider-btn selected" id="prov-openai" onclick="selProvider('openai')">
+        <span class="pb-logo">ð¢</span>OpenAI (ChatGPT)
+      </button>
+      <button class="provider-btn" id="prov-anthropic" onclick="selProvider('anthropic')">
+        <span class="pb-logo">ð </span>Anthropic (Claude)
+      </button>
+      <button class="provider-btn" id="prov-gemini" onclick="selProvider('gemini')">
+        <span class="pb-logo">ðµ</span>Google (Gemini)
+      </button>
+    </div>
+
+    <div class="api-key-wrap">
+      <input type="password" id="api-key-input" placeholder="PegÃ¡ tu API key aquÃ­..." oninput="checkApiKey()" />
+      <button class="toggle-vis" onclick="toggleKeyVis()" title="Mostrar / ocultar">ð</button>
+    </div>
+    <div class="key-note" id="key-note">
+      La clave de OpenAI comienza con <strong>sk-</strong>. No se almacena en ningÃºn lugar â se usa solo para esta consulta y desaparece al cerrar la pestaÃ±a.
+    </div>
+
+    <!-- GuÃ­a para obtener la key -->
+    <button class="guide-toggle" onclick="toggleGuide()">
+      ð Â¿No tenÃ©s API key? MirÃ¡ cÃ³mo obtenerla paso a paso
+    </button>
+
+    <div class="guide-box" id="guide-box">
+      <div class="guide-tabs">
+        <button class="guide-tab active" onclick="switchGuide('openai', this)">ð¢ OpenAI</button>
+        <button class="guide-tab" onclick="switchGuide('anthropic', this)">ð  Claude</button>
+        <button class="guide-tab" onclick="switchGuide('gemini', this)">ðµ Gemini</button>
+      </div>
+
+      <div class="guide-content active" id="guide-openai">
+        <div class="guide-step">
+          <div class="gs-num">1</div>
+          <div class="gs-text">EntrÃ¡ a <a href="https://platform.openai.com" target="_blank">platform.openai.com</a> y creÃ¡ una cuenta (o iniciÃ¡ sesiÃ³n si ya tenÃ©s una de ChatGPT).</div>
+        </div>
+        <div class="guide-step">
+          <div class="gs-num">2</div>
+          <div class="gs-text">Una vez dentro, hacÃ© clic en tu perfil (arriba a la derecha) y elegÃ­ <strong>"API keys"</strong> en el menÃº.</div>
+        </div>
+        <div class="guide-step">
+          <div class="gs-num">3</div>
+          <div class="gs-text">HacÃ© clic en <strong>"Create new secret key"</strong>, ponÃ© un nombre (ej: "verificador") y confirmÃ¡.</div>
+        </div>
+        <div class="guide-step">
+          <div class="gs-num">4</div>
+          <div class="gs-text">CopiÃ¡ la clave que aparece â <strong>solo la verÃ¡s una vez</strong>. Empieza con <strong>sk-proj-</strong> o <strong>sk-</strong>.</div>
+        </div>
+        <div class="guide-step">
+          <div class="gs-num">5</div>
+          <div class="gs-text">NecesitÃ¡s tener <strong>crÃ©dito cargado</strong> en la cuenta para usarla. PodÃ©s cargar desde USD 5. Cada anÃ¡lisis cuesta fracciones de centavo.</div>
+        </div>
+      </div>
+
+      <div class="guide-content" id="guide-gemini">
+        <div class="guide-step">
+          <div class="gs-num">1</div>
+          <div class="gs-text">EntrÃ¡ a <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> con tu cuenta de Google (la misma de Gmail).</div>
+        </div>
+        <div class="guide-step">
+          <div class="gs-num">2</div>
+          <div class="gs-text">En el panel principal, hacÃ© clic en <strong>"Get API key"</strong> (arriba a la izquierda o en el menÃº lateral).</div>
+        </div>
+        <div class="guide-step">
+          <div class="gs-num">3</div>
+          <div class="gs-text">HacÃ© clic en <strong>"Create API key"</strong> y seleccionÃ¡ un proyecto (o creÃ¡ uno nuevo si es la primera vez).</div>
+        </div>
+        <div class="guide-step">
+          <div class="gs-num">4</div>
+          <div class="gs-text">CopiÃ¡ la clave que aparece. Empieza con <strong>AIza</strong>. Guardala en un lugar seguro â no la compartas.</div>
+        </div>
+        <div class="guide-step">
+          <div class="gs-num">5</div>
+          <div class="gs-text"><strong>Gemini tiene un nivel gratuito generoso</strong>: podÃ©s hacer cientos de consultas por dÃ­a sin pagar nada. Es la opciÃ³n mÃ¡s econÃ³mica para empezar.</div>
+        </div>
+      </div>
+
+      <div class="guide-content" id="guide-anthropic">
+        <div class="guide-step">
+          <div class="gs-num">1</div>
+          <div class="gs-text">EntrÃ¡ a <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> y creÃ¡ una cuenta (es distinta a la cuenta de claude.ai).</div>
+        </div>
+        <div class="guide-step">
+          <div class="gs-num">2</div>
+          <div class="gs-text">En el panel, hacÃ© clic en <strong>"API Keys"</strong> en el menÃº de la izquierda.</div>
+        </div>
+        <div class="guide-step">
+          <div class="gs-num">3</div>
+          <div class="gs-text">HacÃ© clic en <strong>"Create Key"</strong>, dale un nombre y confirmÃ¡.</div>
+        </div>
+        <div class="guide-step">
+          <div class="gs-num">4</div>
+          <div class="gs-text">CopiÃ¡ la clave que aparece â <strong>solo la verÃ¡s una vez</strong>. Empieza con <strong>sk-ant-</strong>.</div>
+        </div>
+        <div class="guide-step">
+          <div class="gs-num">5</div>
+          <div class="gs-text">NecesitÃ¡s cargar crÃ©dito en <strong>"Billing"</strong>. Desde USD 5. Cada anÃ¡lisis cuesta fracciones de centavo.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="error-box" id="error-box"></div>
+
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goStep(1)">â AtrÃ¡s</button>
+      <button class="btn btn-analyze" id="btn-analyze" onclick="runAnalysis()" disabled>ð Analizar texto</button>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div class="screen" id="screen-loading">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <p id="loading-msg">Analizando el texto...</p>
+    </div>
+  </div>
+
+  <!-- RESULTADO -->
+  <div class="screen" id="screen-result">
+    <div class="result-summary">
+      <div class="rs-icon">ð</div>
+      <div>
+        <div class="rs-title" id="r-title">Informe de verificaciÃ³n</div>
+        <div class="rs-sub" id="r-sub"></div>
+      </div>
+    </div>
+
+    <div class="raw-result" id="raw-result"></div>
+
+    <div class="result-actions">
+      <button class="btn-copy-result" id="btn-copy-res" onclick="copyResult()">ð Copiar informe</button>
+      <button class="btn btn-ghost" onclick="goStep(1)" style="font-size:.88rem;padding:11px 20px;">â Analizar otro texto</button>
+    </div>
+
+    <button class="restart-btn" onclick="restart()">âº Volver al inicio</button>
+  </div>
+
+</div>
+
+<footer>Por <a href="index.html">Carlos Mirassou Canseco</a> Â· Derecho & IA</footer>
+
+<script>
+// âââ Estado âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+let state = { doc: null, text: '', provider: 'openai', key: '' };
+
+// âââ Progress âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+const STEPS  = ['screen-intro','screen-1','screen-2','screen-loading','screen-result'];
+const PCTS   = [0, 33, 66, 90, 100];
+const LABELS = ['Inicio','Paso 1: Texto','Paso 2: API key','Analizandoâ¦','Resultado listo'];
+
+function goStep(i) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(STEPS[i]).classList.add('active');
+  document.getElementById('prog-fill').style.width = PCTS[i] + '%';
+  document.getElementById('prog-text').textContent = LABELS[i];
+  document.getElementById('prog-pct').textContent  = i > 0 ? PCTS[i] + '%' : '';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// âââ Paso 1 âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+function selDoc(btn, id) {
+  state.doc = id;
+  document.querySelectorAll('.doc-chip').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  checkStep1();
+}
+
+function updateChar() {
+  state.text = document.getElementById('doc-text').value;
+  document.getElementById('char-count').textContent = state.text.length + ' caracteres';
+  checkStep1();
+}
+
+function checkStep1() {
+  document.getElementById('btn-n1').disabled = !(state.doc && state.text.trim().length > 50);
+}
+
+// âââ Paso 2 âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+function selProvider(p) {
+  state.provider = p;
+  document.getElementById('prov-openai').classList.toggle('selected', p === 'openai');
+  document.getElementById('prov-anthropic').classList.toggle('selected', p === 'anthropic');
+  document.getElementById('prov-gemini').classList.toggle('selected', p === 'gemini');
+  const notes = {
+    openai:    'La clave de OpenAI comienza con <strong>sk-</strong>. No se almacena en ningÃºn lugar â se usa solo para esta consulta.',
+    anthropic: 'La clave de Anthropic comienza con <strong>sk-ant-</strong>. No se almacena en ningÃºn lugar â se usa solo para esta consulta.',
+    gemini:    'La clave de Gemini comienza con <strong>AIza</strong>. Tiene nivel gratuito â podÃ©s usarla sin costo. No se almacena en ningÃºn lugar.',
+  };
+  document.getElementById('key-note').innerHTML = notes[p];
+  checkApiKey();
+}
+
+function checkApiKey() {
+  state.key = document.getElementById('api-key-input').value.trim();
+  document.getElementById('btn-analyze').disabled = state.key.length < 10;
+}
+
+function toggleKeyVis() {
+  const inp = document.getElementById('api-key-input');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+}
+
+function toggleGuide() {
+  const box = document.getElementById('guide-box');
+  box.classList.toggle('open');
+}
+
+function switchGuide(tab, btn) {
+  document.querySelectorAll('.guide-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.guide-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('guide-' + tab).classList.add('active');
+}
+
+// âââ AnÃ¡lisis âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+const DOC_LABELS = {
+  sentencia: 'sentencia o resoluciÃ³n judicial',
+  escrito: 'escrito o demanda judicial',
+  informe: 'informe o dictamen',
+  contrato: 'contrato o acuerdo',
+  nota: 'nota o comunicaciÃ³n formal',
+  general: 'documento general',
+};
+
+function buildPrompt() {
+  const docLabel = DOC_LABELS[state.doc] || 'documento';
+  return `Sos un revisor experto en textos generados por inteligencia artificial, con especializaciÃ³n documentos jurÃ­dicos y tÃ©cnicos.
+
+Se te presenta el siguiente texto, identificado como un "${docLabel}", que fue generado por una IA y debe ser verificado antes de ser presentado o utilizado oficialmente.
+
+TU TAREA:
+AnalizÃ¡ el texto y producÃ­ un informe de verificaciÃ³n estructurado. Para cada elemento detectado, indicÃ¡:
+1. QuÃ© debe verificarse exactamente (cita textual o descripciÃ³n del elemento)
+2. Por quÃ© es un riesgo (posible error, alucinaciÃ³n o imprecisiÃ³n)
+3. CÃ³mo verificarlo (fuente o mÃ©todo concreto)
+
+CATEGORÃAS DE RIESGO A REVISAR:
+- ALTO RIESGO: citas de jurisprudencia, nÃºmeros de expedientes, artÃ­culos de leyes o decretos, nombres de normas con numeraciÃ³n especÃ­fica, fechas de sentencias o resoluciones, estadÃ­sticas o cifras precisas
+- RIESGO MEDIO: nombres de personas, instituciones u organismos, plazos legales, conceptos tÃ©cnicos con definiciÃ³n precisa
+- BAJO RIESGO: afirmaciones generales sobre el derecho o la prÃ¡ctica jurÃ­dica que podrÃ­an ser imprecisas
+
+FORMATO DE RESPUESTA:
+OrganizÃ¡ el informe con estas secciones:
+- Resumen ejecutivo (2-3 lÃ­neas sobre el nivel de riesgo general del texto)
+- Elementos de ALTO RIESGO (si los hay)
+- Elementos de RIESGO MEDIO (si los hay)
+- Elementos de BAJO RIESGO (si los hay)
+- RecomendaciÃ³n final
+
+Si el texto tiene muy bajo nivel de riesgo, indicalo claramente.
+Si no encontrÃ¡s ningÃºn elemento verificable, indicalo tambiÃ©n.
+
+TEXTO A ANALIZAR:
+---
+${state.text}
+---`;
+}
+
+async function runAnalysis() {
+  const errorBox = document.getElementById('error-box');
+  errorBox.classList.remove('visible');
+
+  goStep(3); // loading
+
+  const loadingMsgs = [
+    'Analizando el textoâ¦',
+    'Identificando citas y referenciasâ¦',
+    'Evaluando nivel de riesgoâ¦',
+    'Preparando el informeâ¦',
+  ];
+  let mi = 0;
+  const interval = setInterval(() => {
+    mi = (mi + 1) % loadingMsgs.length;
+    document.getElementById('loading-msg').textContent = loadingMsgs[mi];
+  }, 2000);
+
+  try {
+    let result;
+    if (state.provider === 'openai') {
+      result = await callOpenAI();
+    } else if (state.provider === 'anthropic') {
+      result = await callAnthropic();
+    } else {
+      result = await callGemini();
+    }
+
+    clearInterval(interval);
+    showResult(result);
+
+  } catch (err) {
+    clearInterval(interval);
+    goStep(2);
+    errorBox.textContent = 'â ï¸ Error: ' + (err.message || 'No se pudo conectar. VerificÃ¡ tu API key y que tengas crÃ©dito disponible.');
+    errorBox.classList.add('visible');
+  }
+}
+
+async function callOpenAI() {
+  const resp = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + state.key,
+    },
+    body: JSON.stringify({
+      model: 'gpt-4o-mini',
+      messages: [{ role: 'user', content: buildPrompt() }],
+      max_tokens: 2000,
+      temperature: 0.3,
+    }),
+  });
+
+  if (!resp.ok) {
+    const err = await resp.json().catch(() => ({}));
+    throw new Error(err?.error?.message || `HTTP ${resp.status}`);
+  }
+
+  const data = await resp.json();
+  return data.choices?.[0]?.message?.content || 'No se recibiÃ³ respuesta.';
+}
+
+async function callAnthropic() {
+  const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': state.key,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true',
+    },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 2000,
+      messages: [{ role: 'user', content: buildPrompt() }],
+    }),
+  });
+
+  if (!resp.ok) {
+    const err = await resp.json().catch(() => ({}));
+    throw new Error(err?.error?.message || `HTTP ${resp.status}`);
+  }
+
+  const data = await resp.json();
+  return data.content?.[0]?.text || 'No se recibiÃ³ respuesta.';
+}
+
+async function callGemini() {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${state.key}`;
+  const resp = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: buildPrompt() }] }],
+      generationConfig: { temperature: 0.3, maxOutputTokens: 2000 },
+    }),
+  });
+
+  if (!resp.ok) {
+    const err = await resp.json().catch(() => ({}));
+    throw new Error(err?.error?.message || `HTTP ${resp.status}`);
+  }
+
+  const data = await resp.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || 'No se recibiÃ³ respuesta.';
+}
+
+// âââ Resultado ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+function showResult(text) {
+  goStep(4);
+
+  const provLabels = { openai: 'OpenAI (GPT-4o mini)', anthropic: 'Anthropic (Claude Haiku)', gemini: 'Google (Gemini 1.5 Flash)' };
+  const provLabel = provLabels[state.provider] || state.provider;
+  const docLabel  = DOC_LABELS[state.doc] || 'documento';
+  document.getElementById('r-title').textContent = 'Informe de verificaciÃ³n Â· ' + docLabel;
+  document.getElementById('r-sub').textContent   = 'AnÃ¡lisis realizado con ' + provLabel + ' Â· ' + new Date().toLocaleString('es-AR');
+  document.getElementById('raw-result').textContent = text;
+
+  window._lastResult = text;
+}
+
+function copyResult() {
+  const text = window._lastResult || '';
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('btn-copy-res');
+    btn.textContent = 'â Copiado';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'ð Copiar informe'; btn.classList.remove('copied'); }, 2500);
+  });
+}
+
+// âââ Restart ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+function restart() {
+  state = { doc: null, text: '', provider: 'openai', key: '' };
+  document.querySelectorAll('.doc-chip').forEach(b => b.classList.remove('selected'));
+  document.getElementById('doc-text').value = '';
+  document.getElementById('char-count').textContent = '0 caracteres';
+  document.getElementById('api-key-input').value = '';
+  document.getElementById('btn-n1').disabled = true;
+  document.getElementById('btn-analyze').disabled = true;
+  document.getElementById('error-box').classList.remove('visible');
+  document.getElementById('guide-box').classList.remove('open');
+  goStep(0);
+}
+</script>
+</body>
+</html>

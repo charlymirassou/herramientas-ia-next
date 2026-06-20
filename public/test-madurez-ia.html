@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Test de Madurez en IA Â· Carlos Mirassou Canseco</title>
-  <meta name="description" content="DescubrÃ­ tu nivel real de madurez en inteligencia artificial y obtenÃ© un plan de aprendizaje personalizado." />
+  <title>Test de Madurez en IA &#183; Carlos Mirassou Canseco</title>
+  <meta name="description" content="Descubr&#237; tu nivel real de madurez en inteligencia artificial y obten&#233; un plan de aprendizaje personalizado." />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -92,7 +92,7 @@
     .screen { display: none; }
     .screen.active { display: block; }
 
-    /* DimensiÃ³n label */
+    /* Dimensi&#243;n label */
     .dim-label {
       font-size: 11px; font-weight: 700;
       color: var(--accent-mid); text-transform: uppercase;
@@ -202,8 +202,8 @@
       border-bottom: 1px solid var(--border); line-height: 1.5;
     }
     .strength-list li:last-child, .grow-list li:last-child { border-bottom: none; }
-    .strength-list li::before { content: 'â'; position: absolute; left: 0; color: var(--success); font-weight: 700; }
-    .grow-list li::before { content: 'â'; position: absolute; left: 0; color: var(--accent-mid); font-weight: 700; }
+    .strength-list li::before { content: '&#10003;'; position: absolute; left: 0; color: var(--success); font-weight: 700; }
+    .grow-list li::before { content: '&#8594;'; position: absolute; left: 0; color: var(--accent-mid); font-weight: 700; }
 
     .reco-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .reco-card {
@@ -259,15 +259,15 @@
 <body>
 
 <header>
-  <a href="index.html" class="back-link">â Volver al inicio</a>
-  <div class="header-badge">Test Â· 12 preguntas Â· ~4 minutos</div>
-  <h1>Â¿CuÃ¡l es tu nivel real en IA?</h1>
-  <p>RespondÃ© 12 preguntas y obtenÃ© un diagnÃ³stico honesto de tu madurez en inteligencia artificial, con un plan de acciÃ³n concreto.</p>
+  <a href="index.html" class="back-link">&#8592; Volver al inicio</a>
+  <div class="header-badge">Test &#183; 12 preguntas &#183; ~4 minutos</div>
+  <h1>&#191;Cu&#225;l es tu nivel real en IA?</h1>
+  <p>Respond&#233; 12 preguntas y obten&#233; un diagn&#243;stico honesto de tu madurez en inteligencia artificial, con un plan de acci&#243;n concreto.</p>
 </header>
 
 <div class="progress-wrap">
   <div class="progress-info">
-    <span id="prog-text">IntroducciÃ³n</span>
+    <span id="prog-text">Introducci&#243;n</span>
     <span id="prog-pct"></span>
   </div>
   <div class="progress-bar">
@@ -280,18 +280,18 @@
   <!-- INTRO -->
   <div class="screen active" id="screen-intro">
     <div style="text-align:center;">
-      <div class="intro-icon">ð§ </div>
+      <div class="intro-icon">&#129504;</div>
       <h2 style="font-size:1.25rem;font-weight:800;color:var(--accent);margin-bottom:8px;">Test de Madurez en IA</h2>
-      <p style="color:var(--muted);font-size:.95rem;line-height:1.6;margin-bottom:16px;">No hay respuestas correctas o incorrectas. Este test mide dÃ³nde estÃ¡s hoy para ayudarte a saber hacia dÃ³nde ir.</p>
+      <p style="color:var(--muted);font-size:.95rem;line-height:1.6;margin-bottom:16px;">No hay respuestas correctas o incorrectas. Este test mide d&#243;nde est&#225;s hoy para ayudarte a saber hacia d&#243;nde ir.</p>
       <div class="intro-pills">
-        <span class="intro-pill">ð Conocimiento teÃ³rico</span>
-        <span class="intro-pill">ð ï¸ Experiencia prÃ¡ctica</span>
-        <span class="intro-pill">ð¯ Objetivos y contexto</span>
+        <span class="intro-pill">&#128218; Conocimiento te&#243;rico</span>
+        <span class="intro-pill">&#128736;&#65039; Experiencia pr&#225;ctica</span>
+        <span class="intro-pill">&#127919; Objetivos y contexto</span>
       </div>
-      <div class="intro-time">â±ï¸ Aproximadamente 4 minutos</div>
+      <div class="intro-time">&#9201;&#65039; Aproximadamente 4 minutos</div>
     </div>
     <div class="nav" style="justify-content:center;">
-      <button class="btn btn-primary" onclick="startTest()" style="padding:13px 40px;font-size:1rem;">Empezar el test â</button>
+      <button class="btn btn-primary" onclick="startTest()" style="padding:13px 40px;font-size:1rem;">Empezar el test &#8594;</button>
     </div>
   </div>
 
@@ -302,8 +302,8 @@
     <div class="q-text" id="q-text"></div>
     <div class="options" id="q-options"></div>
     <div class="nav">
-      <button class="btn btn-ghost" id="btn-prev" onclick="prevQ()">â AtrÃ¡s</button>
-      <button class="btn btn-primary" id="btn-next" onclick="nextQ()" disabled>Siguiente â</button>
+      <button class="btn btn-ghost" id="btn-prev" onclick="prevQ()">&#8592; Atr&#225;s</button>
+      <button class="btn btn-primary" id="btn-next" onclick="nextQ()" disabled>Siguiente &#8594;</button>
     </div>
   </div>
 
@@ -317,7 +317,7 @@
     </div>
 
     <div class="score-section">
-      <div class="score-label">Tu puntuaciÃ³n general</div>
+      <div class="score-label">Tu puntuaci&#243;n general</div>
       <div class="score-bar"><div class="score-bar-fill" id="r-bar"></div></div>
       <div class="score-dims">
         <div class="score-dim">
@@ -336,257 +336,257 @@
     </div>
 
     <div class="result-section">
-      <h3>â Tus fortalezas</h3>
+      <h3>&#9989; Tus fortalezas</h3>
       <ul class="strength-list" id="r-strengths"></ul>
     </div>
 
     <div class="result-section">
-      <h3>ð Ãreas para desarrollar</h3>
+      <h3>&#128200; &#193;reas para desarrollar</h3>
       <ul class="grow-list" id="r-grow"></ul>
     </div>
 
     <div class="result-section">
-      <h3>ðºï¸ Tu plan de acciÃ³n</h3>
+      <h3>&#128506;&#65039; Tu plan de acci&#243;n</h3>
       <div class="reco-grid" id="r-recos"></div>
     </div>
 
     <div class="share-box">
-      <h3>Â¿ConocÃ©s a alguien que deberÃ­a hacer este test?</h3>
-      <p>Compartilo por WhatsApp o copiÃ¡ el link. Puede ser Ãºtil para colegas, equipos o cualquiera que quiera entender dÃ³nde estÃ¡ parado con la IA.</p>
+      <h3>&#191;Conoc&#233;s a alguien que deber&#237;a hacer este test?</h3>
+      <p>Compartilo por WhatsApp o copi&#225; el link. Puede ser &#250;til para colegas, equipos o cualquiera que quiera entender d&#243;nde est&#225; parado con la IA.</p>
       <div class="share-buttons">
         <a id="share-wa-btn" href="#" target="_blank" class="share-btn share-wa">
-          ð¬ Compartir por WhatsApp
+          &#128172; Compartir por WhatsApp
         </a>
         <button class="share-btn share-copy" id="share-copy-btn" onclick="copyLink()">
-          ð Copiar link
+          &#128279; Copiar link
         </button>
       </div>
     </div>
 
-    <button class="restart-btn" onclick="restart()">âº Volver a hacer el test</button>
+    <button class="restart-btn" onclick="restart()">&#8634; Volver a hacer el test</button>
   </div>
 
 </div>
 
 <footer>
-  Por <a href="index.html">Carlos Mirassou Canseco</a> Â· Derecho & IA
+  Por <a href="index.html">Carlos Mirassou Canseco</a> &#183; Derecho & IA
 </footer>
 
 <script>
-// âââ Preguntas ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// &#9472;&#9472;&#9472; Preguntas &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;
 const QUESTIONS = [
-  // DIMENSIÃN 1: Conocimiento teÃ³rico (Q1-Q4)
+  // DIMENSI&#211;N 1: Conocimiento te&#243;rico (Q1-Q4)
   {
-    dim: 'ð Conocimiento teÃ³rico',
-    text: 'Â¿CÃ³mo describjÃ­as tu comprensiÃ³n de quÃ© es un modelo de lenguaje (como ChatGPT o Claude)?',
+    dim: '&#128218; Conocimiento te&#243;rico',
+    text: '&#191;C&#243;mo describir&#237;as tu comprensi&#243;n de qu&#233; es un modelo de lenguaje (como ChatGPT o Claude)?',
     opts: [
-      { text: 'No tengo claro quÃ© es ni cÃ³mo funciona.', score: 0 },
-      { text: 'Entiendo que es una IA que responde preguntas, pero no sÃ© mucho mÃ¡s.', score: 1 },
-      { text: 'SÃ© que se entrena con grandes volÃºmenes de texto y genera respuestas probables.', score: 2 },
-      { text: 'Comprendo su arquitectura bÃ¡sica, sus limitaciones tÃ©cnicas y por quÃ© "alucina".', score: 3 }
+      { text: 'No tengo claro qu&#233; es ni c&#243;mo funciona.', score: 0 },
+      { text: 'Entiendo que es una IA que responde preguntas, pero no s&#233; mucho m&#225;s.', score: 1 },
+      { text: 'S&#233; que se entrena con grandes vol&#250;menes de texto y genera respuestas probables.', score: 2 },
+      { text: 'Comprendo su arquitectura b&#225;sica, sus limitaciones t&#233;cnicas y por qu&#233; "alucina".', score: 3 }
     ]
   },
   {
-    dim: 'ð Conocimiento teÃ³rico',
-    text: 'Â¿QuÃ© es un "prompt" para vos?',
+    dim: '&#128218; Conocimiento te&#243;rico',
+    text: '&#191;Qu&#233; es un "prompt" para vos?',
     opts: [
-      { text: 'No conozco ese tÃ©rmino.', score: 0 },
-      { text: 'Es lo que escribÃ­s para preguntarle algo a la IA.', score: 1 },
-      { text: 'Es una instrucciÃ³n diseÃ±ada para obtener un resultado especÃ­fico de la IA.', score: 2 },
+      { text: 'No conozco ese t&#233;rmino.', score: 0 },
+      { text: 'Es lo que escrib&#237;s para preguntarle algo a la IA.', score: 1 },
+      { text: 'Es una instrucci&#243;n dise&#241;ada para obtener un resultado espec&#237;fico de la IA.', score: 2 },
       { text: 'Es una estructura que combina rol, contexto, tarea, formato y restricciones para guiar el razonamiento del modelo.', score: 3 }
     ]
   },
   {
-    dim: 'ð Conocimiento teÃ³rico',
-    text: 'Â¿SabÃ©s quÃ© diferencia a NotebookLM de ChatGPT o Claude?',
+    dim: '&#128218; Conocimiento te&#243;rico',
+    text: '&#191;Sab&#233;s qu&#233; diferencia a NotebookLM de ChatGPT o Claude?',
     opts: [
       { text: 'No conozco NotebookLM.', score: 0 },
-      { text: 'SÃ© que existen pero no conozco sus diferencias.', score: 1 },
-      { text: 'SÃ© que NotebookLM trabaja exclusivamente sobre documentos que vos subÃ­s.', score: 2 },
+      { text: 'S&#233; que existen pero no conozco sus diferencias.', score: 1 },
+      { text: 'S&#233; que NotebookLM trabaja exclusivamente sobre documentos que vos sub&#237;s.', score: 2 },
       { text: 'Entiendo las diferencias de arquitectura, casos de uso ideales y limitaciones de cada uno.', score: 3 }
     ]
   },
   {
-    dim: 'ð Conocimiento teÃ³rico',
-    text: 'Â¿QuÃ© entendÃ©s por "alucinaciÃ³n" en el contexto de la IA?',
+    dim: '&#128218; Conocimiento te&#243;rico',
+    text: '&#191;Qu&#233; entend&#233;s por "alucinaci&#243;n" en el contexto de la IA?',
     opts: [
       { text: 'No conozco ese concepto aplicado a la IA.', score: 0 },
-      { text: 'SÃ© que la IA a veces dice cosas incorrectas.', score: 1 },
-      { text: 'Entiendo que el modelo genera texto plausible pero falso cuando no tiene informaciÃ³n suficiente.', score: 2 },
-      { text: 'Comprendo las causas tÃ©cnicas, los contextos donde ocurre mÃ¡s y cÃ³mo diseÃ±ar prompts que lo minimicen.', score: 3 }
+      { text: 'S&#233; que la IA a veces dice cosas incorrectas.', score: 1 },
+      { text: 'Entiendo que el modelo genera texto plausible pero falso cuando no tiene informaci&#243;n suficiente.', score: 2 },
+      { text: 'Comprendo las causas t&#233;cnicas, los contextos donde ocurre m&#225;s y c&#243;mo dise&#241;ar prompts que lo minimicen.', score: 3 }
     ]
   },
 
-  // DIMENSIÃN2 : Experiencia prÃ¡ctica (Q5-Q8)
+  // DIMENSI&#211;N 2: Experiencia pr&#225;ctica (Q5-Q8)
   {
-    dim: 'ð ûî Experiencia prÃ¡ctica',
-    text: 'Â¿Con quÃ© frecuencia usÃ¡s herramientas de IA en tu trabajo o estudio?',
+    dim: '&#128736;&#65039; Experiencia pr&#225;ctica',
+    text: '&#191;Con qu&#233; frecuencia us&#225;s herramientas de IA en tu trabajo o estudio?',
     opts: [
-      { text: 'Nunca las usÃ©.', score: 0 },
-      { text: 'Las probÃ© alguna vez por curiosidad, pero no las uso regularmente.', score: 1 },
+      { text: 'Nunca las us&#233;.', score: 0 },
+      { text: 'Las prob&#233; alguna vez por curiosidad, pero no las uso regularmente.', score: 1 },
       { text: 'Las uso al menos una vez por semana para tareas concretas.', score: 2 },
-      { text: 'Las uso todos los dÃ­as y forman parte de mi flujo de trabajo habitual.', score: 3 }
+      { text: 'Las uso todos los d&#237;as y forman parte de mi flujo de trabajo habitual.', score: 3 }
     ]
   },
   {
-    dim: 'ð ï¸ Experiencia prÃ¡ctica',
-    text: 'Â¿CÃ³mo construÃ­s tus instrucciones cuando usÃ¡s una IA?',
+    dim: '&#128736;&#65039; Experiencia pr&#225;ctica',
+    text: '&#191;C&#243;mo constru&#237;s tus instrucciones cuando us&#225;s una IA?',
     opts: [
-      { text: 'No he usado IA todavÃ­a.', score: 0 },
-      { text: 'Escribo lo que se me ocurre y veo quÃ© pasa.', score: 1 },
-      { text: 'Pienso en quÃ© quiero obtener y trato de ser claro y especÃ­fico.', score: 2 },
-      { text: 'DiseÃ±o el prompt con rol, contexto, tarea, formato y restricciones, y lo itero hasta obtener el resultado que busco.', score: 3 }
+      { text: 'No he usado IA todav&#237;a.', score: 0 },
+      { text: 'Escribo lo que se me ocurre y veo qu&#233; pasa.', score: 1 },
+      { text: 'Pienso en qu&#233; quiero obtener y trato de ser claro y espec&#237;fico.', score: 2 },
+      { text: 'Dise&#241;o el prompt con rol, contexto, tarea, formato y restricciones, y lo itero hasta obtener el resultado que busco.', score: 3 }
     ]
   },
   {
-    dim: 'ð ï¸ Experiencia prÃ¡ctica',
-    text: 'Â¿QuÃ© hacÃ©s cuando la IA te da un resultado que no te convence?',
+    dim: '&#128736;&#65039; Experiencia pr&#225;ctica',
+    text: '&#191;Qu&#233; hac&#233;s cuando la IA te da un resultado que no te convence?',
     opts: [
-      { text: 'No sÃ© quÃ© hacer, abandono o acepto el resultado.', score: 0 },
-      { text: 'Lo intento de nuevo con la misma instrucciÃ³n.', score: 1 },
-      { text: 'Reformulo la instrucciÃ³n para ser mÃ¡s especÃ­fico.', score: 2 },
-      { text: 'Analizo quÃ© parte del prompt fallÃ³, lo corrijo y cargo el contexto que faltaba.', score: 3 }
+      { text: 'No s&#233; qu&#233; hacer, abandono o acepto el resultado.', score: 0 },
+      { text: 'Lo intento de nuevo con la misma instrucci&#243;n.', score: 1 },
+      { text: 'Reformulo la instrucci&#243;n para ser m&#225;s espec&#237;fico.', score: 2 },
+      { text: 'Analizo qu&#233; parte del prompt fall&#243;, lo corrijo y cargo el contexto que faltaba.', score: 3 }
     ]
   },
   {
-    dim: 'ð ï¸ Experiencia prÃ¡ctica',
-    text: 'Â¿VerificÃ¡s lo que te dice la IA antes de usarlo?',
+    dim: '&#128736;&#65039; Experiencia pr&#225;ctica',
+    text: '&#191;Verific&#225;s lo que te dice la IA antes de usarlo?',
     opts: [
-      { text: 'No lo uso, asÃ­ que no aplica.', score: 0 },
+      { text: 'No lo uso, as&#237; que no aplica.', score: 0 },
       { text: 'A veces, si algo me parece raro.', score: 1 },
       { text: 'Siempre verifico los datos importantes, especialmente citas o fuentes.', score: 2 },
-      { text: 'Tengo un criterio sistemÃ¡tico de verificaciÃ³n y sÃ© exactamente quÃ© tipos de errores buscar segÃºn el tipo de tarea.', score: 3 }
+      { text: 'Tengo un criterio sistem&#225;tico de verificaci&#243;n y s&#233; exactamente qu&#233; tipos de errores buscar seg&#250;n el tipo de tarea.', score: 3 }
     ]
   },
 
-  // DIMENSIÃN 3: Objetivos y contexto (Q8-Q12)
+  // DIMENSI&#211;N 3: Objetivos y contexto (Q9-Q12)
   {
-    dim: 'ð¯ Objetivos y contexto',
-    text: 'Â¿Por quÃ© querÃ©s incorporar la IA a tu trabajo o estudio?',
+    dim: '&#127919; Objetivos y contexto',
+    text: '&#191;Por qu&#233; quer&#233;s incorporar la IA a tu trabajo o estudio?',
     opts: [
-      { text: 'No lo tengo claro todavÃ­a, estoy explorando.', score: 0 },
+      { text: 'No lo tengo claro todav&#237;a, estoy explorando.', score: 0 },
       { text: 'Quiero ahorrar tiempo en tareas repetitivas.', score: 1 },
-      { text: 'Quiero mejorar la calidad de mis anÃ¡lisis, redacciones o investigaciones.', score: 2 },
-      { text: 'Tengo un plan concreto de integraciÃ³n de IA a mi flujo de trabajo con casos de uso definidos.', score: 3 }
+      { text: 'Quiero mejorar la calidad de mis an&#225;lisis, redacciones o investigaciones.', score: 2 },
+      { text: 'Tengo un plan concreto de integraci&#243;n de IA a mi flujo de trabajo con casos de uso definidos.', score: 3 }
     ]
   },
   {
-    dim: 'ð¯ Objetivos y contexto',
-    text: 'Â¿CÃ³mo evaluÃ¡s un resultado que te da la IA?',
+    dim: '&#127919; Objetivos y contexto',
+    text: '&#191;C&#243;mo evalu&#225;s un resultado que te da la IA?',
     opts: [
       { text: 'No tengo criterio claro para evaluarlo.', score: 0 },
       { text: 'Lo leo y veo si suena bien.', score: 1 },
       { text: 'Lo comparo con lo que yo esperaba y verifico los datos concretos.', score: 2 },
-      { text: 'Tengo criterios especÃ­ficos segÃºn el tipo de tarea: precisiÃ³n tÃ©cnica, coherencia, ausencia de sesgos y verificabilidad de las fuentes.', score: 3 }
+      { text: 'Tengo criterios espec&#237;ficos seg&#250;n el tipo de tarea: precisi&#243;n t&#233;cnica, coherencia, ausencia de sesgos y verificabilidad de las fuentes.', score: 3 }
     ]
   },
   {
-    dim: 'ð¯ Objetivos y contexto',
-    text: 'Â¿Pensaste en los lÃ­mites Ã©ticos o legales del uso de IA en tu trabajo?',
+    dim: '&#127919; Objetivos y contexto',
+    text: '&#191;Pensaste en los l&#237;mites &#233;ticos o legales del uso de IA en tu trabajo?',
     opts: [
-      { text: 'No, no lo habÃ­a considerado.', score: 0 },
-      { text: 'Lo mencionÃ© en conversaciones pero no profundicÃ©.', score: 1 },
-      { text: 'Tengo claro quÃ© informaciÃ³n no debo cargar en una IA y quÃ© responsabilidades implica usar sus resultados.', score: 2 },
-      { text: 'Manejo los marcos regulatorios vigentes (GDPR, regulaciones locales) y los criterios Ã©ticos para el uso responsable en mi Ã¡rea.', score: 3 }
+      { text: 'No, no lo hab&#237;a considerado.', score: 0 },
+      { text: 'Lo mencion&#233; en conversaciones pero no profundic&#233;.', score: 1 },
+      { text: 'Tengo claro qu&#233; informaci&#243;n no debo cargar en una IA y qu&#233; responsabilidades implica usar sus resultados.', score: 2 },
+      { text: 'Manejo los marcos regulatorios vigentes (GDPR, regulaciones locales) y los criterios &#233;ticos para el uso responsable en mi &#225;rea.', score: 3 }
     ]
   },
   {
-    dim: 'ð¯ Objetivos y contexto',
-    text: 'Â¿CÃ³mo imaginÃ¡s tu relaciÃ³n con la IA en los prÃ³ximos dos aÃ±os?',
+    dim: '&#127919; Objetivos y contexto',
+    text: '&#191;C&#243;mo imagin&#225;s tu relaci&#243;n con la IA en los pr&#243;ximos dos a&#241;os?',
     opts: [
-      { text: 'No lo habÃ­a pensado.', score: 0 },
-      { text: 'Espero empezar a usarla un poco mÃ¡s.', score: 1 },
-      { text: 'Quiero incorporarla de forma sistemÃ¡tica a tareas clave de mi trabajo.', score: 2 },
-      { text: 'Tengo una hoja de ruta clara: herramientas, formaciÃ³n, integraciÃ³n y evaluaciÃ³n de resultados.', score: 3 }
+      { text: 'No lo hab&#237;a pensado.', score: 0 },
+      { text: 'Espero empezar a usarla un poco m&#225;s.', score: 1 },
+      { text: 'Quiero incorporarla de forma sistem&#225;tica a tareas clave de mi trabajo.', score: 2 },
+      { text: 'Tengo una hoja de ruta clara: herramientas, formaci&#243;n, integraci&#243;n y evaluaci&#243;n de resultados.', score: 3 }
     ]
   }
 ];
 
-// âââ Perfiles ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// &#9472;&#9472;&#9472; Perfiles &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;
 const PROFILES = [
   {
     id: 'explorador',
     name: 'Explorador',
-    icon: 'ð±',
+    icon: '&#127793;',
     color: '#0ea5e9',
     light: '#e0f2fe',
-    tagline: 'EstÃ¡s en el punto de partida. No es un problema â es el mejor momento para construir una base sÃ³lida y evitar los errores mÃ¡s comunes.',
+    tagline: 'Est&#225;s en el punto de partida. No es un problema &#8212; es el mejor momento para construir una base s&#243;lida y evitar los errores m&#225;s comunes.',
     strengths: [
-      'TenÃ©s la ventaja de empezar sin vicios ni malos hÃ¡bitos adquiridos.',
-      'Tu apertura a aprender es el recurso mÃ¡s valioso en este proceso.',
-      'PodÃ©s construir criterio propio desde cero, sin sesgos previos.'
+      'Ten&#233;s la ventaja de empezar sin vicios ni malos h&#225;bitos adquiridos.',
+      'Tu apertura a aprender es el recurso m&#225;s valioso en este proceso.',
+      'Pod&#233;s construir criterio propio desde cero, sin sesgos previos.'
     ],
     grow: [
-      'Conocer quÃ© es realmente la IA y quÃ© no es (separar expectativas de realidad).',
-      'Dar los primeros pasos prÃ¡cticos con herramientas de acceso libre.',
-      'Desarrollar el hÃ¡bito de verificar todo lo que produce la IA.'
+      'Conocer qu&#233; es realmente la IA y qu&#233; no es (separar expectativas de realidad).',
+      'Dar los primeros pasos pr&#225;cticos con herramientas de acceso libre.',
+      'Desarrollar el h&#225;bito de verificar todo lo que produce la IA.'
     ],
     recos: [
-      { icon: 'ð', title: 'Herramienta para empezar', val: 'ChatGPT (versiÃ³n gratuita) o Gemini de Google. AbrÃ­ una cuenta y probÃ¡ con preguntas de tu Ã¡rea.' },
-      { icon: 'ð', title: 'Concepto clave a estudiar', val: 'QuÃ© es un modelo de lenguaje y por quÃ© "alucina". Buscar: "CÃ³mo funciona ChatGPT explicado simple".' },
-      { icon: 'ð¯', title: 'Ejercicio esta semana', val: 'Pedile a la IA que te explique un tema de tu trabajo. VerificÃ¡ si lo que te dice es correcto.' },
-      { icon: 'â ï¸', title: 'Error a evitar', val: 'No confiar ciegamente en lo que dice. La IA puede equivocarse con datos, fechas y fuentes.' }
+      { icon: '&#128640;', title: 'Herramienta para empezar', val: 'ChatGPT (versi&#243;n gratuita) o Gemini de Google. Abr&#237; una cuenta y prob&#225; con preguntas de tu &#225;rea.' },
+      { icon: '&#128214;', title: 'Concepto clave a estudiar', val: 'Qu&#233; es un modelo de lenguaje y por qu&#233; "alucina". Buscar: "C&#243;mo funciona ChatGPT explicado simple".' },
+      { icon: '&#127919;', title: 'Ejercicio esta semana', val: 'Pedile a la IA que te explique un tema de tu trabajo. Verific&#225; si lo que te dice es correcto.' },
+      { icon: '&#9888;&#65039;', title: 'Error a evitar', val: 'No confiar ciegamente en lo que dice. La IA puede equivocarse con datos, fechas y fuentes.' }
     ]
   },
   {
     id: 'iniciado',
     name: 'Iniciado',
-    icon: 'â¡',
+    icon: '&#9889;',
     color: '#10b981',
     light: '#d1fae5',
-    tagline: 'Ya usÃ¡s la IA, pero hay una brecha entre lo que obtenÃ©s y lo que podrÃ­as obtener. PequeÃ±os ajustes en cÃ³mo preguntÃ¡s van a cambiar mucho el resultado.',
+    tagline: 'Ya us&#225;s la IA, pero hay una brecha entre lo que obten&#233;s y lo que podr&#237;as obtener. Peque&#241;os ajustes en c&#243;mo pregunt&#225;s van a cambiar mucho el resultado.',
     strengths: [
-      'Ya superaste la barrera de entrada: sabÃ©s para quÃ© sirve y la usÃ¡s.',
-      'TenÃ©s experiencia prÃ¡ctica que te da intuiciÃ³n sobre cuÃ¡ndo funciona y cuÃ¡ndo no.',
-      'Tu curiosidad te trajo hasta acÃ¡ â eso es lo mÃ¡s difÃ­cil de enseÃ±ar.'
+      'Ya superaste la barrera de entrada: sab&#233;s para qu&#233; sirve y la us&#225;s.',
+      'Ten&#233;s experiencia pr&#225;ctica que te da intuici&#243;n sobre cu&#225;ndo funciona y cu&#225;ndo no.',
+      'Tu curiosidad te trajo hasta ac&#225; &#8212; eso es lo m&#225;s dif&#237;cil de ense&#241;ar.'
     ],
     grow: [
       'Aprender a construir prompts estructurados (rol, contexto, tarea, formato).',
-      'Desarrollar un criterio sistemÃ¡tico de verificaciÃ³n de resultados.',
-      'Entender las diferencias entre herramientas para elegir la correcta segÃºn la tarea.'
+      'Desarrollar un criterio sistem&#225;tico de verificaci&#243;n de resultados.',
+      'Entender las diferencias entre herramientas para elegir la correcta seg&#250;n la tarea.'
     ],
     recos: [
-      { icon: 'ð ï¸', title: 'Herramienta para probar', val: 'NotebookLM para trabajar sobre tus propios documentos. Es ideal para anÃ¡lisis sin riesgo de privacidad.' },
-      { icon: 'ð', title: 'Concepto clave a estudiar', val: 'Prompt engineering bÃ¡sico: cÃ³mo estructurar una instrucciÃ³n con rol, contexto y formato de salida.' },
-      { icon: 'ð¯', title: 'Ejercicio esta semana', val: 'TomÃ¡ una tarea que ya hacÃ©s con IA y reescribÃ­ el prompt con estructura: rol â contexto â tarea â formato. ComparÃ¡ los resultados.' },
-      { icon: 'â ï¸', title: 'Error a evitar', val: 'Usar siempre la misma herramienta para todo. Cada IA tiene fortalezas distintas segÃºn el tipo de tarea.' }
+      { icon: '&#128736;&#65039;', title: 'Herramienta para probar', val: 'NotebookLM para trabajar sobre tus propios documentos. Es ideal para an&#225;lisis sin riesgo de privacidad.' },
+      { icon: '&#128214;', title: 'Concepto clave a estudiar', val: 'Prompt engineering b&#225;sico: c&#243;mo estructurar una instrucci&#243;n con rol, contexto y formato de salida.' },
+      { icon: '&#127919;', title: 'Ejercicio esta semana', val: 'Tom&#225; una tarea que ya hac&#233;s con IA y reescrib&#237; el prompt con estructura: rol &#8594; contexto &#8594; tarea &#8594; formato. Compar&#225; los resultados.' },
+      { icon: '&#9888;&#65039;', title: 'Error a evitar', val: 'Usar siempre la misma herramienta para todo. Cada IA tiene fortalezas distintas seg&#250;n el tipo de tarea.' }
     ]
   },
   {
     id: 'practicante',
     name: 'Practicante',
-    icon: 'ð¥',
+    icon: '&#128293;',
     color: '#8b5cf6',
     light: '#ede9fe',
-    tagline: 'TenÃ©s una base sÃ³lida y criterio propio. El siguiente nivel es sistematizar lo que hacÃ©s, profundizar en tÃ©cnicas avanzadas e integrar la IA de forma estratÃ©gica.',
+    tagline: 'Ten&#233;s una base s&#243;lida y criterio propio. El siguiente nivel es sistematizar lo que hac&#233;s, profundizar en t&#233;cnicas avanzadas e integrar la IA de forma estrat&#233;gica.',
     strengths: [
-      'UsÃ¡s la IA con regularidad y sabÃ©s cÃ³mo iterar cuando el resultado no es el esperado.',
-      'TenÃ©s criterio para verificar outputs y entendÃ©s las limitaciones de los modelos.',
+      'Us&#225;s la IA con regularidad y sab&#233;s c&#243;mo iterar cuando el resultado no es el esperado.',
+      'Ten&#233;s criterio para verificar outputs y entend&#233;s las limitaciones de los modelos.',
       'Ya pensaste en los objetivos y el contexto de uso, no solo en la herramienta.'
     ],
     grow: [
-      'TÃ©cnicas avanzadas de prompting: chain-of-thought, few-shot, instrucciones de verificaciÃ³n interna.',
-      'IntegraciÃ³n de flujos de trabajo: combinar varias herramientas para tareas complejas.',
-      'Marco regulatorio y Ã©tico aplicado a tu Ã¡rea especÃ­fica de trabajo.'
+      'T&#233;cnicas avanzadas de prompting: chain-of-thought, few-shot, instrucciones de verificaci&#243;n interna.',
+      'Integraci&#243;n de flujos de trabajo: combinar varias herramientas para tareas complejas.',
+      'Marco regulatorio y &#233;tico aplicado a tu &#225;rea espec&#237;fica de trabajo.'
     ],
     recos: [
-      { icon: 'ð ï¸', title: 'Herramienta para explorar', val: 'Claude (Anthropic) para tareas de anÃ¡lisis largo y razonamiento complejo. Maneja bien documentos extensos.' },
-      { icon: 'ð', title: 'Concepto clave a estudiar', val: 'Chain-of-thought prompting y verificaciÃ³n interna: cÃ³mo pedirle a la IA que razone paso a paso antes de responder.' },
-      { icon: 'ð¯', title: 'Ejercicio esta semana', val: 'DiseÃ±Ã¡ un prompt complejo para una tarea real con: rol detallado, metodologÃ­a de anÃ¡lisis y checklist de verificaciÃ³n final. EvaluÃ¡ la diferencia con tu prompt habitual.' },
-      { icon: 'â ï¸', title: 'Error a evitar', val: 'Automatizar sin supervisiÃ³n. Cuanto mÃ¡s capaz se vuelve tu uso de la IA, mÃ¡s importante es mantener el criterio humano en las decisiones.' }
+      { icon: '&#128736;&#65039;', title: 'Herramienta para explorar', val: 'Claude (Anthropic) para tareas de an&#225;lisis largo y razonamiento complejo. Maneja bien documentos extensos.' },
+      { icon: '&#128214;', title: 'Concepto clave a estudiar', val: 'Chain-of-thought prompting y verificaci&#243;n interna: c&#243;mo pedirle a la IA que razone paso a paso antes de responder.' },
+      { icon: '&#127919;', title: 'Ejercicio esta semana', val: 'Dise&#241;&#225; un prompt complejo para una tarea real con: rol detallado, metodolog&#237;a de an&#225;lisis y checklist de verificaci&#243;n final. Evalu&#225; la diferencia con tu prompt habitual.' },
+      { icon: '&#9888;&#65039;', title: 'Error a evitar', val: 'Automatizar sin supervisi&#243;n. Cuanto m&#225;s capaz se vuelve tu uso de la IA, m&#225;s importante es mantener el criterio humano en las decisiones.' }
     ]
   },
   {
     id: 'experto',
     name: 'Experto',
-    icon: 'ð',
+    icon: '&#128640;',
     color: '#f59e0b',
     light: '#fef3c7',
-    tagline: 'TenÃ©s un nivel de madurez real. El desafÃ­o ahora es la escala: sistematizar, enseÃ±ar a otros y mantenerte actualizado en un campo que cambia muy rÃ¡pido.',
+    tagline: 'Ten&#233;s un nivel de madurez real. El desaf&#237;o ahora es la escala: sistematizar, ense&#241;ar a otros y mantenerte actualizado en un campo que cambia muy r&#225;pido.',
     strengths: [
-      'Tu uso de la IA es estratÃ©gico, sistemÃ¡tico y con criterio tÃ©cnico sÃ³lido.',
-      'EntendÃ©s los lÃ­mites Ã©ticos y regulatorios, no solo las capacidades.',
-      'TenÃ©s una visiÃ³n clara de hacia dÃ³nde querÃ©s ir con estas herramientas.'
+      'Tu uso de la IA es estrat&#233;gico, sistem&#225;tico y con criterio t&#233;cnico s&#243;lido.',
+      'Entend&#233;s los l&#237;mites &#233;ticos y regulatorios, no solo las capacidades.',
+      'Ten&#233;s una visi&#243;n clara de hacia d&#243;nde quer&#233;s ir con estas herramientas.'
     ],
     grow: [
       'Explorar integraciones con API para flujos de trabajo automatizados.',
@@ -594,20 +594,20 @@ const PROFILES = [
       'Desarrollar capacidad de transmitir estos conocimientos a otros de forma efectiva.'
     ],
     recos: [
-      { icon: 'ð ï¸', title: 'PrÃ³ximo paso tÃ©cnico', val: 'Explorar la API de Anthropic o OpenAI para construir herramientas propias integradas a tu flujo de trabajo.' },
-      { icon: 'ð', title: 'Ãrea para profundizar', val: 'Marcos regulatorios de IA: reglamento europeo de IA, normativas locales y criterios de uso responsable en entornos profesionales.' },
-      { icon: 'ð¯', title: 'DesafÃ­o esta semana', val: 'DocumentÃ¡ tu flujo de trabajo con IA y diseÃ±Ã¡ una guÃ­a o capacitaciÃ³n para compartir con colegas. EnseÃ±ar es la mejor forma de consolidar conocimiento.' },
-      { icon: 'â ï¸', title: 'Riesgo a monitorear', val: 'La sobreconfianza. A mayor dominio tÃ©cnico, mayor tentaciÃ³n de saltear pasos de verificaciÃ³n. MantenÃ© los chequeos aunque parezcan innecesarios.' }
+      { icon: '&#128736;&#65039;', title: 'Pr&#243;ximo paso t&#233;cnico', val: 'Explorar la API de Anthropic o OpenAI para construir herramientas propias integradas a tu flujo de trabajo.' },
+      { icon: '&#128214;', title: '&#193;rea para profundizar', val: 'Marcos regulatorios de IA: reglamento europeo de IA, normativas locales y criterios de uso responsable en entornos profesionales.' },
+      { icon: '&#127919;', title: 'Desaf&#237;o esta semana', val: 'Document&#225; tu flujo de trabajo con IA y dise&#241;&#225; una gu&#237;a o capacitaci&#243;n para compartir con colegas. Ense&#241;ar es la mejor forma de consolidar conocimiento.' },
+      { icon: '&#9888;&#65039;', title: 'Riesgo a monitorear', val: 'La sobreconfianza. A mayor dominio t&#233;cnico, mayor tentaci&#243;n de saltear pasos de verificaci&#243;n. Manten&#233; los chequeos aunque parezcan innecesarios.' }
     ]
   }
 ];
 
-// âââ Estado âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// &#9472;&#9472;&#9472; Estado &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;
 let current = 0;
 let answers = new Array(QUESTIONS.length).fill(null);
 const DIM_SIZE = 4;
 
-// âââ Iniciar test âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// &#9472;&#9472;&#9472; Iniciar test &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;
 function startTest() {
   current = 0;
   answers = new Array(QUESTIONS.length).fill(null);
@@ -616,7 +616,7 @@ function startTest() {
   document.getElementById('screen-q').classList.add('active');
 }
 
-// âââ Mostrar pregunta âââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// &#9472;&#9472;&#9472; Mostrar pregunta &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;
 function showQ(idx) {
   const q = QUESTIONS[idx];
   document.getElementById('q-dim').textContent = q.dim;
@@ -636,7 +636,7 @@ function showQ(idx) {
 
   document.getElementById('btn-prev').style.visibility = idx === 0 ? 'hidden' : 'visible';
   document.getElementById('btn-next').disabled = answers[idx] === null;
-  document.getElementById('btn-next').textContent = idx === QUESTIONS.length - 1 ? 'Ver mi resultado â' : 'Siguiente â';
+  document.getElementById('btn-next').textContent = idx === QUESTIONS.length - 1 ? 'Ver mi resultado &#8594;' : 'Siguiente &#8594;';
 
   const pct = Math.round((idx / QUESTIONS.length) * 100);
   document.getElementById('prog-fill').style.width = pct + '%';
@@ -663,7 +663,7 @@ function prevQ() {
   if (current > 0) { current--; showQ(current); }
 }
 
-// âââ Calcular y mostrar resultado âââââââââââââââââââââââââââââââââââââââââââââ
+// &#9472;&#9472;&#9472; Calcular y mostrar resultado &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;
 function showResult() {
   document.getElementById('screen-q').classList.remove('active');
   document.getElementById('screen-result').classList.add('active');
@@ -671,7 +671,7 @@ function showResult() {
   document.getElementById('prog-text').textContent = 'Resultado listo';
   document.getElementById('prog-pct').textContent = '100%';
 
-  // Scores por dimensiÃ³n
+  // Scores por dimensi&#243;n
   const dim1 = answers.slice(0, DIM_SIZE).reduce((s, a, i) => s + (a !== null ? QUESTIONS[i].opts[a].score : 0), 0);
   const dim2 = answers.slice(DIM_SIZE, DIM_SIZE * 2).reduce((s, a, i) => s + (a !== null ? QUESTIONS[DIM_SIZE + i].opts[a].score : 0), 0);
   const dim3 = answers.slice(DIM_SIZE * 2).reduce((s, a, i) => s + (a !== null ? QUESTIONS[DIM_SIZE * 2 + i].opts[a].score : 0), 0);
@@ -719,28 +719,28 @@ function showResult() {
   ).join('');
 
   // WhatsApp share
-  const msg = encodeURIComponent(`Hice el test de madurez en IA de Carlos Mirassou Canseco y obtuve el perfil "${profile.name}" ${profile.icon}\n\nÂ¿CuÃ¡l es el tuyo? â https://charlymirassou.github.io/herramientas-ia/test-madurez-ia.html`);
+  const msg = encodeURIComponent(`Hice el test de madurez en IA de Carlos Mirassou Canseco y obtuve el perfil "${profile.name}" ${profile.icon}\n\n&#191;Cu&#225;l es el tuyo? &#8594; https://charlymirassou.github.io/herramientas-ia/test-madurez-ia.html`);
   document.getElementById('share-wa-btn').href = `https://wa.me/?text=${msg}`;
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// âââ Compartir ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// &#9472;&#9472;&#9472; Compartir &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;
 function copyLink() {
   navigator.clipboard.writeText('https://charlymirassou.github.io/herramientas-ia/test-madurez-ia.html').then(() => {
     const btn = document.getElementById('share-copy-btn');
-    btn.textContent = 'â Link copiado';
+    btn.textContent = '&#10003; Link copiado';
     btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'ð Copiar link'; btn.classList.remove('copied'); }, 2500);
+    setTimeout(() => { btn.textContent = '&#128279; Copiar link'; btn.classList.remove('copied'); }, 2500);
   });
 }
 
-// âââ Reiniciar ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// &#9472;&#9472;&#9472; Reiniciar &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;
 function restart() {
   document.getElementById('screen-result').classList.remove('active');
   document.getElementById('screen-intro').classList.add('active');
   document.getElementById('prog-fill').style.width = '0%';
-  document.getElementById('prog-text').textContent = 'IntroducciÃ³n';
+  document.getElementById('prog-text').textContent = 'Introducci&#243;n';
   document.getElementById('prog-pct').textContent = '';
   answers = new Array(QUESTIONS.length).fill(null);
   current = 0;

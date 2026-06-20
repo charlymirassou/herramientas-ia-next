@@ -2,8 +2,9 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prompteador Judicial</title>
+  <title>Prompteador Judicial v2</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -87,7 +88,7 @@
     .tips-box h4 { font-size: .88rem; font-weight: 700; color: var(--gold); margin-bottom: 7px; }
     .tips-box ul { list-style: none; padding: 0; }
     .tips-box ul li { font-size: .81rem; color: #5c4a00; padding: 3px 0 3px 16px; position: relative; line-height: 1.4; }
-    .tips-box ul li::before { content: 'â'; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
+    .tips-box ul li::before { content: '&#8594;'; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
     .tool-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--accent-light); color: var(--accent-mid); font-size: .8rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; margin-bottom: 14px; }
     .restart-btn { width: 100%; text-align: center; padding: 12px; background: transparent; border: 2px solid var(--border); border-radius: 8px; font-size: .9rem; font-weight: 600; color: var(--muted); cursor: pointer; transition: all .15s; }
     .restart-btn:hover { border-color: #94a3b8; color: var(--primary); }
@@ -98,11 +99,11 @@
 <body>
 
 <header>
-  <div class="header-icon">âï¸</div>
-  <div class="badge">VersiÃ³n Judicial Avanzada</div>
+  <div class="header-icon">&#9878;&#65039;</div>
+  <div class="badge">Versi&#243;n Judicial Avanzada</div>
   <h1>Prompteador Judicial</h1>
-  <p>GenerÃ¡ prompts de nivel profesional, adaptados a tu rol, tu especialidad y tu tarea concreta.</p>
-  <div class="privacy-note">ð 100% local Â· NingÃºn dato sale de tu navegador</div>
+  <p>Gener&#225; prompts de nivel profesional, adaptados a tu rol, tu especialidad y tu tarea concreta.</p>
+  <div class="privacy-note">&#128274; 100% local &#183; Ning&#250;n dato sale de tu navegador</div>
 </header>
 
 <div class="progress-bar-wrap">
@@ -120,50 +121,50 @@
   <!-- PASO 1 -->
   <div class="step active" id="step-1">
     <div class="step-number">Paso 1 de 8</div>
-    <h2>Â¿Con quÃ© herramienta de IA vas a trabajar?</h2>
+    <h2>&#191;Con qu&#233; herramienta de IA vas a trabajar?</h2>
     <p class="hint">El prompt se optimiza para la herramienta que elijas.</p>
     <div class="tool-grid">
       <div class="tool-card" onclick="selTool(this,'chatgpt')">
-        <div class="tool-icon">ð¬</div><div class="tool-name">ChatGPT</div>
-        <div class="tool-desc">Muy bueno para redacciÃ³n, anÃ¡lisis y conversaciÃ³n.</div>
+        <div class="tool-icon">&#128172;</div><div class="tool-name">ChatGPT</div>
+        <div class="tool-desc">Muy bueno para redacci&#243;n, an&#225;lisis y conversaci&#243;n.</div>
       </div>
       <div class="tool-card" onclick="selTool(this,'gemini')">
-        <div class="tool-icon">â¨</div><div class="tool-name">Gemini</div>
-        <div class="tool-desc">Procesa documentos largos y tiene bÃºsqueda web integrada.</div>
+        <div class="tool-icon">&#10024;</div><div class="tool-name">Gemini</div>
+        <div class="tool-desc">Procesa documentos largos y tiene b&#250;squeda web integrada.</div>
       </div>
       <div class="tool-card" onclick="selTool(this,'claude')">
-        <div class="tool-icon">ð¤</div><div class="tool-name">Claude</div>
+        <div class="tool-icon">&#129302;</div><div class="tool-name">Claude</div>
         <div class="tool-desc">Muy preciso con textos largos y razonamiento complejo.</div>
       </div>
       <div class="tool-card" onclick="selTool(this,'notebooklm')">
-        <div class="tool-icon">ð</div><div class="tool-name">NotebookLM</div>
+        <div class="tool-icon">&#128211;</div><div class="tool-name">NotebookLM</div>
         <div class="tool-desc">Ideal para trabajar sobre tus propios expedientes y docs.</div>
       </div>
     </div>
-    <div class="nav"><div></div><button class="btn btn-primary" id="b1" onclick="goTo(2)" disabled>Siguiente â</button></div>
+    <div class="nav"><div></div><button class="btn btn-primary" id="b1" onclick="goTo(2)" disabled>Siguiente &#8594;</button></div>
   </div>
 
   <!-- PASO 2 -->
   <div class="step" id="step-2">
     <div class="step-number">Paso 2 de 8</div>
-    <h2>Â¿CuÃ¡l es tu rol en el sistema judicial?</h2>
-    <p class="hint">Define el perfil profesional que adoptarÃ¡ la IA. Es uno de los elementos mÃ¡s importantes del prompt.</p>
+    <h2>&#191;Cu&#225;l es tu rol en el sistema judicial?</h2>
+    <p class="hint">Define el perfil profesional que adoptar&#225; la IA. Es uno de los elementos m&#225;s importantes del prompt.</p>
     <div class="op-grid">
-      <div class="op-card" onclick="selOp(this,'juez')"><div class="op-icon">ð§ââï¸</div><div class="op-title">Juez / Vocal de CÃ¡mara</div></div>
-      <div class="op-card" onclick="selOp(this,'secretario')"><div class="op-icon">ð</div><div class="op-title">Secretario/a judicial</div></div>
-      <div class="op-card" onclick="selOp(this,'fiscal')"><div class="op-icon">âï¸</div><div class="op-title">Fiscal / Ministerio PÃºblico</div></div>
-      <div class="op-card" onclick="selOp(this,'defensor')"><div class="op-icon">ð¡ï¸</div><div class="op-title">Defensor/a oficial</div></div>
-      <div class="op-card" onclick="selOp(this,'letrado')"><div class="op-icon">ð¼</div><div class="op-title">Abogado/a litigante</div></div>
-      <div class="op-card" onclick="selOp(this,'funcionario')"><div class="op-icon">ðï¸</div><div class="op-title">Funcionario/a judicial</div></div>
+      <div class="op-card" onclick="selOp(this,'juez')"><div class="op-icon">&#129489;&#8205;&#9878;&#65039;</div><div class="op-title">Juez / Vocal de C&#225;mara</div></div>
+      <div class="op-card" onclick="selOp(this,'secretario')"><div class="op-icon">&#128203;</div><div class="op-title">Secretario/a judicial</div></div>
+      <div class="op-card" onclick="selOp(this,'fiscal')"><div class="op-icon">&#9878;&#65039;</div><div class="op-title">Fiscal / Ministerio P&#250;blico</div></div>
+      <div class="op-card" onclick="selOp(this,'defensor')"><div class="op-icon">&#128737;&#65039;</div><div class="op-title">Defensor/a oficial</div></div>
+      <div class="op-card" onclick="selOp(this,'letrado')"><div class="op-icon">&#128188;</div><div class="op-title">Abogado/a litigante</div></div>
+      <div class="op-card" onclick="selOp(this,'funcionario')"><div class="op-icon">&#127963;&#65039;</div><div class="op-title">Funcionario/a judicial</div></div>
     </div>
-    <div class="nav"><button class="btn btn-ghost" onclick="goTo(1)">â AtrÃ¡s</button><button class="btn btn-primary" id="b2" onclick="goTo(3)" disabled>Siguiente â</button></div>
+    <div class="nav"><button class="btn btn-ghost" onclick="goTo(1)">&#8592; Atr&#225;s</button><button class="btn btn-primary" id="b2" onclick="goTo(3)" disabled>Siguiente &#8594;</button></div>
   </div>
 
   <!-- PASO 3 -->
   <div class="step" id="step-3">
     <div class="step-number">Paso 3 de 8</div>
-    <h2>Â¿En quÃ© Ã¡rea del derecho te especializÃ¡s?</h2>
-    <p class="hint">PodÃ©s seleccionar mÃ¡s de una. La IA conocerÃ¡ en profundidad las Ã¡reas que elijas.</p>
+    <h2>&#191;En qu&#233; &#225;rea del derecho te especializ&#225;s?</h2>
+    <p class="hint">Pod&#233;s seleccionar m&#225;s de una. La IA conocer&#225; en profundidad las &#225;reas que elijas.</p>
     <div class="chip-group" id="specialty-chips">
       <div class="chip" onclick="toggleChip(this,'Derecho Constitucional')">Derecho Constitucional</div>
       <div class="chip" onclick="toggleChip(this,'Derecho Penal')">Derecho Penal</div>
@@ -177,51 +178,51 @@
       <div class="chip" onclick="toggleChip(this,'Derecho Ambiental')">Derecho Ambiental</div>
     </div>
     <div class="field">
-      <label>Â¿Otra especialidad?</label>
-      <input type="text" id="specialty-custom" placeholder="Ej: Derecho de la Seguridad Social, Derecho MÃ©dico..." oninput="checkStep3()">
+      <label>&#191;Otra especialidad?</label>
+      <input type="text" id="specialty-custom" placeholder="Ej: Derecho de la Seguridad Social, Derecho M&#233;dico..." oninput="checkStep3()">
     </div>
-    <div class="nav"><button class="btn btn-ghost" onclick="goTo(2)">â AtrÃ¡s</button><button class="btn btn-primary" id="b3" onclick="goTo(4)" disabled>Siguiente â</button></div>
+    <div class="nav"><button class="btn btn-ghost" onclick="goTo(2)">&#8592; Atr&#225;s</button><button class="btn btn-primary" id="b3" onclick="goTo(4)" disabled>Siguiente &#8594;</button></div>
   </div>
 
   <!-- PASO 4 -->
   <div class="step" id="step-4">
     <div class="step-number">Paso 4 de 8</div>
-    <h2>Â¿CuÃ¡l es tu tarea?</h2>
-    <p class="hint">SeleccionÃ¡ el caso de uso que mejor describe lo que necesitÃ¡s.</p>
+    <h2>&#191;Cu&#225;l es tu tarea?</h2>
+    <p class="hint">Seleccion&#225; el caso de uso que mejor describe lo que necesit&#225;s.</p>
     <div class="usecase-grid">
       <div class="usecase-card" onclick="selUsecase(this,'sentencia')">
-        <div class="uc-icon">ð</div><div><div class="uc-title">Redactar o revisar una sentencia / resoluciÃ³n</div><div class="uc-desc">Estructura, argumentaciÃ³n o revisiÃ³n de estilo en resoluciones judiciales.</div></div>
+        <div class="uc-icon">&#128220;</div><div><div class="uc-title">Redactar o revisar una sentencia / resoluci&#243;n</div><div class="uc-desc">Estructura, argumentaci&#243;n o revisi&#243;n de estilo en resoluciones judiciales.</div></div>
       </div>
       <div class="usecase-card" onclick="selUsecase(this,'expediente')">
-        <div class="uc-icon">ð</div><div><div class="uc-title">Resumir o analizar un expediente</div><div class="uc-desc">Hechos relevantes, cronologÃ­a, posiciones de las partes, estado procesal.</div></div>
+        <div class="uc-icon">&#128193;</div><div><div class="uc-title">Resumir o analizar un expediente</div><div class="uc-desc">Hechos relevantes, cronolog&#237;a, posiciones de las partes, estado procesal.</div></div>
       </div>
       <div class="usecase-card" onclick="selUsecase(this,'jurisprudencia')">
-        <div class="uc-icon">ð</div><div><div class="uc-title">Buscar o analizar jurisprudencia</div><div class="uc-desc">Precedentes, comparaciÃ³n de fallos, sÃ­ntesis de doctrina judicial.</div></div>
+        <div class="uc-icon">&#128269;</div><div><div class="uc-title">Buscar o analizar jurisprudencia</div><div class="uc-desc">Precedentes, comparaci&#243;n de fallos, s&#237;ntesis de doctrina judicial.</div></div>
       </div>
       <div class="usecase-card" onclick="selUsecase(this,'normativa')">
-        <div class="uc-icon">ð</div><div><div class="uc-title">Interpretar o comparar normativa</div><div class="uc-desc">AnÃ¡lisis de artÃ­culos, comparaciÃ³n de normas, detecciÃ³n de lagunas.</div></div>
+        <div class="uc-icon">&#128218;</div><div><div class="uc-title">Interpretar o comparar normativa</div><div class="uc-desc">An&#225;lisis de art&#237;culos, comparaci&#243;n de normas, detecci&#243;n de lagunas.</div></div>
       </div>
       <div class="usecase-card" onclick="selUsecase(this,'escrito')">
-        <div class="uc-icon">âï¸</div><div><div class="uc-title">Redactar un escrito o informe</div><div class="uc-desc">Demandas, contestaciones, dictÃ¡menes, informes, notas de elevaciÃ³n.</div></div>
+        <div class="uc-icon">&#9997;&#65039;</div><div><div class="uc-title">Redactar un escrito o informe</div><div class="uc-desc">Demandas, contestaciones, dict&#225;menes, informes, notas de elevaci&#243;n.</div></div>
       </div>
       <div class="usecase-card" onclick="selUsecase(this,'explicar')">
-        <div class="uc-icon">ð</div><div><div class="uc-title">Explicar un concepto jurÃ­dico</div><div class="uc-desc">Instituciones, figuras procesales, tÃ©rminos tÃ©cnicos complejos.</div></div>
+        <div class="uc-icon">&#127891;</div><div><div class="uc-title">Explicar un concepto jur&#237;dico</div><div class="uc-desc">Instituciones, figuras procesales, t&#233;rminos t&#233;cnicos complejos.</div></div>
       </div>
     </div>
     <div class="divider"></div>
-    <label style="display:block;font-size:.88rem;font-weight:600;margin-bottom:6px;">Â¿Tu tarea no estÃ¡ en la lista? Describila:</label>
-    <textarea id="custom-usecase" placeholder="Ej: Necesito preparar un anÃ¡lisis sobre el uso de IA como prueba en procesos penales..." style="width:100%;border:2px solid var(--border);border-radius:8px;padding:11px 13px;font-size:.92rem;font-family:inherit;color:var(--primary);resize:vertical;min-height:65px;background:var(--surface);" oninput="onCustomUsecase(this)" onfocus="this.style.borderColor='var(--accent-mid)'" onblur="this.style.borderColor='var(--border)'"></textarea>
-    <small style="display:block;margin-top:4px;font-size:.77rem;color:var(--muted);">PodÃ©s combinar una opciÃ³n de arriba con este campo.</small>
-    <div class="nav" style="margin-top:14px;"><button class="btn btn-ghost" onclick="goTo(3)">â AtrÃ¡s</button><button class="btn btn-primary" id="b4" onclick="goTo(5)" disabled>Siguiente â</button></div>
+    <label style="display:block;font-size:.88rem;font-weight:600;margin-bottom:6px;">&#191;Tu tarea no est&#225; en la lista? Describila:</label>
+    <textarea id="custom-usecase" placeholder="Ej: Necesito preparar un an&#225;lisis sobre el uso de IA como prueba en procesos penales..." style="width:100%;border:2px solid var(--border);border-radius:8px;padding:11px 13px;font-size:.92rem;font-family:inherit;color:var(--primary);resize:vertical;min-height:65px;background:var(--surface);" oninput="onCustomUsecase(this)" onfocus="this.style.borderColor='var(--accent-mid)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+    <small style="display:block;margin-top:4px;font-size:.77rem;color:var(--muted);">Pod&#233;s combinar una opci&#243;n de arriba con este campo.</small>
+    <div class="nav" style="margin-top:14px;"><button class="btn btn-ghost" onclick="goTo(3)">&#8592; Atr&#225;s</button><button class="btn btn-primary" id="b4" onclick="goTo(5)" disabled>Siguiente &#8594;</button></div>
   </div>
 
   <!-- PASO 5 -->
   <div class="step" id="step-5">
     <div class="step-number">Paso 5 de 8</div>
-    <h2 id="s5-title">Contanos mÃ¡s sobre la tarea</h2>
-    <p class="hint" id="s5-hint">Cuanto mÃ¡s especÃ­fico seas, mejos el resultado.</p>
+    <h2 id="s5-title">Contanos m&#225;s sobre la tarea</h2>
+    <p class="hint" id="s5-hint">Cuanto m&#225;s espec&#237;fico seas, mejor el resultado.</p>
     <div class="field">
-      <label id="s5-label-task">Â¿QuÃ© necesitÃ¡s exactamente? *</label>
+      <label id="s5-label-task">&#191;Qu&#233; necesit&#225;s exactamente? *</label>
       <textarea id="task-input" placeholder="" oninput="checkMinLen('task-input','b5',8)"></textarea>
     </div>
     <div class="field">
@@ -229,91 +230,91 @@
       <textarea id="context-input" placeholder=""></textarea>
       <small id="s5-ctx-hint"></small>
     </div>
-    <div class="nav"><button class="btn btn-ghost" onclick="goTo(4)">â AtrÃ¡s</button><button class="btn btn-primary" id="b5" onclick="goTo(6)" disabled>Siguiente â</button></div>
+    <div class="nav"><button class="btn btn-ghost" onclick="goTo(4)">&#8592; Atr&#225;s</button><button class="btn btn-primary" id="b5" onclick="goTo(6)" disabled>Siguiente &#8594;</button></div>
   </div>
 
   <!-- PASO 6 -->
   <div class="step" id="step-6">
     <div class="step-number">Paso 6 de 8</div>
-    <h2>Fuero, jurisdicciÃ³n y formato</h2>
-    <p class="hint">Estos datos le permiten a la IA enfocar la respuesta con precisiÃ³n.</p>
+    <h2>Fuero, jurisdicci&#243;n y formato</h2>
+    <p class="hint">Estos datos le permiten a la IA enfocar la respuesta con precisi&#243;n.</p>
     <div class="field">
-      <label>Fuero o materia *'/label>
+      <label>Fuero o materia *</label>
       <select id="fuero-select" onchange="checkSelectBtn('fuero-select','b6')">
-        <option value="">â SeleccionÃ¡ â</option>
+        <option value="">&#8212; Seleccion&#225; &#8212;</option>
         <option>Civil y Comercial</option><option>Penal</option>
         <option>Familia y Sucesiones</option><option>Contencioso Administrativo</option>
         <option>Laboral</option><option>Federal</option><option>General / No especificar</option>
       </select>
     </div>
     <div class="field">
-      <label>Normativa o cÃ³digo procesal aplicable (opcional)</label>
-      <input type="text" id="jurisdiccion-input" placeholder="Ej: CPCC de RÃ­o Negro, Ley 10.160, CCCN Art. 1724...">
+      <label>Normativa o c&#243;digo procesal aplicable (opcional)</label>
+      <input type="text" id="jurisdiccion-input" placeholder="Ej: CPCC de R&#237;o Negro, Ley 10.160, CCCN Art. 1724...">
     </div>
     <div class="field">
-      <label>Â¿CÃ³mo querÃ©s que te responda?</label>
+      <label>&#191;C&#243;mo quer&#233;s que te responda?</label>
       <select id="format-select">
-        <option value="">â SeleccionÃ¡ (opcional) â</option>
-        <option>Texto corrido con redacciÃ³n formal y jurÃ­dica</option>
-        <option>Esquema estructurado con secciones (HECHOS / FUNDAMENTOS / CONCLUSIÃN)</option>
-        <option>Puntos clave y sÃ­ntesis ejecutiva</option>
+        <option value="">&#8212; Seleccion&#225; (opcional) &#8212;</option>
+        <option>Texto corrido con redacci&#243;n formal y jur&#237;dica</option>
+        <option>Esquema estructurado con secciones (HECHOS / FUNDAMENTOS / CONCLUSI&#211;N)</option>
+        <option>Puntos clave y s&#237;ntesis ejecutiva</option>
         <option>Tabla comparativa</option>
         <option>Borrador listo para incluir en expediente</option>
       </select>
     </div>
-    <div class="nav"><button class="btn btn-ghost" onclick="goTo(5)">â AtrÃ¡s</button><button class="btn btn-primary" id="b6" onclick="goTo(7)" disabled>Siguiente â</button></div>
+    <div class="nav"><button class="btn btn-ghost" onclick="goTo(5)">&#8592; Atr&#225;s</button><button class="btn btn-primary" id="b6" onclick="goTo(7)" disabled>Siguiente &#8594;</button></div>
   </div>
 
   <!-- PASO 7 -->
   <div class="step" id="step-7">
     <div class="step-number">Paso 7 de 8</div>
     <h2>Restricciones y ajustes finales</h2>
-    <p class="hint">Las marcadas por defecto son las mÃ¡s importantes para uso judicial.</p>
+    <p class="hint">Las marcadas por defecto son las m&#225;s importantes para uso judicial.</p>
     <div class="tag-group" id="restrict-tags">
       <div class="tag-btn selected" onclick="toggleTag(this)">No inventar jurisprudencia</div>
       <div class="tag-btn selected" onclick="toggleTag(this)">No inventar normativa</div>
       <div class="tag-btn selected" onclick="toggleTag(this)">Marcar con [VERIFICAR] lo que no es seguro</div>
-      <div class="tag-btn selected" onclick="toggleTag(this)">Indicar el nivel de certeza de cada afirmaciÃ³n</div>
-      <div class="tag-btn" onclick="toggleTag(this)">No dar opiniÃ³n personal</div>
+      <div class="tag-btn selected" onclick="toggleTag(this)">Indicar el nivel de certeza de cada afirmaci&#243;n</div>
+      <div class="tag-btn" onclick="toggleTag(this)">No dar opini&#243;n personal</div>
       <div class="tag-btn" onclick="toggleTag(this)">Citar las fuentes utilizadas</div>
       <div class="tag-btn" onclick="toggleTag(this)">No usar lenguaje coloquial</div>
       <div class="tag-btn" onclick="toggleTag(this)">No extenderse innecesariamente</div>
       <div class="tag-btn" onclick="toggleTag(this)">Anticipar y responder posibles objeciones</div>
-      <div class="tag-btn" onclick="toggleTag(this)">Si hay lagunas en la informaciÃ³n del caso, preguntÃ¡ antes de asumir</div>
+      <div class="tag-btn" onclick="toggleTag(this)">Si hay lagunas en la informaci&#243;n del caso, pregunt&#225; antes de asumir</div>
     </div>
     <div class="field">
-      <label>Â¿Alguna aclaraciÃ³n adicional?</label>
+      <label>&#191;Alguna aclaraci&#243;n adicional?</label>
       <textarea id="extra-input" placeholder="Ej: El texto no debe superar 400 palabras. / No incluir el encabezado de la sentencia." style="min-height:60px;"></textarea>
     </div>
-    <div class="nav"><button class="btn btn-ghost" onclick="goTo(6)">â AtrÃ¡s</button><button class="btn btn-primary" onclick="goTo(8)">Generar prompt â</button></div>
+    <div class="nav"><button class="btn btn-ghost" onclick="goTo(6)">&#8592; Atr&#225;s</button><button class="btn btn-primary" onclick="goTo(8)">Generar prompt &#8594;</button></div>
   </div>
 
   <!-- PASO 8 -->
   <div class="step" id="step-8">
-    <div class="step-number">Paso 8 de 8 Â· Listo</div>
-    <h2>Tu prompt estÃ¡ listo</h2>
-    <p class="hint" style="margin-bottom:14px;">Copialo y pegalo en <span id="tool-name-result" style="font-weight:700;"></span>. VerificÃ¡ siempre el resultado antes de usarlo en un expediente.</p>
+    <div class="step-number">Paso 8 de 8 &#183; Listo</div>
+    <h2>Tu prompt est&#225; listo</h2>
+    <p class="hint" style="margin-bottom:14px;">Copialo y pegalo en <span id="tool-name-result" style="font-weight:700;"></span>. Verific&#225; siempre el resultado antes de usarlo en un expediente.</p>
     <div id="tool-badge-result" class="tool-badge"></div>
     <div class="result-box">
       <pre id="prompt-result"></pre>
       <button class="copy-btn-small" id="copy-small" onclick="copyPrompt()">Copiar</button>
     </div>
-    <button class="copy-btn-large" id="copy-large" onclick="copyPrompt()">ð Copiar prompt</button>
-    <div class="warning-box"><strong>â ï¸ Aviso importante</strong>La IA puede cometer errores en citas de jurisprudencia o artÃ­culos normativos. VerificÃ¡ siempre los datos antes de incorporar el resultado a un expediente o resoluciÃ³n.</div>
+    <button class="copy-btn-large" id="copy-large" onclick="copyPrompt()">&#128203; Copiar prompt</button>
+    <div class="warning-box"><strong>&#9888;&#65039; Aviso importante</strong>La IA puede cometer errores en citas de jurisprudencia o art&#237;culos normativos. Verific&#225; siempre los datos antes de incorporar el resultado a un expediente o resoluci&#243;n.</div>
     <div class="tips-box" id="tips-box"></div>
-    <button class="restart-btn" onclick="restart()">âº Armar otro prompt</button>
+    <button class="restart-btn" onclick="restart()">&#8634; Armar otro prompt</button>
   </div>
 
 </div>
 
-<footer>âï¸ Prompteador Judicial Â· 100% local Â· NingÃºn dato sale de tu navegador</footer>
+<footer>&#9878;&#65039; Prompteador Judicial &#183; 100% local &#183; Ning&#250;n dato sale de tu navegador</footer>
 
 <script>
 const DEFAULT_RESTRICTIONS = [
   'No inventar jurisprudencia',
   'No inventar normativa',
   'Marcar con [VERIFICAR] lo que no es seguro',
-  'Indicar el nivel de certeza de cada afirmaciÃ³n'
+  'Indicar el nivel de certeza de cada afirmaci\u00f3n'
 ];
 
 const S = {
@@ -398,150 +399,150 @@ function toggleTag(el) {
 
 const USECASE_CFG = {
   sentencia:{
-    title:'Sobre la sentencia o resoluciÃ³n',
-    hint:'DescribÃ­ quÃ© parte de la sentencia necesitÃ¡s o quÃ© querÃ©s que la IA haga con ella.',
-    labelTask:'Â¿QuÃ© necesitÃ¡s exactamente? *',
-    phTask:'Ej: Quiero que me ayude a estructurar los considerandos de una sentencia de amparo por derecho a la salud. El actor es una persona con discapacidad que requiere cobertura de medicaciÃ³n...',
+    title:'Sobre la sentencia o resoluci\u00f3n',
+    hint:'Describ\u00ed qu\u00e9 parte de la sentencia necesit\u00e1s o qu\u00e9 quer\u00e9s que la IA haga con ella.',
+    labelTask:'\u00bfQu\u00e9 necesit\u00e1s exactamente? *',
+    phTask:'Ej: Quiero que me ayude a estructurar los considerandos de una sentencia de amparo por derecho a la salud. El actor es una persona con discapacidad que requiere cobertura de medicaci\u00f3n...',
     labelCtx:'Hechos relevantes del caso',
-    phCtx:'Ej: El actor tiene diagnÃ³stico certificado, la obra social rechazÃ³ la cobertura argumentando que el medicamento es experimental...',
-    ctxHint:'No incluyas datos identificatorios reales si el caso estÃ¡ activo.'
+    phCtx:'Ej: El actor tiene diagn\u00f3stico certificado, la obra social rechaz\u00f3 la cobertura argumentando que el medicamento es experimental...',
+    ctxHint:'No incluyas datos identificatorios reales si el caso est\u00e1 activo.'
   },
   expediente:{
     title:'Sobre el expediente a analizar',
-    hint:'Â¿QuÃ© informaciÃ³n necesitÃ¡s extraer del expediente?',
-    labelTask:'Â¿QuÃ© querÃ©s obtener? *',
-    phTask:'Ej: Necesito un resumen cronolÃ³gico de los actos procesales, identificar las posiciones de cada parte y detectar las cuestiones aÃºn no resueltas...',
-    labelCtx:'DescripciÃ³n o texto del expediente',
-    phCtx:'PegÃ¡ aquÃ­ el texto del expediente o una descripciÃ³n detallada de su contenido...',
-    ctxHint:'Si usÃ¡s NotebookLM, subÃ­ el expediente como fuente y pegÃ¡ el prompt en el chat.'
+    hint:'\u00bfQu\u00e9 informaci\u00f3n necesit\u00e1s extraer del expediente?',
+    labelTask:'\u00bfQu\u00e9 quer\u00e9s obtener? *',
+    phTask:'Ej: Necesito un resumen cronol\u00f3gico de los actos procesales, identificar las posiciones de cada parte y detectar las cuestiones a\u00fan no resueltas...',
+    labelCtx:'Descripci\u00f3n o texto del expediente',
+    phCtx:'Peg\u00e1 aqu\u00ed el texto del expediente o una descripci\u00f3n detallada de su contenido...',
+    ctxHint:'Si us\u00e1s NotebookLM, sub\u00ed el expediente como fuente y peg\u00e1 el prompt en el chat.'
   },
   jurisprudencia:{
-    title:'Sobre la bÃºsqueda de jurisprudencia',
-    hint:'DescribÃ­ el tema jurÃ­dico sobre el que buscÃ¡s precedentes.',
-    labelTask:'Â¿QuÃ© cuestiÃ³n jurÃ­dica querÃ©s investigar? *',
-    phTask:'Ej: Busco jurisprudencia de la CSJN sobre la procedencia del amparo colectivo en materia ambiental, especÃ­ficamente en casos de contaminaciÃ³n hÃ­drica...',
-    labelCtx:'Enfoque o criterio de bÃºsqueda',
-    phCtx:'Ej: Me interesa la evoluciÃ³n desde el fallo Mendoza. Busco fallos que hayan ordenado medidas cautelares innovativas...',
-    ctxHint:'â ï¸ VerificÃ¡ siempre la existencia de los fallos que cite la IA antes de usarlos.'
+    title:'Sobre la b\u00fasqueda de jurisprudencia',
+    hint:'Describ\u00ed el tema jur\u00eddico sobre el que busc\u00e1s precedentes.',
+    labelTask:'\u00bfQu\u00e9 cuesti\u00f3n jur\u00eddica quer\u00e9s investigar? *',
+    phTask:'Ej: Busco jurisprudencia de la CSJN sobre la procedencia del amparo colectivo en materia ambiental, espec\u00edficamente en casos de contaminaci\u00f3n h\u00eddrica...',
+    labelCtx:'Enfoque o criterio de b\u00fasqueda',
+    phCtx:'Ej: Me interesa la evoluci\u00f3n desde el fallo Mendoza. Busco fallos que hayan ordenado medidas cautelares innovativas...',
+    ctxHint:'\u26a0\ufe0f Verific\u00e1 siempre la existencia de los fallos que cite la IA antes de usarlos.'
   },
   normativa:{
     title:'Sobre la normativa a analizar',
-    hint:'IndicÃ¡ quÃ© normas o artÃ­culos necesitÃ¡s interpretar o comparar.',
-    labelTask:'Â¿QuÃ© querÃ©s hacer con la normativa? *',
-    phTask:'Ej: Quiero un anÃ¡lisis comparativo del rÃ©gimen de responsabilidad civil en el CCCN vs. el CÃ³digo de VÃ©lez, con foco en los arts. 1716 a 1736 del CCCN...',
-    labelCtx:'Normas especÃ­ficas (artÃ­culos, leyes)',
-    phCtx:'Ej: Art. 1724, 1725, 1736 CCCN. Contrastar con arts. 1109 y 1113 CÃ³digo VÃ©lez...',
+    hint:'Indic\u00e1 qu\u00e9 normas o art\u00edculos necesit\u00e1s interpretar o comparar.',
+    labelTask:'\u00bfQu\u00e9 quer\u00e9s hacer con la normativa? *',
+    phTask:'Ej: Quiero un an\u00e1lisis comparativo del r\u00e9gimen de responsabilidad civil en el CCCN vs. el C\u00f3digo de V\u00e9lez, con foco en los arts. 1716 a 1736 del CCCN...',
+    labelCtx:'Normas espec\u00edficas (art\u00edculos, leyes)',
+    phCtx:'Ej: Art. 1724, 1725, 1736 CCCN. Contrastar con arts. 1109 y 1113 C\u00f3digo V\u00e9lez...',
     ctxHint:''
   },
   escrito:{
     title:'Sobre el escrito a redactar',
-    hint:'DescribÃ­ el tipo de escrito y su propÃ³sito.',
-    labelTask:'Â¿QuÃ© escrito necesitÃ¡s redactar? *',
-    phTask:'Ej: Necesito redactar una contestaciÃ³n de demanda en un juicio laboral por despido incausado. El actor reclama indemnizaciÃ³n conforme Ley 20.744. La demandada niega el vÃ­nculo laboral...',
+    hint:'Describ\u00ed el tipo de escrito y su prop\u00f3sito.',
+    labelTask:'\u00bfQu\u00e9 escrito necesit\u00e1s redactar? *',
+    phTask:'Ej: Necesito redactar una contestaci\u00f3n de demanda en un juicio laboral por despido incausado. El actor reclama indemnizaci\u00f3n conforme Ley 20.744. La demandada niega el v\u00ednculo laboral...',
     labelCtx:'Hechos del caso y argumentos clave',
-    phCtx:'Ej: Contrato de locaciÃ³n de servicios firmado en 2019, el actor facturaba como monotributista y tenÃ­a libertad de horarios...',
-    ctxHint:'UsÃ¡ nombres ficticios. No incluyas datos reales de partes identificables.'
+    phCtx:'Ej: Contrato de locaci\u00f3n de servicios firmado en 2019, el actor facturaba como monotributista y ten\u00eda libertad de horarios...',
+    ctxHint:'Us\u00e1 nombres ficticios. No incluyas datos reales de partes identificables.'
   },
   explicar:{
     title:'Sobre el concepto a explicar',
-    hint:'IndicÃ¡ quÃ© instituciÃ³n o figura jurÃ­dica querÃ©s entender mejor.',
-    labelTask:'Â¿QuÃ© concepto querÃ©s que te expliquen? *',
-    phTask:'Ej: Quiero una explicaciÃ³n exhaustiva de la teorÃ­a de la imprevisiÃ³n en el CCCN (art. 1091): fundamentos, requisitos de procedencia, diferencias con la lesiÃ³n subjetiva...',
-    labelCtx:'Â¿Para quÃ© vas a usar la explicaciÃ³n?',
-    phCtx:'Ej: Necesito fundar el rechazo de la defensa de imprevisiÃ³n invocada por la demandada...',
+    hint:'Indic\u00e1 qu\u00e9 instituci\u00f3n o figura jur\u00eddica quer\u00e9s entender mejor.',
+    labelTask:'\u00bfQu\u00e9 concepto quer\u00e9s que te expliquen? *',
+    phTask:'Ej: Quiero una explicaci\u00f3n exhaustiva de la teor\u00eda de la imprevisi\u00f3n en el CCCN (art. 1091): fundamentos, requisitos de procedencia, diferencias con la lesi\u00f3n subjetiva...',
+    labelCtx:'\u00bfPara qu\u00e9 vas a usar la explicaci\u00f3n?',
+    phCtx:'Ej: Necesito fundar el rechazo de la defensa de imprevisi\u00f3n invocada por la demandada...',
     ctxHint:''
   }
 };
 
 const OPERATOR_ROLES = {
-  juez:'Sos un/a juez/a federal o provincial con vasta trayectoria en el Poder Judicial de la RepÃºblica Argentina. Tu pensamiento jurÃ­dico es riguroso, metÃ³dico y siempre fundamentado en el derecho positivo vigente. ConocÃ©s en profundidad la tÃ©cnica sentencial, los estÃ¡ndares constitucionales de motivaciÃ³n exigidos por la CSJN (Fallos: 236:27; 240:160 y su larga progenie), las reglas del debido proceso del art. 18 CN y el principio iura novit curia. AplicÃ¡s la estructura lÃ³gica clÃ¡sica del razonamiento judicial: premisa normativa, premisa fÃ¡ctica, subsunciÃ³n y conclusiÃ³n. EscribÃ­s con precisiÃ³n tÃ©cnica en castellano jurÃ­dico argentino, distinguÃ­s lo vinculante de lo persuasivo, jerarquizÃ¡s fuentes normativas correctamente (CN â tratados DDHH â ley â decreto â acordada) y tomÃ¡s decisiones que deben poder superar el escrutinio de las instancias superiores y el control de constitucionalidad. Nunca hacÃ©s afirmaciones de hecho o de derecho sin respaldo. Cuando algo es discutible o tiene posiciones doctrinarias encontradas, lo seÃ±alÃ¡s.',
-  secretario:'Sos un/a secretario/a judicial letrado/a con amplia experiencia en la gestiÃ³n, sustanciaciÃ³n y ordenamiento de expedientes en el Poder Judicial argentino. ConocÃ©s en detalle los cÃ³digos procesales aplicables (CPCC, CPPF, CPPBA y sus equivalentes provinciales), los plazos fatales e improrrogables, las formas solemnes de los actos procesales y los requisitos de admisibilidad formal de las presentaciones. Tu redacciÃ³n es precisa, ordenada y ajustada a los estÃ¡ndares de la prÃ¡ctica del tribunal. SabÃ©s cÃ³mo proyectar resoluciones de trÃ¡mite, providencias simples e interlocutorias. DistinguÃ­s entre actos procesales que requieren firma del juez y los que puede suscribir el secretario. ConocÃ©s la organizaciÃ³n interna del tribunal, los sistemas de gestiÃ³n judicial (Lex100, SACM, SINEJ u otros segÃºn la jurisdicciÃ³n) y los criterios de notificaciÃ³n por ministerio de ley.',
-  fiscal:'Sos un/a fiscal integrante del Ministerio PÃºblico Fiscal de la RepÃºblica Argentina, con amplia experiencia en el ejercicio de la acciÃ³n penal pÃºblica y la defensa del interÃ©s general. ActuÃ¡s con plena objetividad (principio de objetividad, art. 2 CPPF): tu funciÃ³n no es solo acusar, sino asegurar la correcta aplicaciÃ³n de la ley. ConocÃ©s en profundidad las tÃ©cnicas de litigaciÃ³n oral adversarial, la teorÃ­a del caso, la construcciÃ³n y presentaciÃ³n de la acusaciÃ³n, la cadena de custodia de la prueba y los estÃ¡ndares de admisibilidad probatoria. ManejÎ¡s la jurisprudencia de la CSJN, la CÃ¡mara Federal de CasaciÃ³n Penal y los estÃ¡ndares del sistema interamericano (CIDH, Corte IDH) en materia de debido proceso, garantÃ­as de las vÃ­ctimas e investigaciÃ³n eficaz. Tu argumentaciÃ³n es incisiva, orientada a los hechos probados y al derecho aplicable, y puede resistir el anÃ¡lisis de la defensa y del tribunal.',
-  defensor:'Sos un/a defensor/a oficial con amplia experiencia en la representaciÃ³n tÃ©cnica de personas imputadas o en situaciÃ³n de vulnerabilidad ante el Poder Judicial argentino. Tu misiÃ³n constitucional es garantizar el derecho de defensa en juicio (art. 18 CN) y el debido proceso legal. Tu perspectiva estÃ¡ permanentemente orientada a la protecciÃ³n de garantÃ­as procesales y derechos fundamentales: presunciÃ³n de inocencia, derecho a ser oÃ­do, prohibiciÃ³n de autoincriminaciÃ³n, principio de legalidad penal. ConocÃ©s en detalle los estÃ¡ndares del sistema interamericano de derechos humanos (art. 8 y 25 CADH, jurisprudencia de la Corte IDH) y su aplicaciÃ³n directa en el fuero interno por vÃ­a del bloque de constitucionalidad federal (art. 75 inc. 22 CN). IdentificÃ¡s nulidades procesales, planteos de inconstitucionalidad y defensas de fondo con precisiÃ³n tÃ©cnica. EscribÃ­s para proteger a tu asistido, con rigor jurÃ­dico y sin concesiones retÃ³ricas innecesarias.',
-  letrado:'Sos un/a abogado/a litigante con extensa trayectoria en el ejercicio profesional en la RepÃºblica Argentina. Tu argumentaciÃ³n es estratÃ©gica, tÃ©cnicamente sÃ³lida y adaptada al foro al que te dirigÃ­s. ConocÃ©s los tiempos y las lÃ³gicas de cada proceso (civil, comercial, laboral, contencioso-administrativo, penal), la construcciÃ³n de la teorÃ­a del caso y las tÃ©cnicas de persuasiÃ³n jurÃ­dica. SabÃ©s cuÃ¡ndo citar doctrina para fundar una posiciÃ³n y cuÃ¡ndo la jurisprudencia del tribunal al que te dirigÃ­s es el argumento mÃ¡s eficaz. AnticipÃ¡s los argumentos de la contraparte y los respondÃ©s preventivamente. EscribÃ­s para convencer: al juez de primera instancia, a la cÃ¡mara revisora, y eventualmente a la casaciÃ³n. Tu estilo es formal, conciso y tÃ©cnico, sin adornos retÃ³ricos que diluyan la argumentaciÃ³n. ConocÃ©s las particularidades del derecho procesal de la jurisdicciÃ³n donde litigÃ¡s.',
-  funcionario:'Sos un/a funcionario/a judicial letrado/a (prosecretario/a, jefe de despacho, relator/a u otro cargo equivalente) con profundo conocimiento de la administraciÃ³n de justicia, los procedimientos internos del Poder Judicial y la normativa que los regula. Tu trabajo requiere precisiÃ³n tÃ©cnica, dominio de la normativa procesal, capacidad para sintetizar informaciÃ³n compleja y habilidad para proyectar documentos institucionales claros, fundados y correctamente estructurados. ConocÃ©s los criterios interpretativos de la acordada reglamentaria, la circular del tribunal superior y las disposiciones de superintendencia. SabÃ©s distinguir entre funciÃ³n jurisdiccional y funciÃ³n administrativa del Poder Judicial, y actuÃ¡s dentro de los lÃ­mites de la competencia del cargo.'
+  juez:'Sos un/a juez/a federal o provincial con vasta trayectoria en el Poder Judicial de la Rep\u00fablica Argentina. Tu pensamiento jur\u00eddico es riguroso, met\u00f3dico y siempre fundamentado en el derecho positivo vigente. Conoc\u00e9s en profundidad la t\u00e9cnica sentencial, los est\u00e1ndares constitucionales de motivaci\u00f3n exigidos por la CSJN (Fallos: 236:27; 240:160 y su larga progenie), las reglas del debido proceso del art. 18 CN y el principio iura novit curia. Aplic\u00e1s la estructura l\u00f3gica cl\u00e1sica del razonamiento judicial: premisa normativa, premisa f\u00e1ctica, subsunci\u00f3n y conclusi\u00f3n. Escrib\u00eds con precisi\u00f3n t\u00e9cnica en castellano jur\u00eddico argentino, distingu\u00eds lo vinculante de lo persuasivo, jerarquiz\u00e1s fuentes normativas correctamente (CN \u2192 tratados DDHH \u2192 ley \u2192 decreto \u2192 acordada) y tom\u00e1s decisiones que deben poder superar el escrutinio de las instancias superiores y el control de constitucionalidad. Nunca hac\u00e9s afirmaciones de hecho o de derecho sin respaldo. Cuando algo es discutible o tiene posiciones doctrinarias encontradas, lo se\u00f1al\u00e1s.',
+  secretario:'Sos un/a secretario/a judicial letrado/a con amplia experiencia en el gesti\u00f3n, sustanciaci\u00f3n y ordenamiento de expedientes en el Poder Judicial argentino. Conoc\u00e9s en detalle los c\u00f3digos procesales aplicables (CPCC, CPPF, CPPBA y sus equivalentes provinciales), los plazos fatales e improrrogables, las formas solemnes de los actos procesales y los requisitos de admisibilidad formal de las presentaciones. Tu redacci\u00f3n es precisa, ordenada y ajustada a los est\u00e1ndares de la pr\u00e1ctica del tribunal. Sab\u00e9s c\u00f3mo proyectar resoluciones de tr\u00e1mite, providencias simples e interlocutorias. Distingu\u00eds entre actos procesales que requieren firma del juez y los que puede suscribir el secretario. Conoc\u00e9s la organizaci\u00f3n interna del tribunal, los sistemas de gesti\u00f3n judicial (Lex100, SACM, SINEJ u otros seg\u00fan la jurisdicci\u00f3n) y los criterios de notificaci\u00f3n por ministerio de ley.',
+  fiscal:'Sos un/a fiscal integrante del Ministerio P\u00fablico Fiscal de la Rep\u00fablica Argentina, con amplia experiencia en el ejercicio de la acci\u00f3n penal p\u00fablica y la defensa del inter\u00e9s general. Actu\u00e1s con plena objetividad (principio de objetividad, art. 2 CPPF): tu funci\u00f3n no es solo acusar, sino asegurar la correcta aplicaci\u00f3n de la ley. Conoc\u00e9s en profundidad las t\u00e9cnicas de litigaci\u00f3n oral adversarial, la teor\u00eda del caso, la construcci\u00f3n y presentaci\u00f3n de la acusaci\u00f3n, la cadena de custodia de la prueba y los est\u00e1ndares de admisibilidad probatoria. Manej\u00e1s la jurisprudencia de la CSJN, la C\u00e1mara Federal de Casaci\u00f3n Penal y los est\u00e1ndares del sistema interamericano (CIDH, Corte IDH) en materia de debido proceso, garant\u00edas de las v\u00edctimas e investigaci\u00f3n eficaz. Tu argumentaci\u00f3n es incisiva, orientada a los hechos probados y al derecho aplicable, y puede resistir el an\u00e1lisis de la defensa y del tribunal.',
+  defensor:'Sos un/a defensor/a oficial con amplia experiencia en la representaci\u00f3n t\u00e9cnica de personas imputadas o en situaci\u00f3n de vulnerabilidad ante el Poder Judicial argentino. Tu misi\u00f3n constitucional es garantizar el derecho de defensa en juicio (art. 18 CN) y el debido proceso legal. Tu perspectiva est\u00e1 permanentemente orientada a la protecci\u00f3n de garant\u00edas procesales y derechos fundamentales: presunci\u00f3n de inocencia, derecho a ser o\u00eddo, prohibici\u00f3n de autoincriminaci\u00f3n, principio de legalidad penal. Conoc\u00e9s en detalle los est\u00e1ndares del sistema interamericano de derechos humanos (art. 8 y 25 CADH, jurisprudencia de la Corte IDH) y su aplicaci\u00f3n directa en el fuero interno por v\u00eda del bloque de constitucionalidad federal (art. 75 inc. 22 CN). Identific\u00e1s nulidades procesales, planteos de inconstitucionalidad y defensas de fondo con precisi\u00f3n t\u00e9cnica. Escrib\u00eds para proteger a tu asistido, con rigor jur\u00eddico y sin concesiones ret\u00f3ricas innecesarias.',
+  letrado:'Sos un/a abogado/a litigante con extensa trayectoria en el ejercicio profesional en la Rep\u00fablica Argentina. Tu argumentaci\u00f3n es estrat\u00e9gica, t\u00e9cnicamente s\u00f3lida y adaptada al foro al que te dirig\u00eds. Conoc\u00e9s los tiempos y las l\u00f3gicas de cada proceso (civil, comercial, laboral, contencioso-administrativo, penal), la construcci\u00f3n de la teor\u00eda del caso y las t\u00e9cnicas de persuasi\u00f3n jur\u00eddica. Sab\u00e9s cu\u00e1ndo citar doctrina para fundar una posici\u00f3n y cu\u00e1ndo la jurisprudencia del tribunal al que te dirig\u00eds es el argumento m\u00e1s eficaz. Anticip\u00e1s los argumentos de la contraparte y los respond\u00e9s preventivamente. Escrib\u00eds para convencer: al juez de primera instancia, a la c\u00e1mara revisora, y eventualmente a la casaci\u00f3n. Tu estilo es formal, conciso y t\u00e9cnico, sin adornos ret\u00f3ricos que diluyan la argumentaci\u00f3n. Conoc\u00e9s las particularidades del derecho procesal de la jurisdicci\u00f3n donde litig\u00e1s.',
+  funcionario:'Sos un/a funcionario/a judicial letrado/a (prosecretario/a, jefe de despacho, relator/a u otro cargo equivalente) con profundo conocimiento de la administraci\u00f3n de justicia, los procedimientos internos del Poder Judicial y la normativa que los regula. Tu trabajo requiere precisi\u00f3n t\u00e9cnica, dominio de la normativa procesal, capacidad para sintetizar informaci\u00f3n compleja y habilidad para proyectar documentos institucionales claros, fundados y correctamente estructurados. Conoc\u00e9s los criterios interpretativos de la acordada reglamentaria, la circular del tribunal superior y las disposiciones de superintendencia. Sab\u00e9s distinguir entre funci\u00f3n jurisdiccional y funci\u00f3n administrativa del Poder Judicial, y actu\u00e1s dentro de los l\u00edmites de la competencia del cargo.'
 };
 
 const METHODOLOGY = {
-  sentencia:`METODOLOGÃA DE ANÃLISIS â seguÃ­ estos pasos en orden antes de redactar:
-1. LeÃ© atentamente todos los datos del caso. IdentificÃ¡ los hechos jurÃ­dicamente relevantes y separalos de los circunstanciales o accesorios.
-2. DeterminÃ¡ el marco normativo aplicable: quÃ© normas rigen el caso, cuÃ¡l es su jerarquÃ­a y si hay tensiÃ³n o aparente contradicciÃ³n entre ellas.
-3. AnalizÃ¡ la jurisprudencia pertinente: comenzÃ¡ por los precedentes de la CSJN y los tribunales superiores de la jurisdicciÃ³n. SeÃ±alÃ¡ si la doctrina es consolidada o si existe divergencia de criterios.
-4. ConstruÃ­ la argumentaciÃ³n de lo general a lo particular: principio constitucional o legal â norma especÃ­fica aplicable â subsunciÃ³n en los hechos del caso.
-5. AnticipÃ¡ las objeciones mÃ¡s fuertes que podrÃ­a plantear la parte contraria o una instancia revisora, y respondelas dentro del anÃ¡lisis.
-6. ConcluÃ­ con una posiciÃ³n jurÃ­dica clara, fundada y coherente con los pasos anteriores. No dejÃ©s cuestiones relevantes sin resolver.
-7. RevisÃ¡ que cada afirmaciÃ³n estÃ© respaldada en norma, doctrina o jurisprudencia. MarcÃ¡ con [VERIFICAR] cualquier dato que no puedas confirmar con certeza.`,
-  expediente:`METODOLOGÃA DE ANÃLISIS â seguÃ­ estos pasos en orden antes de redactar:
-1. IdentificÃ¡ a todas las partes del proceso, su carÃ¡cter procesal (actor, demandado, tercero, etc.) y quiÃ©n las representa.
-2. ConstruÃ­ una cronologÃ­a ordenada de los actos procesales relevantes, desde el inicio de las actuaciones hasta el estado actual.
-3. DistinguÃ­ los hechos reconocidos o no controvertidos de los hechos disputados. SeÃ±alÃ¡ cuÃ¡les son clave para la resoluciÃ³n del conflicto.
-4. IdentificÃ¡ con precisiÃ³n las pretensiones de cada parte, los fundamentos fÃ¡cticos que las sustentan y las normas que invocan.
-5. DeterminÃ¡ el estado procesal actual: quÃ© estÃ¡ resuelto, quÃ© estÃ¡ pendiente, quÃ© plazos corren y quÃ© actos quedan por cumplirse.
-6. SeÃ±alÃ¡ las cuestiones de hecho o de derecho que requieren resoluciÃ³n prioritaria y, si corresponde, formulÃ¡ una recomendaciÃ³n sobre los prÃ³ximos pasos.`,
-  jurisprudencia:`ETODOLOGÃA DE ANÃLISIS â seguÃ­ estos pasos en orden antes de redactar:
-1. DefinÃ­ con precisiÃ³n la cuestiÃ³n jurÃ­dica central sobre la que se busca jurisprudencia. Si hay sub-preguntas relevantes, identificalas.
-2. UbicÃ¡ y describÃ­ los precedentes de la CSJN: su doctrina, su evoluciÃ³n en el tiempo y si mantienen vigencia o fueron superados.
-3. AnalizÃ¡ la postura de los tribunales intermedios (cÃ¡maras de apelaciones, tribunales superiores provinciales, cÃ¡mara de casaciÃ³n).
-4. IdentificÃ¡ si existe doctrina legal consolidada o si hay divergencia de criterios entre tribunales o entre el fuero federal y el provincial.
-5. SintetizÃ¡ los argumentos jurÃ­dicos recurrentes a favor y en contra de cada postura. SeÃ±alÃ¡ cuÃ¡l parece ser la tendencia actual.
-6. ConcluÃ­ con una evaluaciÃ³n del estado de la cuestiÃ³n y, si corresponde, cuÃ¡l es la postura mÃ¡s sÃ³lida o la de mayor aplicaciÃ³n prÃ¡ctica.
-ADVERTENCIA CRÃTICA: JamÃ¡s inventes o atribuyas afirmaciones a fallos que no puedas verificar. Si citÃ¡s un fallo, indicÃ¡ la fuente. Si no podÃ©s confirmar su existencia o contenido exacto, marcalo con [VERIFICAR EXISTENCIA].`,
-  normativa:`METODOLOGÃA DE ANÃLISIS â seguÃ­ estos pasos en orden antes de redactar:
-1. IdentificÃ¡ todas las normas en juego y ubicalas en la escala jerÃ¡rquica del ordenamiento argentino: ConstituciÃ³n Nacional â tratados con jerarquÃ­a constitucional (art. 75 inc. 22 CN) â leyes ordinarias â decretos â resoluciones â acordadas.
-2. AplicÃ¡ primero la interpretaciÃ³n literal o gramatical: Â¿quÃ© dice el texto de la norma? Â¿el sentido es claro o admite mÃ¡s de una lectura?
-3. AplicÃ¡ la interpretaciÃ³n sistemÃ¡tica: Â¿cÃ³mo encaja esta norma dentro del conjunto normativo al que pertenece? Â¿quÃ© dicen las normas conexas?
-4. RecurrÃ­ a la interpretaciÃ³n histÃ³rica: Â¿cuÃ¡l fue la intenciÃ³n del legislador o del constituyente? Â¿quÃ© problema venÃ­a a resolver esta norma?
-5. AplicÃ¡ la interpretaciÃ³n teleolÃ³gica: Â¿cuÃ¡l es el fin o el bien jurÃ­dico que protege la norma? Â¿quÃ© interpretaciÃ³n mejor lo realiza?
-6. IdentificÃ¡ contradicciones aparentes, lagunas o antinomias. AplicÃ¡ los criterios de resoluciÃ³n: ley posterior deroga anterior, ley especial prevalece sobre general, ley superior prevalece sobre inferior.
-7. ConcluyÃ­ con el criterio interpretativo mÃ¡s fundado, mÃ¡s defensible y mÃ¡s coherente con el sistema jurÃ­dico en su conjunto.`,
-  escrito:`METODOLOGÃA DE REDACCIÃN â seguÃ­ estos pasos en orden antes de redactar:
-1. Antes de escribir, identificÃ¡ claramente: (a) cuÃ¡l es la posiciÃ³n jurÃ­dica de la parte, (b) quÃ© le pedÃ­s al tribunal, (c) en quÃ© hechos y normas se apoya el pedido.
-2. RedactÃ¡ el relato de los hechos de forma ordenada cronolÃ³gicamente, completa y presentada de manera favorable a la postura de la parte, sin falsear datos.
-3. IdentificÃ¡ el marco normativo aplicable y desarrollÃ¡ cÃ³mo cada norma favorece la posiciÃ³n sostenida.
-4. DesarrollÃ¡ los argumentos jurÃ­dicos de mayor a menor solidez. El argumento mÃ¡s fuerte va primero.
-5. AnticipÃ¡ las defensas o argumentos mÃ¡s probables de la contraparte y respondelos preventivamente, antes de que los planteen.
-6. FormulÃ¡ el petitorio de manera clara, precisa y exhaustiva. No dejÃ©s peticiones implÃ­citas: todo lo que se quiere obtener debe pedirse expresamente.
-7. RevisÃ¡ que el escrito sea coherente, que los hechos y los argumentos jurÃ­dicos estÃ©n correctamente enlazados y que no haya afirmaciones sin respaldo.`,
-  explicar:`METODOLOGÃA DE EXPLICACIÃN â seguÃ­ estos pasos en orden antes de redactar:
-1. DefinÃ­ el concepto con precisiÃ³n tÃ©cnica: cÃ³mo lo define la ley, el cÃ³digo o la doctrina dominante.
-2. Ubicalo en el contexto histÃ³rico y sistemÃ¡tico: Â¿de dÃ³nde viene esta instituciÃ³n? Â¿cÃ³mo evolucionÃ³ en el derecho argentino?
-3. DesarrollÃ¡ los elementos constitutivos, requisitos o presupuestos que lo integran, uno por uno, con claridad.
-4. MostrÃ¡ cÃ³mo funciona en la prÃ¡ctica con ejemplos concretos, idealmente tomados de casos o situaciones tÃ­picas del fuero correspondiente.
-5. SeÃ±alÃ¡ los lÃ­mites, excepciones, casos controvertidos y las zonas grises donde la aplicaciÃ³n del concepto no es pacÃ­fica.
-6. IndicÃ¡ cuÃ¡l es el criterio mayoritario de la doctrina y de la jurisprudencia, y si existe una postura minoritaria relevante que deba conocerse.
-7. Si es pertinente, seÃ±alÃ¡ las consecuencias prÃ¡cticas de adoptar una u otra interpretaciÃ³n.`
+  sentencia:`METODOLOG\u00cdA DE AN\u00c1LISIS \u2014 segu\u00ed estos pasos en orden antes de redactar:
+1. Le\u00e9 atentamente todos los datos del caso. Identific\u00e1 los hechos jur\u00eddicamente relevantes y separalos de los circunstanciales o accesorios.
+2. Determin\u00e1 el marco normativo aplicable: qu\u00e9 normas rigen el caso, cu\u00e1l es su jerarqu\u00eda y si hay tensi\u00f3n o aparente contradicci\u00f3n entre ellas.
+3. Analiz\u00e1 la jurisprudencia pertinente: comenz\u00e1 por los precedentes de la CSJN y los tribunales superiores de la jurisdicci\u00f3n. Se\u00f1al\u00e1 si la doctrina es consolidada o si existe divergencia de criterios.
+4. Constru\u00ed la argumentaci\u00f3n de lo general a lo particular: principio constitucional o legal \u2192 torma espec\u00edfica aplicable \u2192 subsunci\u00f3n en los hechos del caso.
+5. Anticip\u00e1 las objeciones m\u00e1s fuertes que podr\u00eda plantear la parte contraria o una instancia revisora, y respondelas dentro del an\u00e1lisis.
+6. Conclu\u00ed con una posici\u00f3n jur\u00eddica clara, fundada y coherente con los pasos anteriores. No dej\u00e9s cuestiones relevantes sin resolver.
+7. Revis\u00e1 que cada afirmaci\u00f3n est\u00e9 respaldada en norma, doctrina o jurisprudencia. Marc\u00e1 con [VERIFICAR] cualquier dato que no puedas confirmar con certeza.`,
+  expediente:`METODOLOG\u00cdA DE AN\u00c1LISIS \u2014 segu\u00ed estos pasos en orden antes de redactar:
+1. Identific\u00e1 a todas las partes del proceso, su car\u00e1cter procesal (actor, demandado, tercero, etc.) y qui\u00e9n las representa.
+2. Constru\u00ed una cronolog\u00eda ordenada de los actos procesales relevantes, desde el inicio de las actuaciones hasta el estado actual.
+3. Distingu\u00ed los hechos reconocidos o no controvertidos de los hechos disputados. Se\u00f1al\u00e1 cu\u00e1les son clave para la resoluci\u00f3n del conflicto.
+4. Identific\u00e1 con precisi\u00f3n las pretensiones de cada parte, los fundamentos f\u00e1cticos que las sustentan y las normas que invocan.
+5. Determin\u00e1 el estado procesal actual: qu\u00e9 est\u00e1 resuelto, qu\u00e9 est\u00e1 pendiente, qu\u00e9 plazos corren y qu\u00e9 actos quedan por cumplirse.
+6. Se\u00f1al\u00e1 las cuestiones de hecho o de derecho que requieren resoluci\u00f3n prioritaria y, si corresponde, formul\u00e1 una recomendaci\u00f3n sobre los pr\u00f3ximos pasos.`,
+  jurisprudencia:`METODOLOG\u00cdA DE AN\u00c1LISIS \u2014 segu\u00ed estos pasos en orden antes de redactar:
+1. Defin\u00ed con precisi\u00f3n la cuesti\u00f3n jur\u00eddica central sobre la que se busca jurisprudencia. Si hay sub-preguntas relevantes, identificalas.
+2. Ubic\u00e1 y describ\u00ed los precedentes de la CSJN: su doctrina, su evoluci\u00f3n en el tiempo y si mantienen vigencia o fueron superados.
+3. Analiz\u00e1 la postura de los tribunales intermedios (c\u00e1maras de apelaciones, tribunales superiores provinciales, c\u00e1mara de casaci\u00f3n).
+4. Identific\u00e1 si existe doctrina legal consolidada o si hay divergencia de criterios entre tribunales o entre el fuero federal y el provincial.
+5. Sintetiz\u00e1 los argumentos jur\u00eddicos recurrentes a favor y en contra de cada postura. Se\u00f1al\u00e1 cu\u00e1l parece ser la tendencia actual.
+6. Conclu\u00ed con una evaluaci\u00f3n del estado de la cuesti\u00f3n y, si corresponde, cu\u00e1l es la postura m\u00e1s s\u00f3lida o la de mayor aplicaci\u00f3n pr\u00e1ctica.
+ADVERTENCIA CR\u00cdTICA: Jam\u00e1s inventes o atribuyas afirmaciones a fallos que no puedas verificar. Si cit\u00e1s un fallo, indic\u00e1 la fuente. Si no pod\u00e9s confirmar su existencia o contenido exacto, marcalo con [VERIFICAR EXISTENCIA].`,
+  normativa:`METODOLOG\u00cdA DE AN\u00c1LISIS \u2014 segu\u00ed estos pasos en orden antes de redactar:
+1. Identific\u00e1 todas las normas en juego y ubicalas en la escala jer\u00e1rquica del ordenamiento argentino: Constituci\u00f3n Nacional \u2192 tratados con jerarqu\u00eda constitucional (art. 75 inc. 22 CN) \u2192 leyes ordinarias \u2192 decretos \u2192 resoluciones \u2192 acordadas.
+2. Aplic\u00e1 primero la interpretaci\u00f3n literal o gramatical: \u00bfqu\u00e9 dice el texto de la norma? \u00bfel sentido es claro o admite m\u00e1s de una lectura?
+3. Aplic\u00e1 la interpretaci\u00f3n sistem\u00e1tica: \u00bfc\u00f3mo encaja esta norma dentro del conjunto normativo al que pertenece? \u00bfqu\u00e9 dicen las normas conexas?
+4. Recurr\u00ed a la interpretaci\u00f3n hist\u00f3rica: \u00bfcu\u00e1l fue la intenci\u00f3n del legislador o del constituyente? \u00bfqu\u00e9 problema ven\u00eda a resolver esta norma?
+5. Aplic\u00e1 la interpretaci\u00f3n teleol\u00f3gica: \u00bfcu\u00e1l es el fin o el bien jur\u00eddico que protege la norma? \u00bfqu\u00e9 interpretaci\u00f3n mejor lo realiza?
+6. Identific\u00e1 contradicciones aparentes, lagunas o antinomias. Aplic\u00e1 los criterios de resoluci\u00f3n: ley posterior deroga anterior, ley especial prevalece sobre general, ley superior prevalece sobre inferior.
+7. Conclu\u00ed con el criterio interpretativo m\u00e1s fundado, m\u00e1s defensible y m\u00e1s coherente con el sistema jur\u00eddico en su conjunto.`,
+  escrito:`METODOLOG\u00cdA DE REDACCI\u00d3N \u2014 segu\u00ed estos pasos en orden antes de redactar:
+1. Antes de escribir, identific\u00e1 claramente: (a) cu\u00e1l es la posici\u00f3n jur\u00eddica de la parte, (b) qu\u00e9 le ped\u00eds al tribunal, (c) en qu\u00e9 hechos y normas se apoya el pedido.
+2. Redact\u00e1 el relato de los hechos de forma ordenada cronol\u00f3gicamente, completa y presentada de manera favorable a la postura de la parte, sin falsear datos.
+3. Identific\u00e1 el marco normativo aplicable y desarroll\u00e1 c\u00f3mo cada norma favorece la posici\u00f3n sostenida.
+4. Desarroll\u00e1 los argumentos jur\u00eddicos de mayor a menor solidez. El argumento m\u00e1s fuerte va primero.
+5. Anticip\u00e1 las defensas o argumentos m\u00e1s probables de la contraparte y respondelos preventivamente, antes de que los planteen.
+6. Formul\u00e1 el petitorio de manera clara, precisa y exhaustiva. No dej\u00e9s peticiones impl\u00edcitas: todo lo que se quiere obtener debe pedirse expresamente.
+7. Revis\u00e1 que el escrito sea coherente, que los hechos y los argumentos jur\u00eddicos est\u00e9n correctamente enlazados y que no haya afirmaciones sin respaldo.`,
+  explicar:`METODOLOG\u00cdA DE EXPLICACI\u00d3N \u2014 segu\u00ed estos pasos en orden antes de redactar:
+1. Defin\u00ed el concepto con precisi\u00f3n t\u00e9cnica: c\u00f3mo lo define la ley, el c\u00f3digo o la doctrina dominante.
+2. Ubicalo en el contexto hist\u00f3rico y sistem\u00e1tico: \u00bfde d\u00f3nde viene esta instituci\u00f3n? \u00bfc\u00f3mo evolucion\u00f3 en el derecho argentino?
+3. Desarroll\u00e1 los elementos constitutivos, requisitos o presupuestos que lo integran, uno por uno, con claridad.
+4. Mostr\u00e1 c\u00f3mo funciona en la pr\u00e1ctica con ejemplos concretos, idealmente tomados de casos o situaciones t\u00edpicas del fuero correspondiente.
+5. Se\u00f1al\u00e1 los l\u00edmites, excepciones, casos controvertidos y las zonas grises donde la aplicaci\u00f3n del concepto no es pac\u00edfica.
+6. Indic\u00e1 cu\u00e1l es el criterio mayoritario de la doctrina y de la jurisprudencia, y si existe una postura minoritaria relevante que deba conocerse.
+7. Si es pertinente, se\u00f1al\u00e1 las consecuencias pr\u00e1cticas de adoptar una u otra interpretaci\u00f3n.`
 };
 
 const FORMAT_DETAIL = {
-  'Texto corrido con redacciÃ³n formal y jurÃ­dica':'RespondÃ© en texto corrido, con redacciÃ³n formal y jurÃ­dica en castellano argentino. Sin listas, sin viÃ±etas, sin subtÃ­tulos en ma{ºscula. La prosa debe ser fluida, precisa y tÃ©cnicamente sÃ³lida, apta para incorporarse directamente a una resoluciÃ³n, sentencia o escrito judicial con mÃ­nimas modificaciones. UsÃ¡ conectores argumentativos propios del lenguaje jurÃ­dico (en consecuencia, por tanto, de conformidad con, cabe seÃ±alar, sin perjuicio de ello, etc.).',
-  'Esquema estructurado con secciones (HECHOS / FUNDAMENTOS / CONCLUSIÃN)':'OrganizÃ¡ la respuesta con secciones claramente identificadas y separadas, en este orden: I. HECHOS RELEVANTES, II. MARCO NORMATIVO APLICABLE, III. ANÃLISIS JURÃDICO (con los argumentos desarrollados en pÃ¡rrafos), IV. CONCLUSIÃN. Cada secciÃ³n debe estar plenamente desarrollada, no reducida a una lista de palabras clave. UsÃ¡ numeraciÃ³n romana para los tÃ­tulos y lenguaje jurÃ­dico formal en castellano argentino.',
-  'Puntos clave y sÃ­ntesis ejecutiva':'ComenzÃ¡ con una SÃNTESIS EJECUTIVA de no mÃ¡s de cuatro lÃ­neas que capture el resultado o la posiciÃ³n jurÃ­dica central. Luego desarrollÃ¡ los puntos relevantes en una lista numerada, ordenados de mayor a menor importancia jurÃ­dica. Cada Ã­tem debe ser una oraciÃ³n completa y tÃ©cnicamente precisa, no una palabra suelta. FinalizÃ¡ con una CONCLUSIÃN de dos lÃ­neas.',
-  'Tabla comparativa':'OrganizÃ¡ la informaciÃ³n principal en una tabla comparativa con columnas claramente identificadas. Cada celda debe contener informaciÃ³n concisa y tÃ©cnicamente precisa. Debajo de la tabla incluÃ­ un pÃ¡rrafo de anÃ¡lisis que sintetice las diferencias mÃ¡s relevantes y su implicancia jurÃ­dica prÃ¡ctica.',
-  'Borrador listo para incluir en expediente':'RedactÃ¡ un borrador formal, con la estructura, el estilo y el lenguaje propios de los escritos o resoluciones judiciales argentinos. UsÃ¡ las convenciones de forma habituales: saludo inicial si corresponde, numeraciÃ³n de pÃ¡rrafos o considerandos si aplica, parte dispositiva o petitorio claramente diferenciado. El texto debe poder incorporarse directamente al expediente con mÃ­nimas modificaciones de datos. RedactÃ¡ en castellano jurÃ­dico argentino, sin anglicismos innecesarios ni lenguaje coloquial.'
+  'Texto corrido con redacci\u00f3n formal y jur\u00eddica':'Respond\u00e9 en texto corrido, con redacci\u00f3n formal y jur\u00eddica en castellano argentino. Sin listas, sin vi\u00f1etas, sin subt\u00edtulos en may\u00fascula. La prosa debe ser fluida, precisa y t\u00e9cnicamente s\u00f3lida, apta para incorporarse directamente a una resoluci\u00f3n, sentencia o escrito judicial con m\u00ednimas modificaciones. Us\u00e1 conectores argumentativos propios del lenguaje jur\u00eddico (en consecuencia, por tanto, de conformidad con, cabe se\u00f1alar, sin perjuicio de ello, etc.).',
+  'Esquema estructurado con secciones (HECHOS / FUNDAMENTOS / CONCLUSI\u00d3N)':'Organiz\u00e1 la respuesta con secciones claramente identificadas y separadas, en este orden: I. HECHOS RELEVANTES, II. MARCO NORMATIVO APLICABLE, III. AN\u00c1LISIS JUR\u00cdDICO (con los argumentos desarrollados en p\u00e1rrafos), IV. CONCLUSI\u00d3N. Cada secci\u00f3n debe estar plenamente desarrollada, no reducida a una lista de palabras clave. Us\u00e1 numeraci\u00f3n romana para los t\u00edtulos y lenguaje jur\u00eddico formal en castellano argentino.',
+  'Puntos clave y s\u00edntesis ejecutiva':'Comenz\u00e1 con una S\u00cdNTESIS EJECUTIVA de no m\u00e1s de cuatro l\u00edneas que capture el resultado o la posici\u00f3n jur\u00eddica central. Luego desarroll\u00e1 los puntos relevantes en una lista numerada, ordenados de mayor a menor importancia jur\u00eddica. Cada \u00edtem debe ser una oraci\u00f3n completa y t\u00e9cnicamente precisa, no una palabra suelta. Finaliz\u00e1 con una CONCLUSI\u00d3N de dos l\u00edneas.',
+  'Tabla comparativa':'Organiz\u00e1 la informaci\u00f3n principal en una tabla comparativa con columnas claramente identificadas. Cada celda debe contener informaci\u00f3n concisa y t\u00e9cnicamente precisa. Debajo de la tabla inclu\u00ed un p\u00e1rrafo de an\u00e1lisis que sintetice las diferencias m\u00e1s relevantes y su implicancia jur\u00eddica pr\u00e1ctica.',
+  'Borrador listo para incluir en expediente':'Redact\u00e1 un borrador formal, con la estructura, el estilo y el lenguaje propios de los escritos o resoluciones judiciales argentinos. Us\u00e1 las convenciones de forma habituales: saludo inicial si corresponde, numeraci\u00f3n de p\u00e1rrafos o considerandos si aplica, parte dispositiva o petitorio claramente diferenciado. El texto debe poder incorporarse directamente al expediente con m\u00ednimas modificaciones de datos. Redact\u00e1 en castellano jur\u00eddico argentino, sin anglicismos innecesarios ni lenguaje coloquial.'
 };
 
 const TOOL_TIPS = {
-  chatgpt:{name:'ChatGPT',icon:'ð¬',tips:['â ï¸ Privacidad: no subas documentos con datos identificatorios reales de partes o imputados. AnonimizÃ¡ siempre antes de pegar texto de un expediente activo.','PegÃ¡ el prompt completo en el chat como primer mensaje. Para profundizar en un punto: "DesarrollÃ¡ mÃ¡s el anÃ¡lisis jurÃ­dico del punto 3, considerando tambiÃ©n el principio de proporcionalidad".','Si tenÃ©s un PDF del expediente, adjuntalo en GPT-4o junto con el prompt. GPT-4o puede leer el documento y responder en base a Ã©l.','Para corregir o ajustar la respuesta: "ReescribÃ­ el considerando 2 con mayor fundamentaciÃ³n normativa" o "AcortÃ¡ la respuesta a un mÃ¡ximo de 400 palabras manteniendo el rigor tÃ©cnico".']},
-  gemini:{name:'Gemini',icon:'â¨',tips:['â ï¸ Privacidad: anonimizÃ¡ los datos del expediente antes de adjuntar cualquier documento. Gemini puede usar el contenido para mejorar sus modelos salvo que desactives esa opciÃ³n en la configuraciÃ³n.','AdjuntÃ¡ el expediente o sentencia como archivo junto con el prompt. En Gemini Advanced podÃ©s procesar documentos muy extensos (hasta 1 millÃ³n de tokens).','Para jurisprudencia actualizada, agregÃ¡ al prompt: "BuscÃ¡ tambiÃ©n fallos recientes publicados en lÃ­nea sobre este tema e indicÃ¡ las fuentes".','Si la respuesta es demasiado larga, pedÃ­: "ResumÃ­ la respuesta anterior en no mÃ¡s de 5 puntos clave, sin perder precisiÃ³n tÃ©cnica".']},
-  claude:{name:'Claude',icon:'ð¤',tips:['Claude tiene una de las ventanas de contexto mÃ¡s grandes disponibles: podÃ©s pegar el expediente completo en el mismo mensaje junto con el prompt, sin necesidad de resumirlo.','Es especialmente preciso con instrucciones detalladas y estructuradas: no simplifiques el prompt, cuanto mÃ¡s especÃ­fico sea, mejor el resultado.','Para mayor profundidad en un punto: "AnalizÃ¡ el punto X tambiÃ©n desde la perspectiva del principio de proporcionalidad y del estÃ¡ndar de la Corte IDH".','Claude es muy transparente sobre sus limitaciones: si no sabe algo o no puede verificarlo, lo dice. PrestÃ¡ atenciÃ³n a esas advertencias.']},
-  notebooklm:{name:'NotebookLM',icon:'ð',tips:['Flujo de trabajo recomendado: (1) CreÃ¡ un nuevo notebook, (2) SubÃ­ el expediente o sentencia como "fuente", (3) PegÃ¡ este prompt en el chat del notebook.','NotebookLM solo responde sobre lo que hay en tus documentos cargados. No inventa fuentes externas ni jurisprudencia que no estÃ© en tus archivos: es ideal para trabajar con expedientes propios sin riesgo de alucinaciones.','PodÃ©s subir mÃºltiples documentos como fuentes (expediente + normativa + doctrina) y pedirle que los analice en conjunto.','PodÃ©s pedirle que genere un "audio overview" para escuchar el resumen del expediente mientras te trasladÃ¡s o revisÃ¡s otros archivos.']}
+  chatgpt:{name:'ChatGPT',icon:'\ud83d\udcac',tips:['\u26a0\ufe0f Privacidad: no subas documentos con datos identificatorios reales de partes o imputados. Anonimiz\u00e1 siempre antes de pegar texto de un expediente activo.','Peg\u00e1 el prompt completo en el chat como primer mensaje. Para profundizar en un punto: "Desarroll\u00e1 m\u00e1s el an\u00e1lisis jur\u00eddico del punto 3, considerando tambi\u00e9n el principio de proporcionalidad".','Si ten\u00e9s un PDF del expediente, adjuntalo en GPT-4o junto con el prompt. GPT-4o puede leer el documento y responder en base a \u00e9l.','Para corregir o ajustar la respuesta: "Reescrib\u00ed el considerando 2 con mayor fundamentaci\u00f3n normativa" o "Acort\u00e1 la respuesta a un m\u00e1ximo de 400 palabras manteniendo el rigor t\u00e9cnico".']},
+  gemini:{name:'Gemini',icon:'\u2728',tips:['\u26a0\ufe0f Privacidad: anonimiz\u00e1 los datos del expediente antes de adjuntar cualquier documento. Gemini puede usar el contenido para mejorar sus modelos salvo que desactives esa opci\u00f3n en la configuraci\u00f3n.','Adjunt\u00e1 el expediente o sentencia como archivo junto con el prompt. En Gemini Advanced pod\u00e9s procesar documentos muy extensos (hasta 1 mill\u00f3n de tokens).','Para jurisprudencia actualizada, agreg\u00e1 al prompt: "Busc\u00e1 tambi\u00e9n fallos recientes publicados en l\u00ednea sobre este tema e indic\u00e1 las fuentes".','Si la respuesta es demasiado larga, ped\u00ed: "Resum\u00ed la respuesta anterior en no m\u00e1s de 5 puntos clave, sin perder precisi\u00f3n t\u00e9cnica".']},
+  claude:{name:'Claude',icon:'\ud83e\udd16',tips:['Claude tiene una de las ventanas de contexto m\u00e1s grandes disponibles: pod\u00e9s pegar el expediente completo en el mismo mensaje junto con el prompt, sin necesidad de resumirlo.','Es especialmente preciso con instrucciones detalladas y estructuradas: no simplifiques el prompt, cuanto m\u00e1s espec\u00edfico sea, mejor el resultado.','Para mayor profundidad en un punto: "Analiz\u00e1 el punto X tambi\u00e9n desde la perspectiva del principio de proporcionalidad y del est\u00e1ndar de la Corte IDH".','Claude es muy transparente sobre sus limitaciones: si no sabe algo o no puede verificarlo, lo dice. Prest\u00e1 atenci\u00f3n a esas advertencias.']},
+  notebooklm:{name:'NotebookLM',icon:'\ud83d\udcd3',tips:['Flujo de trabajo recomendado: (1) Cre\u00e1 un nuevo notebook, (2) Sub\u00ed el expediente o sentencia como "fuente", (3) Peg\u00e1 este prompt en el chat del notebook.','NotebookLM solo responde sobre lo que hay en tus documentos cargados. No inventa fuentes externas ni jurisprudencia que no est\u00e9 en tus archivos: es ideal para trabajar con expedientes propios sin riesgo de alucinaciones.','Pod\u00e9s subir m\u00faltiples documentos como fuentes (expediente + normativa + doctrina) y pedirle que los analice en conjunto.','Pod\u00e9s pedirle que genere un "audio overview" para escuchar el resumen del expediente mientras te traslad\u00e1s o revis\u00e1s otros archivos.']}
 };
 
 function buildPrompt() {
   const op = OPERATOR_ROLES[S.operator];
   const tool = TOOL_TIPS[S.tool];
   const lines = [];
-  const SEP = 'â'.repeat(60);
+  const SEP = '\u2500'.repeat(60);
 
   const specList = S.specialties.join(', ') || 'derecho en general';
 
   // Bloque de apertura diferenciado por herramienta
   if (S.tool === 'notebooklm') {
-    lines.push('ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ');
-    lines.push('   INSTRUCCIÃN PARA NOTEBOIKLM â ANÃLISIS DOCUMENTAL');
-    lines.push('ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ');
+    lines.push('\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550');
+    lines.push('   INSTRUCCI\u00d3N PARA NOTEBOOKLM \u2014 AN\u00c1LISIS DOCUMENTAL');
+    lines.push('\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550');
     lines.push('');
-    lines.push('BasÃ¡ndote EXCLUSIVAMENTE en los documentos que tengo cargados como fuentes en este notebook, realizÃ¡ la tarea que se describe a continuaciÃ³n. No uses conocimiento externo a los documentos cargados. Si la informaciÃ³n necesaria no estÃ¡ en los documentos, indicÃ¡lo expresamente.');
+    lines.push('Bas\u00e1ndote EXCLUSIVAMENTE en los documentos que tengo cargados como fuentes en este notebook, realiz\u00e1 la tarea que se describe a continuaci\u00f3n. No uses conocimiento externo a los documentos cargados. Si la informaci\u00f3n necesaria no est\u00e1 en los documentos, indic\u00e1lo expresamente.');
     lines.push('');
     if (S.fuero && S.fuero !== 'General / No especificar') {
       lines.push('Fuero/materia: ' + S.fuero);
@@ -551,15 +552,15 @@ function buildPrompt() {
     }
     if ((S.fuero && S.fuero !== 'General / No especificar') || S.jurisdiccion) lines.push('');
   } else {
-    lines.push('ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ');
+    lines.push('\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550');
     lines.push('   PROMPT JUDICIAL PROFESIONAL');
-    lines.push('ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ');
+    lines.push('\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550');
     lines.push('');
     lines.push('ROL Y PERFIL PROFESIONAL');
     lines.push(SEP);
     lines.push(op);
     lines.push('');
-    lines.push('Ãrea de especializaciÃ³n: ' + specList + '. ConocÃ©s en profundidad la doctrina, la jurisprudencia y las particularidades prÃ¡cticas de estas Ã¡reas en el ordenamiento jurÃ­dico argentino.');
+    lines.push('\u00c1rea de especializaci\u00f3n: ' + specList + '. Conoc\u00e9s en profundidad la doctrina, la jurisprudencia y las particularidades pr\u00e1cticas de estas \u00e1reas en el ordenamiento jur\u00eddico argentino.');
     lines.push('');
 
     // Contexto jurisdiccional
@@ -568,7 +569,7 @@ function buildPrompt() {
       lines.push('CONTEXTO JURISDICCIONAL');
       lines.push(SEP);
       if (S.fuero && S.fuero !== 'General / No especificar') lines.push('Fuero: ' + S.fuero);
-      if (S.jurisdiccion) lines.push('Normativa y/o cÃ³digo procesal aplicable: ' + S.jurisdiccion);
+      if (S.jurisdiccion) lines.push('Normativa y/o c\u00f3digo procesal aplicable: ' + S.jurisdiccion);
       lines.push('');
     }
   }
@@ -595,7 +596,7 @@ function buildPrompt() {
     lines.push('');
   }
 
-  // MetodologÃ­a
+  // Metodolog\u00eda
   if (S.usecase && METHODOLOGY[S.usecase]) {
     lines.push(METHODOLOGY[S.usecase]);
     lines.push('');
@@ -610,52 +611,52 @@ function buildPrompt() {
   } else {
     lines.push('FORMATO DE RESPUESTA');
     lines.push(SEP);
-    lines.push('RespondÃ© en castellano jurÃ­dico argentino, con redacciÃ³n formal y tÃ©cnica, adecuada para el Ã¡mbito judicial. OrganizÃ¡ la respuesta de manera clara y lÃ³gica, asegurÃ¡ndote de que cada secciÃ³n estÃ© completa antes de pasar a la siguiente.');
+    lines.push('Respond\u00e9 en castellano jur\u00eddico argentino, con redacci\u00f3n formal y t\u00e9cnica, adecuada para el \u00e1mbito judicial. Organiz\u00e1 la respuesta de manera clara y l\u00f3gica, asegur\u00e1ndote de que cada secci\u00f3n est\u00e9 completa antes de pasar a la siguiente.');
     lines.push('');
   }
 
   // Restricciones
   const allR = [...S.restrictions];
-  if (S.extra) allR.push('AclaraciÃ³n adicional: ' + S.extra);
-  // Agregar restricciÃ³n de idioma si no estÃ¡ ya
+  if (S.extra) allR.push('Aclaraci\u00f3n adicional: ' + S.extra);
+  // Agregar restricci\u00f3n de idioma si no est\u00e1 ya
   if (!allR.some(r => r.toLowerCase().includes('castellano'))) {
-    allR.unshift('RespondÃ© siempre en castellano jurÃ­dico argentino (no neutro, no espaÃ±ol de EspaÃ±a)');
+    allR.unshift('Respond\u00e9 siempre en castellano jur\u00eddico argentino (no neutro, no espa\u00f1ol de Espa\u00f1a)');
   }
   if (allR.length > 0) {
     lines.push('RESTRICCIONES Y CONDICIONES');
     lines.push(SEP);
-    allR.forEach(r => lines.push('â¢ ' + r));
+    allR.forEach(r => lines.push('\u2022 ' + r));
     lines.push('');
   }
 
-  // VerificaciÃ³n final â checklist explÃ­cito antes de responder
-  lines.push('VERIFICACIÃN ANTES DE RESPONDER');
+  // Verificaci\u00f3n final \u2014 checklist expl\u00edcito antes de responder
+  lines.push('VERIFICACI\u00d3N ANTES DE RESPONDER');
   lines.push(SEP);
-  lines.push('Antes de dar tu respuesta definitiva, verificÃ¡ internamente que:');
-  lines.push('1. Cada afirmaciÃ³n jurÃ­dica estÃ© fundada en una norma vigente, doctrina autorizada o jurisprudencia verificable.');
+  lines.push('Antes de dar tu respuesta definitiva, verific\u00e1 internamente que:');
+  lines.push('1. Cada afirmaci\u00f3n jur\u00eddica est\u00e9 fundada en una norma vigente, doctrina autorizada o jurisprudencia verificable.');
   lines.push('2. No hayas inventado ni atribuido falsamente contenido a ninguna cita normativa, fallo o autor.');
-  lines.push('3. El formato de la respuesta corresponde al uso judicial al que estÃ¡ destinada.');
+  lines.push('3. El formato de la respuesta corresponde al uso judicial al que est\u00e1 destinada.');
   lines.push('4. La respuesta es coherente de principio a fin, sin contradicciones internas ni saltos argumentales.');
-  lines.push('5. Todo dato incierto o no verificable con certeza estÃ© marcado con [VERIFICAR].');
+  lines.push('5. Todo dato incierto o no verificable con certeza est\u00e9 marcado con [VERIFICAR].');
   lines.push('');
-  lines.push('Solo entonces, redactÃ¡ tu respuesta.');
+  lines.push('Solo entonces, redact\u00e1 tu respuesta.');
 
   document.getElementById('prompt-result').textContent = lines.join('\n');
   document.getElementById('tool-name-result').textContent = tool.name;
   document.getElementById('tool-badge-result').innerHTML = tool.icon + ' Optimizado para ' + tool.name;
-  document.getElementById('tips-box').innerHTML = '<h4>ð¡ CÃ³mo usarlo mejor en ' + tool.name + '</h4><ul>' + tool.tips.map(t=>'<li>'+t+'</li>').join('') + '</ul>';
+  document.getElementById('tips-box').innerHTML = '<h4>\ud83d\udca1 C\u00f3mo usarlo mejor en ' + tool.name + '</h4><ul>' + tool.tips.map(t=>'<li>'+t+'</li>').join('') + '</ul>';
 }
 
 function copyPrompt() {
   const text = document.getElementById('prompt-result').textContent;
   navigator.clipboard.writeText(text).then(() => {
     const small = document.getElementById('copy-small');
-    small.textContent = 'â Copiado'; small.classList.add('copied');
+    small.textContent = '\u2713 Copiado'; small.classList.add('copied');
     const large = document.getElementById('copy-large');
-    large.innerHTML = 'â Â¡Copiado! Ya podÃ©s pegarlo en la herramienta de IA'; large.classList.add('copied');
+    large.innerHTML = '\u2713 \u00a1Copiado! Ya pod\u00e9s pegarlo en la herramienta de IA'; large.classList.add('copied');
     setTimeout(() => {
       small.textContent = 'Copiar'; small.classList.remove('copied');
-      large.innerHTML = 'ð Copiar prompt'; large.classList.remove('copied');
+      large.innerHTML = '\ud83d\udccb Copiar prompt'; large.classList.remove('copied');
     }, 2500);
   });
 }
